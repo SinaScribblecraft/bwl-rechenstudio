@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import type { SolutionStep } from '$lib/data';
+	import type { SolutionStep } from '$lib/types';
 
 	import ExerciseSolutionStep from '$lib/components/exercise/ExerciseSolutionStep.svelte';
 	import FinalResult from '$lib/components/exercise/FinalResult.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SubTask, DataTable } from '$lib/data';
+	import type { SubTask, DataTable } from '$lib/types';
 
 	interface Props {
 		title: string;

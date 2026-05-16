@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { math } from '$lib/actions/math';
-	import type { FormulaDef } from '$lib/data';
+	import type { FormulaDef } from '$lib/types';
 
 	let { formulas } = $props<{ formulas: FormulaDef[] }>();
-
 	let isOpen = $state(false);
+
+	// Speicher für die Breite der Formel-Karten-Elemente
+	let cardWidths = $state<number[]>([]);
 
 	function toggle() {
 		isOpen = !isOpen;
@@ -19,14 +21,17 @@
 		>
 			💡 {isOpen ? 'Formel-Tipps ausblenden' : 'Tipp: Benötigte Formeln anzeigen'}
 			<span class="text-lg leading-none transition-transform duration-200 {isOpen ? 'rotate-180' : ''}">
-                ⌄
-            </span>
+      ⌄
+    </span>
 		</button>
 
 		{#if isOpen}
 			<div class="mt-4 flex flex-col gap-6">
-				{#each formulas as f}
-					<div class="bg-white rounded-xl border border-slate-200 p-0 shadow-sm overflow-hidden">
+				{#each formulas as f, index}
+					<div
+						bind:clientWidth={cardWidths[index]}
+						class="bg-white rounded-xl border border-slate-200 p-0 shadow-sm overflow-hidden"
+					>
 
 						<div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
 							<h4 class="text-lg font-bold text-slate-800 m-0">
@@ -34,9 +39,13 @@
 							</h4>
 						</div>
 
-						<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:divide-x divide-slate-100">
+						<div
+							class="p-6 grid gap-8"
+							class:grid-cols-1={!cardWidths[index] || cardWidths[index] < 650}
+							class:grid-cols-[1.2fr_1fr]={cardWidths[index] >= 650}
+						>
 
-							<div class="flex flex-col items-center justify-center text-center">
+							<div class="flex flex-col items-center justify-center text-center w-full">
 
 								<div class="flex flex-row items-center justify-center gap-2 text-indigo-900 font-bold text-[15px] mb-1 [&_.katex-display]:!m-0 [&_.katex-display]:!inline-block">
 									<span use:math={f.result.symbol}></span>
@@ -53,7 +62,13 @@
 
 							</div>
 
-							<div class="md:pl-8 flex flex-col justify-center">
+							<div
+								class="flex flex-col justify-center"
+								class:border-t={cardWidths[index] < 650}
+								class:border-slate-50={cardWidths[index] < 650}
+								class:pt-6={cardWidths[index] < 650}
+								class:pl-8={cardWidths[index] >= 650}
+							>
 								<h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
 									Parameter
 								</h5>

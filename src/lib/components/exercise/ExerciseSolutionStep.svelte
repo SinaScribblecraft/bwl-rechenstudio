@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SolutionStep } from '$lib/data';
+	import type { SolutionStep } from '$lib/types';
 	import StepRevealBox from '$lib/components/exercise/StepRevealBox.svelte';
 	import { slide } from 'svelte/transition';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { math } from '$lib/actions/math';
-	import type { SolutionStep } from '$lib/data';
+	import type { SolutionStep } from '$lib/types';
 
 	interface Props {
 		step: SolutionStep;

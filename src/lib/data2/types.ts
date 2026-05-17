@@ -147,7 +147,7 @@ export interface Exercise {
 
 export interface Topic {
 	title: string;
-	subtitle?: string;
+	subtitle: string;
 	/** Alle Formeln dieses Aufgabentyps — IDs müssen eindeutig sein */
 	formulas: Formula[];
 	exercises: Exercise[];

@@ -4,10 +4,10 @@
 	import ExerciseFormulas from '$lib/components/exercise/ExerciseFormulas.svelte';
 	import ExerciseSolution from '$lib/components/exercise/ExerciseSolution.svelte';
 	import type { TopicData } from '$lib/types';
-	import type { ExerciseData } from '$lib/data2/types';
+	import type { ExerciseData, Topic } from '$lib/data2/types';
 
 	interface Data {
-		topic: ExerciseData
+		topic: Topic
 		unitId: string,
 		topicId: string,
 		exercise: TopicData
@@ -78,8 +78,8 @@
 <div class="w-full px-6 py-8 lg:px-10">
 
 	<TopicHeader
-		title={data.exercise.title}
-		subtitle={data.exercise.subtitle}
+		title={data.topic.title}
+		subtitle={data.topic.subtitle}
 		{activeTab}
 		onTabChange={(tab) => activeTab = tab}
 	/>

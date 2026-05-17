@@ -1,0 +1,421 @@
+{
+  "minimalkostenkombination": {
+    "title": "Minimalkostenkombination",
+    "subtitle": "Bestimme die kostenminimale Faktoreinsatzkombination bei substitutionaler Produktionsfunktion über GRS und Expansionspfad.",
+    "formulas": [
+      {
+        "id": "isoquante",
+        "name": "Isoquantengleichung",
+        "math": "M = f(r_1, r_2) \\implies r_2 = g(r_1, M)",
+        "result": { "symbol": "r_2 = g(r_1, M)", "description": "Geometrischer Ort aller Faktorkombinationen mit gleicher Ausbringung $M$" },
+        "params": [
+          { "symbol": "M",   "description": "Vorgegebene Ausbringungsmenge" },
+          { "symbol": "r_1", "description": "Einsatzmenge Faktor 1" },
+          { "symbol": "r_2", "description": "Einsatzmenge Faktor 2" }
+        ]
+      },
+      {
+        "id": "grs",
+        "name": "Grenzrate der Substitution",
+        "math": "GRS_{2,1} = \\frac{dr_2}{dr_1} = -\\frac{\\partial M / \\partial r_1}{\\partial M / \\partial r_2}",
+        "result": { "symbol": "GRS_{2,1}", "description": "Marginales Faktoraustauschverhältnis entlang der Isoquante" },
+        "params": [
+          { "symbol": "\\partial M / \\partial r_1", "description": "Grenzproduktivität des Faktors 1" },
+          { "symbol": "\\partial M / \\partial r_2", "description": "Grenzproduktivität des Faktors 2" }
+        ]
+      },
+      {
+        "id": "minimalkosten-bedingung",
+        "name": "Optimalitätsbedingung",
+        "math": "\\frac{dr_2}{dr_1} = -\\frac{q_1}{q_2}",
+        "result": { "symbol": "P", "description": "Im Minimalkostenpunkt entspricht die Steigung der Isoquante der Steigung der Isokostenlinie" },
+        "params": [
+          { "symbol": "q_1", "description": "Preis Faktor 1" },
+          { "symbol": "q_2", "description": "Preis Faktor 2" }
+        ]
+      },
+      {
+        "id": "kostenfunktion",
+        "name": "Kostenfunktion",
+        "math": "K = q_1 \\cdot r_1 + q_2 \\cdot r_2",
+        "result": { "symbol": "K", "description": "Gesamtkosten bei gegebenen Faktoreinsatzmengen und -preisen" },
+        "params": [
+          { "symbol": "q_1", "description": "Preis Faktor 1" },
+          { "symbol": "q_2", "description": "Preis Faktor 2" },
+          { "symbol": "r_1", "description": "Einsatzmenge Faktor 1" },
+          { "symbol": "r_2", "description": "Einsatzmenge Faktor 2" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Aufgabe 5 (Skript) — Cobb-Douglas-Funktion",
+        "descriptionTemplate": "Gegeben sei die folgende substitutionale Produktionsfunktion: {Mfunc}. Die Preise der beiden Einsatzfaktoren betragen $q_1 = {q1}$ und $q_2 = {q2}$.",
+        "given": [
+          { "type": "formula", "symbol": "Mfunc",  "math": "M(r_1, r_2) = 4 r_1^2 \\cdot r_2", "label": "Produktionsfunktion" },
+          { "type": "value",   "symbol": "q1",     "value": 6,    "unit": "GE/ME",            "label": "Preis Faktor 1" },
+          { "type": "value",   "symbol": "q2",     "value": 4,    "unit": "GE/ME",            "label": "Preis Faktor 2" },
+          { "type": "value",   "symbol": "M_ziel", "value": 3000, "unit": "ME",               "label": "Vorgegebene Ausbringungsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die Grenzrate der Substitution $GRS_{2,1}$ und ermitteln Sie anschließend den Expansionspfad. Geben Sie dazu die Beziehung an, die im Kostenminimum zwischen $GRS_{2,1}$ und den Faktorpreisen $q_1$ und $q_2$ gilt.",
+            "formulaRefs": ["isoquante", "grs", "minimalkosten-bedingung"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Produktionsfunktion",
+                "math": "M = 4 r_1^2 \\cdot r_2"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $r_2$ auflösen (Isoquantengleichung)",
+                "math": "r_2 = \\frac{M}{4 r_1^2} = \\frac{M}{4} \\cdot r_1^{-2}"
+              },
+              {
+                "type": "calculation",
+                "title": "Ableiten nach $r_1$ — Grenzrate der Substitution",
+                "math": "GRS_{2,1} = \\frac{dr_2}{dr_1} = -\\frac{M}{2 r_1^3}"
+              },
+              {
+                "type": "formula",
+                "title": "Optimalitätsbedingung im Kostenminimum",
+                "math": "\\frac{dr_2}{dr_1} = -\\frac{q_1}{q_2}"
+              },
+              {
+                "type": "substitution",
+                "title": "GRS und Faktorpreise gleichsetzen",
+                "math": "-\\frac{M}{2 r_1^3} = -\\frac{6}{4} = -\\frac{3}{2}"
+              },
+              {
+                "type": "calculation",
+                "title": "$M$ durch Produktionsfunktion ersetzen ($M = 4 r_1^2 \\cdot r_2$)",
+                "math": "\\frac{4 r_1^2 \\cdot r_2}{2 r_1^3} = \\frac{3}{2}"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "\\frac{2 r_2}{r_1} = \\frac{3}{2}"
+              },
+              {
+                "type": "result",
+                "title": "Expansionspfad",
+                "math": "r_2 = \\frac{3}{4} \\cdot r_1"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Mit welchen Faktoreinsatzmengen $r_1$ und $r_2$ wird die Menge $M = 3.000$ kostenminimal hergestellt? Wie hoch sind die minimalen Kosten?",
+            "formulaRefs": ["kostenfunktion"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Expansionspfad in Produktionsfunktion einsetzen",
+                "math": "M = 4 r_1^2 \\cdot r_2 = 4 r_1^2 \\cdot \\frac{3}{4} r_1"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "M = 3 r_1^3"
+              },
+              {
+                "type": "substitution",
+                "title": "$M = 3.000$ einsetzen",
+                "math": "3{.}000 = 3 r_1^3"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $r_1$ auflösen",
+                "math": "r_1^3 = 1{.}000 \\implies r_1 = 10"
+              },
+              {
+                "type": "calculation",
+                "title": "$r_2$ über Expansionspfad",
+                "math": "r_2 = \\frac{3}{4} \\cdot 10 = 7{,}5"
+              },
+              {
+                "type": "substitution",
+                "title": "Minimale Kosten",
+                "math": "K_{min} = q_1 \\cdot r_1 + q_2 \\cdot r_2 = 6 \\cdot 10 + 4 \\cdot 7{,}5"
+              },
+              {
+                "type": "result",
+                "title": "Faktoreinsatzmengen und minimale Kosten",
+                "math": "r_1 = 10, \\quad r_2 = 7{,}5, \\quad K_{min} = 90 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Cobb-Douglas mit Faktor 2 als Multiplikator",
+        "descriptionTemplate": "Gegeben sei die substitutionale Produktionsfunktion {Mfunc}. Die Faktorpreise betragen $q_1 = {q1}$ und $q_2 = {q2}$.",
+        "given": [
+          { "type": "formula", "symbol": "Mfunc",  "math": "M(r_1, r_2) = r_1^2 \\cdot r_2", "label": "Produktionsfunktion" },
+          { "type": "value",   "symbol": "q1",     "value": 4,   "unit": "GE/ME",          "label": "Preis Faktor 1" },
+          { "type": "value",   "symbol": "q2",     "value": 6,   "unit": "GE/ME",          "label": "Preis Faktor 2" },
+          { "type": "value",   "symbol": "M_ziel", "value": 243, "unit": "ME",             "label": "Vorgegebene Ausbringungsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die Grenzrate der Substitution $GRS_{2,1}$ und den Expansionspfad.",
+            "formulaRefs": ["isoquante", "grs", "minimalkosten-bedingung"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Isoquantengleichung",
+                "math": "r_2 = \\frac{M}{r_1^2} = M \\cdot r_1^{-2}"
+              },
+              {
+                "type": "calculation",
+                "title": "GRS durch Ableiten nach $r_1$",
+                "math": "GRS_{2,1} = \\frac{dr_2}{dr_1} = -\\frac{2 M}{r_1^3}"
+              },
+              {
+                "type": "formula",
+                "title": "Optimalitätsbedingung",
+                "math": "-\\frac{2 M}{r_1^3} = -\\frac{q_1}{q_2} = -\\frac{4}{6} = -\\frac{2}{3}"
+              },
+              {
+                "type": "calculation",
+                "title": "$M$ durch Produktionsfunktion ersetzen ($M = r_1^2 \\cdot r_2$)",
+                "math": "\\frac{2 \\cdot r_1^2 \\cdot r_2}{r_1^3} = \\frac{2}{3}"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "\\frac{2 r_2}{r_1} = \\frac{2}{3}"
+              },
+              {
+                "type": "result",
+                "title": "Expansionspfad",
+                "math": "r_2 = \\frac{1}{3} \\cdot r_1"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die kostenminimalen Einsatzmengen $r_1$ und $r_2$ sowie die minimalen Kosten $K_{min}$.",
+            "formulaRefs": ["kostenfunktion"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Expansionspfad in Produktionsfunktion einsetzen",
+                "math": "M = r_1^2 \\cdot \\frac{1}{3} r_1 = \\frac{r_1^3}{3}"
+              },
+              {
+                "type": "substitution",
+                "title": "$M = 243$ einsetzen",
+                "math": "243 = \\frac{r_1^3}{3}"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $r_1$ auflösen",
+                "math": "r_1^3 = 729 \\implies r_1 = 9"
+              },
+              {
+                "type": "calculation",
+                "title": "$r_2$ über Expansionspfad",
+                "math": "r_2 = \\frac{1}{3} \\cdot 9 = 3"
+              },
+              {
+                "type": "substitution",
+                "title": "Kosten berechnen",
+                "math": "K_{min} = 4 \\cdot 9 + 6 \\cdot 3"
+              },
+              {
+                "type": "result",
+                "title": "Faktoreinsatzmengen und minimale Kosten",
+                "math": "r_1 = 9, \\quad r_2 = 3, \\quad K_{min} = 54 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Produktionsfunktion mit gleichen Exponenten",
+        "descriptionTemplate": "Gegeben sei die folgende substitutionale Produktionsfunktion: {Mfunc}. Die Faktorpreise betragen $q_1 = {q1}$ und $q_2 = {q2}$.",
+        "given": [
+          { "type": "formula", "symbol": "Mfunc",  "math": "M(r_1, r_2) = 3 r_1 \\cdot r_2", "label": "Produktionsfunktion" },
+          { "type": "value",   "symbol": "q1",     "value": 10,  "unit": "GE/ME",            "label": "Preis Faktor 1" },
+          { "type": "value",   "symbol": "q2",     "value": 5,   "unit": "GE/ME",            "label": "Preis Faktor 2" },
+          { "type": "value",   "symbol": "M_ziel", "value": 600, "unit": "ME",               "label": "Vorgegebene Ausbringungsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Ermitteln Sie die $GRS_{2,1}$ und den Expansionspfad.",
+            "formulaRefs": ["isoquante", "grs", "minimalkosten-bedingung"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Isoquantengleichung",
+                "math": "r_2 = \\frac{M}{3 r_1} = \\frac{M}{3} \\cdot r_1^{-1}"
+              },
+              {
+                "type": "calculation",
+                "title": "GRS durch Ableitung",
+                "math": "GRS_{2,1} = \\frac{dr_2}{dr_1} = -\\frac{M}{3 r_1^2}"
+              },
+              {
+                "type": "formula",
+                "title": "Optimalitätsbedingung",
+                "math": "-\\frac{M}{3 r_1^2} = -\\frac{q_1}{q_2} = -\\frac{10}{5} = -2"
+              },
+              {
+                "type": "calculation",
+                "title": "$M = 3 r_1 \\cdot r_2$ einsetzen",
+                "math": "\\frac{3 r_1 \\cdot r_2}{3 r_1^2} = 2"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "\\frac{r_2}{r_1} = 2"
+              },
+              {
+                "type": "result",
+                "title": "Expansionspfad",
+                "math": "r_2 = 2 \\cdot r_1"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die kostenminimalen Einsatzmengen $r_1$ und $r_2$ sowie die minimalen Kosten für $M = 600$.",
+            "formulaRefs": ["kostenfunktion"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Expansionspfad in Produktionsfunktion einsetzen",
+                "math": "M = 3 r_1 \\cdot 2 r_1 = 6 r_1^2"
+              },
+              {
+                "type": "substitution",
+                "title": "$M = 600$ einsetzen",
+                "math": "600 = 6 r_1^2"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $r_1$ auflösen",
+                "math": "r_1^2 = 100 \\implies r_1 = 10"
+              },
+              {
+                "type": "calculation",
+                "title": "$r_2$ über Expansionspfad",
+                "math": "r_2 = 2 \\cdot 10 = 20"
+              },
+              {
+                "type": "substitution",
+                "title": "Kosten berechnen",
+                "math": "K_{min} = 10 \\cdot 10 + 5 \\cdot 20"
+              },
+              {
+                "type": "result",
+                "title": "Faktoreinsatzmengen und minimale Kosten",
+                "math": "r_1 = 10, \\quad r_2 = 20, \\quad K_{min} = 200 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Produktionsfunktion mit Lösung über Grenzproduktivitäten",
+        "descriptionTemplate": "Gegeben sei die substitutionale Produktionsfunktion {Mfunc}. Die Preise der Einsatzfaktoren betragen $q_1 = {q1}$ und $q_2 = {q2}$.",
+        "given": [
+          { "type": "formula", "symbol": "Mfunc",  "math": "M(r_1, r_2) = r_1 \\cdot r_2^2", "label": "Produktionsfunktion" },
+          { "type": "value",   "symbol": "q1",     "value": 3,   "unit": "GE/ME",           "label": "Preis Faktor 1" },
+          { "type": "value",   "symbol": "q2",     "value": 4,   "unit": "GE/ME",           "label": "Preis Faktor 2" },
+          { "type": "value",   "symbol": "M_ziel", "value": 144, "unit": "ME",              "label": "Vorgegebene Ausbringungsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die $GRS_{2,1}$ über die Grenzproduktivitäten und ermitteln Sie den Expansionspfad.",
+            "formulaRefs": ["grs", "minimalkosten-bedingung"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Grenzproduktivität Faktor 1",
+                "math": "\\frac{\\partial M}{\\partial r_1} = r_2^2"
+              },
+              {
+                "type": "formula",
+                "title": "Grenzproduktivität Faktor 2",
+                "math": "\\frac{\\partial M}{\\partial r_2} = 2 r_1 \\cdot r_2"
+              },
+              {
+                "type": "calculation",
+                "title": "GRS als negatives reziprokes Verhältnis der Grenzproduktivitäten",
+                "math": "GRS_{2,1} = -\\frac{\\partial M / \\partial r_1}{\\partial M / \\partial r_2} = -\\frac{r_2^2}{2 r_1 \\cdot r_2}"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "GRS_{2,1} = -\\frac{r_2}{2 r_1}"
+              },
+              {
+                "type": "formula",
+                "title": "Optimalitätsbedingung",
+                "math": "-\\frac{r_2}{2 r_1} = -\\frac{q_1}{q_2} = -\\frac{3}{4}"
+              },
+              {
+                "type": "result",
+                "title": "Expansionspfad",
+                "math": "r_2 = \\frac{3}{2} \\cdot r_1"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Mit welchen Faktoreinsatzmengen wird $M = 144$ kostenminimal hergestellt? Wie hoch sind die minimalen Kosten?",
+            "formulaRefs": ["kostenfunktion"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Expansionspfad in Produktionsfunktion einsetzen",
+                "math": "M = r_1 \\cdot \\left( \\frac{3}{2} r_1 \\right)^2 = r_1 \\cdot \\frac{9}{4} r_1^2"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "M = \\frac{9}{4} r_1^3"
+              },
+              {
+                "type": "substitution",
+                "title": "$M = 144$ einsetzen",
+                "math": "144 = \\frac{9}{4} r_1^3"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $r_1$ auflösen",
+                "math": "r_1^3 = 64 \\implies r_1 = 4"
+              },
+              {
+                "type": "calculation",
+                "title": "$r_2$ über Expansionspfad",
+                "math": "r_2 = \\frac{3}{2} \\cdot 4 = 6"
+              },
+              {
+                "type": "substitution",
+                "title": "Kosten berechnen",
+                "math": "K_{min} = 3 \\cdot 4 + 4 \\cdot 6"
+              },
+              {
+                "type": "result",
+                "title": "Faktoreinsatzmengen und minimale Kosten",
+                "math": "r_1 = 4, \\quad r_2 = 6, \\quad K_{min} = 36 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

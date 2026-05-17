@@ -5,4 +5,3 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<TopicView topic={data.exercises.homogenitaet} />

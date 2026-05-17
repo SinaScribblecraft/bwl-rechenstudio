@@ -108,7 +108,7 @@
               {
                 "type": "formula",
                 "title": "Andler-Formel aufstellen",
-                "description": "Der Lagerkostensatz C_l ist direkt gegeben — die Umrechnung über Einstandspreis und Zinssatz entfällt.",
+                "description": "Der Lagerkostensatz $C_l$ ist direkt gegeben — die Umrechnung über Einstandspreis und Zinssatz entfällt.",
                 "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
               },
               {
@@ -153,7 +153,7 @@
               {
                 "type": "result",
                 "title": "Gesamtkosten",
-                "description": "Probe: Im Optimum gilt stets K_L = K_B ✓",
+                "description": "Probe: Im Optimum gilt stets $K_L = K_B$ ✓",
                 "math": "K_T = K_L + K_B = 707{,}11 + 707{,}11 = 1{.}414{,}21 \\text{ GE}"
               }
             ]

@@ -3,14 +3,15 @@
 	import ExerciseTask from '$lib/components/exercise/ExerciseTask.svelte';
 	import ExerciseFormulas from '$lib/components/exercise/ExerciseFormulas.svelte';
 	import ExerciseSolution from '$lib/components/exercise/ExerciseSolution.svelte';
-	import type { TopicData } from '$lib/types';
-	import type { ExerciseData, Topic } from '$lib/data2/types';
+	import type { Topic } from '$lib/data2/types.ts';
+	// import type { TopicData } from '$lib/types';
+	import {  inlineMath } from '$lib/data2/types';
 
 	interface Data {
 		topic: Topic
-		unitId: string,
-		topicId: string,
-		exercise: TopicData
+		// unitId: string,
+		// topicId: string,
+		// exercise: TopicData
 	}
 
 	interface Props {
@@ -26,7 +27,7 @@
 	// Steuert, ob der Lösungsweg rechts sichtbar ist
 	let showSolution = $state(false);
 
-	let activeExercise = $derived(data.exercise.exercises[activeExerciseIndex]);
+	let activeExercise = $derived(data.topic.exercises[activeExerciseIndex]);
 	let activeSubTask = $derived(activeExercise?.subTasks[activeSubTaskIndex]);
 
 	// Wenn die Hauptaufgabe gewechselt wird, setzen wir alles zurück
@@ -96,9 +97,9 @@
 	{:else}
 		<div class="flex flex-col gap-6 animate-in fade-in duration-300">
 
-			{#if data.exercise.exercises.length > 1}
+			{#if data.topic.exercises.length > 1}
 				<div class="flex flex-wrap gap-2">
-					{#each data.exercise.exercises as _, index}
+					{#each data.topic.exercises as _, index (index)}
 						<button
 							onclick={() => activeExerciseIndex = index}
 							class="px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm border
@@ -122,8 +123,9 @@
 					{#key activeExerciseIndex}
 						<ExerciseTask
 							title={activeExercise.title}
-							description={activeExercise.description}
-							dataTable={activeExercise.dataTable}
+							descriptionTemplate={activeExercise.descriptionTemplate}
+							given={activeExercise.given}
+							dataTable={activeExercise.inputTable}
 							subTasks={activeExercise.subTasks}
 							onShowSolution={(index) => {
             activeSubTaskIndex = index; // Wechselt zum entsprechenden Tab
@@ -131,8 +133,8 @@
         }}
 						/>
 
-						{#if activeExercise.formulas && activeExercise.formulas.length > 0}
-							<ExerciseFormulas formulas={activeExercise.formulas} />
+						{#if data.topic.formulas && data.topic.formulas.length > 0}
+							<ExerciseFormulas formulas={data.topic.formulas} />
 						{/if}
 					{/key}
 				</div>
@@ -191,15 +193,13 @@
                   {activeSubTask.label}
               </span>
 										<span class="font-semibold text-slate-700 text-sm leading-relaxed pt-px">
-                  {activeSubTask.question}
+                   {@html inlineMath(activeSubTask.question)}
               </span>
 									</div>
 
 									{#key activeSubTaskIndex}
 										<ExerciseSolution
 											steps={activeSubTask.steps}
-											finalResultText={activeSubTask.finalResultText}
-											finalResultMath={activeSubTask.finalResultMath}
 										/>
 									{/key}
 								{/if}

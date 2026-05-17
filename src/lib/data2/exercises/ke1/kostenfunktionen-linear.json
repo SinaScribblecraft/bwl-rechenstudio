@@ -1,0 +1,416 @@
+{
+  "kostenfunktionen-linear": {
+    "title": "Lineare Kostenfunktionen",
+    "subtitle": "Berechne Gesamtkosten, Stückkosten und Grenzkosten bei linearem Kostenverlauf.",
+    "formulas": [
+      {
+        "id": "gesamtkosten-linear",
+        "name": "Lineare Gesamtkostenfunktion",
+        "math": "K_T(M) = K_f + k_v \\cdot M",
+        "result": { "symbol": "K_T(M)", "description": "Gesamtkosten in Abhängigkeit der Ausbringungsmenge" },
+        "params": [
+          { "symbol": "K_f", "description": "Fixe Kosten (beschäftigungsunabhängig)" },
+          { "symbol": "k_v", "description": "Variable Stückkosten (konstant bei linearem Verlauf)" },
+          { "symbol": "M",   "description": "Ausbringungsmenge" }
+        ]
+      },
+      {
+        "id": "totale-stueckkosten",
+        "name": "Totale Stückkosten",
+        "math": "k_T(M) = \\frac{K_T(M)}{M} = \\frac{K_f}{M} + k_v",
+        "result": { "symbol": "k_T(M)", "description": "Durchschnittliche Gesamtkosten pro Stück" },
+        "params": [
+          { "symbol": "K_f", "description": "Fixe Kosten" },
+          { "symbol": "k_v", "description": "Variable Stückkosten" },
+          { "symbol": "M",   "description": "Ausbringungsmenge" }
+        ]
+      },
+      {
+        "id": "fixe-stueckkosten",
+        "name": "Fixe Stückkosten",
+        "math": "k_f(M) = \\frac{K_f}{M}",
+        "result": { "symbol": "k_f(M)", "description": "Fixkosten pro Stück (Fixkostendegression)" },
+        "params": [
+          { "symbol": "K_f", "description": "Fixe Kosten" },
+          { "symbol": "M",   "description": "Ausbringungsmenge" }
+        ]
+      },
+      {
+        "id": "grenzkosten-linear",
+        "name": "Grenzkosten bei linearem Verlauf",
+        "math": "K'_T(M) = \\frac{dK_T(M)}{dM} = k_v",
+        "result": { "symbol": "K'_T(M)", "description": "Steigung der Gesamtkostenfunktion" },
+        "params": [
+          { "symbol": "k_v", "description": "Variable Stückkosten — entsprechen bei linearem Verlauf den Grenzkosten" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Klassische Kostenrechnung",
+        "descriptionTemplate": "Ein Unternehmen produziert ein Erzeugnis mit fixen Kosten von {Kf} GE pro Periode und variablen Stückkosten von {kv} GE/ME. Die Ausbringungsmenge betrage {M} ME.",
+        "given": [
+          { "type": "value", "symbol": "Kf", "value": 20000, "unit": "GE",    "label": "Fixe Kosten" },
+          { "type": "value", "symbol": "kv", "value": 8,     "unit": "GE/ME", "label": "Variable Stückkosten" },
+          { "type": "value", "symbol": "M",  "value": 2000,  "unit": "ME",    "label": "Ausbringungsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die Gesamtkosten $K_T(M)$ für die gegebene Ausbringungsmenge.",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Lineare Gesamtkostenfunktion",
+                "math": "K_T(M) = K_f + k_v \\cdot M"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "K_T(2{.}000) = 20{.}000 + 8 \\cdot 2{.}000"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausrechnen",
+                "math": "K_T(2{.}000) = 20{.}000 + 16{.}000"
+              },
+              {
+                "type": "result",
+                "title": "Gesamtkosten",
+                "math": "K_T(2{.}000) = 36{.}000 \\text{ GE}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die totalen Stückkosten $k_T(M)$ für die gegebene Ausbringungsmenge.",
+            "formulaRefs": ["totale-stueckkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Totale Stückkosten",
+                "math": "k_T(M) = \\frac{K_T(M)}{M} = \\frac{K_f}{M} + k_v"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "k_T(2{.}000) = \\frac{20{.}000}{2{.}000} + 8"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausrechnen",
+                "math": "k_T(2{.}000) = 10 + 8"
+              },
+              {
+                "type": "result",
+                "title": "Totale Stückkosten",
+                "math": "k_T(2{.}000) = 18 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Bestimmen Sie die fixen Stückkosten $k_f(M)$ und die variablen Stückkosten $k_v(M)$ für die gegebene Ausbringungsmenge.",
+            "formulaRefs": ["fixe-stueckkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Fixe Stückkosten",
+                "math": "k_f(M) = \\frac{K_f}{M}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "k_f(2{.}000) = \\frac{20{.}000}{2{.}000} = 10 \\text{ GE/ME}"
+              },
+              {
+                "type": "other",
+                "title": "Variable Stückkosten",
+                "description": "Bei linearem Kostenverlauf sind die variablen Stückkosten $k_v(M)$ konstant und entsprechen $k_v$.",
+                "math": "k_v(M) = k_v = 8 \\text{ GE/ME}"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis",
+                "math": "k_f(2{.}000) = 10 \\text{ GE/ME} \\quad \\text{und} \\quad k_v(M) = 8 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "d",
+            "question": "Geben Sie die Grenzkosten $K'_T(M)$ an.",
+            "formulaRefs": ["grenzkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Grenzkosten als erste Ableitung",
+                "math": "K'_T(M) = \\frac{dK_T(M)}{dM} = \\frac{d(K_f + k_v \\cdot M)}{dM}"
+              },
+              {
+                "type": "calculation",
+                "title": "Ableitung bilden",
+                "description": "Die Ableitung der fixen Kosten ist null, da diese beschäftigungsunabhängig sind.",
+                "math": "K'_T(M) = k_v"
+              },
+              {
+                "type": "result",
+                "title": "Grenzkosten",
+                "math": "K'_T(M) = 8 \\text{ GE/ME}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Rückwärtsrechnung — Kostenfunktion aus zwei Beobachtungen",
+        "descriptionTemplate": "Für ein Unternehmen wurden zwei Kostenwerte erfasst: Bei einer Ausbringungsmenge von {M1} ME betragen die Gesamtkosten {KT1} GE, bei einer Menge von {M2} ME betragen sie {KT2} GE. Es wird ein linearer Kostenverlauf unterstellt.",
+        "given": [
+          { "type": "value", "symbol": "M1",  "value": 100,  "unit": "ME", "label": "Ausbringungsmenge Punkt 1" },
+          { "type": "value", "symbol": "KT1", "value": 5000, "unit": "GE", "label": "Gesamtkosten Punkt 1" },
+          { "type": "value", "symbol": "M2",  "value": 300,  "unit": "ME", "label": "Ausbringungsmenge Punkt 2" },
+          { "type": "value", "symbol": "KT2", "value": 9000, "unit": "GE", "label": "Gesamtkosten Punkt 2" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die variablen Stückkosten $k_v$.",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Lineare Kostenfunktion für beide Beobachtungen",
+                "description": "Es gilt $K_T(M) = K_f + k_v \\cdot M$ für beide Punkte:",
+                "math": "\\begin{cases} K_{T,1} = K_f + k_v \\cdot M_1 \\\\ K_{T,2} = K_f + k_v \\cdot M_2 \\end{cases}"
+              },
+              {
+                "type": "calculation",
+                "title": "Differenz bilden (Fixkosten eliminieren)",
+                "math": "K_{T,2} - K_{T,1} = k_v \\cdot (M_2 - M_1)"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "9{.}000 - 5{.}000 = k_v \\cdot (300 - 100)"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $k_v$ auflösen",
+                "math": "k_v = \\frac{4{.}000}{200}"
+              },
+              {
+                "type": "result",
+                "title": "Variable Stückkosten",
+                "math": "k_v = 20 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die fixen Kosten $K_f$.",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Kostenfunktion nach $K_f$ umstellen",
+                "math": "K_f = K_{T,1} - k_v \\cdot M_1"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "K_f = 5{.}000 - 20 \\cdot 100"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausrechnen",
+                "math": "K_f = 5{.}000 - 2{.}000"
+              },
+              {
+                "type": "result",
+                "title": "Fixe Kosten",
+                "math": "K_f = 3{.}000 \\text{ GE}"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Geben Sie die gesamte Kostenfunktion $K_T(M)$ an.",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Lineare Kostenfunktion",
+                "math": "K_T(M) = K_f + k_v \\cdot M"
+              },
+              {
+                "type": "substitution",
+                "title": "Ermittelte Werte einsetzen",
+                "math": "K_T(M) = 3{.}000 + 20 \\cdot M"
+              },
+              {
+                "type": "result",
+                "title": "Kostenfunktion",
+                "math": "K_T(M) = 3{.}000 + 20 \\cdot M \\text{ [GE]}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Mindestausbringung bei vorgegebenen Stückkosten",
+        "descriptionTemplate": "Ein Hersteller plant die Produktion eines Erzeugnisses. Die fixen Kosten betragen {Kf} GE pro Periode, die variablen Stückkosten {kv} GE/ME. Ab welcher Ausbringungsmenge sind die totalen Stückkosten höchstens so hoch wie der vorgegebene Zielwert {kT_ziel} GE/ME?",
+        "given": [
+          { "type": "value", "symbol": "Kf",      "value": 12000, "unit": "GE",    "label": "Fixe Kosten" },
+          { "type": "value", "symbol": "kv",      "value": 8,     "unit": "GE/ME", "label": "Variable Stückkosten" },
+          { "type": "value", "symbol": "kT_ziel", "value": 10,    "unit": "GE/ME", "label": "Zielwert totale Stückkosten" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Stellen Sie die Funktion der totalen Stückkosten $k_T(M)$ auf.",
+            "formulaRefs": ["totale-stueckkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Totale Stückkosten allgemein",
+                "math": "k_T(M) = \\frac{K_f}{M} + k_v"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "k_T(M) = \\frac{12{.}000}{M} + 8"
+              },
+              {
+                "type": "result",
+                "title": "Stückkostenfunktion",
+                "math": "k_T(M) = \\frac{12{.}000}{M} + 8 \\text{ [GE/ME]}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die Mindestausbringungsmenge $M$, ab der gilt $k_T(M) \\leq 10$ GE/ME.",
+            "formulaRefs": ["totale-stueckkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Ungleichung aufstellen",
+                "math": "\\frac{12{.}000}{M} + 8 \\leq 10"
+              },
+              {
+                "type": "calculation",
+                "title": "Konstanten subtrahieren",
+                "math": "\\frac{12{.}000}{M} \\leq 2"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $M$ auflösen",
+                "description": "Da $M > 0$, dreht sich das Ungleichheitszeichen beim Umstellen um:",
+                "math": "M \\geq \\frac{12{.}000}{2}"
+              },
+              {
+                "type": "result",
+                "title": "Mindestausbringungsmenge",
+                "math": "M \\geq 6{.}000 \\text{ ME}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Anlagenvergleich — Wahl zwischen zwei Kostenstrukturen",
+        "descriptionTemplate": "Ein Unternehmen kann zwischen zwei alternativen Produktionsanlagen wählen. Anlage A weist fixe Kosten von {KfA} GE und variable Stückkosten von {kvA} GE/ME auf. Anlage B verursacht fixe Kosten von {KfB} GE bei variablen Stückkosten von {kvB} GE/ME. Untersucht werden soll, bei welcher Ausbringungsmenge welche Anlage vorteilhaft ist.",
+        "given": [
+          { "type": "value", "symbol": "KfA",      "value": 20000, "unit": "GE",    "label": "Fixe Kosten Anlage A" },
+          { "type": "value", "symbol": "kvA",      "value": 10,    "unit": "GE/ME", "label": "Variable Stückkosten Anlage A" },
+          { "type": "value", "symbol": "KfB",      "value": 30000, "unit": "GE",    "label": "Fixe Kosten Anlage B" },
+          { "type": "value", "symbol": "kvB",      "value": 6,     "unit": "GE/ME", "label": "Variable Stückkosten Anlage B" },
+          { "type": "value", "symbol": "M_vergl",  "value": 5000,  "unit": "ME",    "label": "Vergleichsmenge" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Geben Sie die Kostenfunktionen $K_T^A(M)$ und $K_T^B(M)$ beider Anlagen an.",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Lineare Kostenfunktion",
+                "math": "K_T(M) = K_f + k_v \\cdot M"
+              },
+              {
+                "type": "substitution",
+                "title": "Anlage A",
+                "math": "K_T^A(M) = 20{.}000 + 10 \\cdot M"
+              },
+              {
+                "type": "result",
+                "title": "Anlage B",
+                "math": "K_T^B(M) = 30{.}000 + 6 \\cdot M"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bei welcher Ausbringungsmenge $M$ sind beide Anlagen gleich teuer (Indifferenzmenge)?",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Indifferenzbedingung",
+                "math": "K_T^A(M) = K_T^B(M)"
+              },
+              {
+                "type": "substitution",
+                "title": "Kostenfunktionen gleichsetzen",
+                "math": "20{.}000 + 10 \\cdot M = 30{.}000 + 6 \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $M$ auflösen",
+                "math": "4 \\cdot M = 10{.}000"
+              },
+              {
+                "type": "result",
+                "title": "Indifferenzmenge",
+                "math": "M = 2{.}500 \\text{ ME}"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Welche Anlage ist bei einer Ausbringungsmenge von $M = 5.000$ ME günstiger?",
+            "formulaRefs": ["gesamtkosten-linear"],
+            "steps": [
+              {
+                "type": "substitution",
+                "title": "Anlage A bei $M = 5.000$",
+                "math": "K_T^A(5{.}000) = 20{.}000 + 10 \\cdot 5{.}000 = 70{.}000 \\text{ GE}"
+              },
+              {
+                "type": "substitution",
+                "title": "Anlage B bei $M = 5.000$",
+                "math": "K_T^B(5{.}000) = 30{.}000 + 6 \\cdot 5{.}000 = 60{.}000 \\text{ GE}"
+              },
+              {
+                "type": "other",
+                "title": "Vergleich",
+                "description": "Oberhalb der Indifferenzmenge von $M = 2.500$ ME ist Anlage B mit den niedrigeren variablen Stückkosten günstiger.",
+                "math": "K_T^B(5{.}000) < K_T^A(5{.}000)"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis",
+                "math": "\\text{Anlage B ist um } 10{.}000 \\text{ GE günstiger.}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

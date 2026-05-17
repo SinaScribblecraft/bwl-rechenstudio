@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { math } from '$lib/actions/math';
-	import type { FormulaDef } from '$lib/types';
+	import type { Formula } from '$lib/data2/types';
 
-	let { formulas } = $props<{ formulas: FormulaDef[] }>();
+	interface Props {
+		formulas: Formula[];
+	}
+
+	let { formulas } : Props = $props();
 	let isOpen = $state(false);
 
 	// Speicher für die Breite der Formel-Karten-Elemente
@@ -48,7 +52,7 @@
 							<div class="flex flex-col items-center justify-center text-center w-full">
 
 								<div class="flex flex-row items-center justify-center gap-2 text-indigo-900 font-bold text-[15px] mb-1 [&_.katex-display]:!m-0 [&_.katex-display]:!inline-block">
-									<span use:math={f.result.symbol}></span>
+									<span use:math={f.result?.symbol}></span>
 									<span>= {f.result.description}</span>
 								</div>
 

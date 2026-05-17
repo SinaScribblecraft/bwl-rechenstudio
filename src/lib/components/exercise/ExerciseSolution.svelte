@@ -1,11 +1,11 @@
 <script lang="ts">
 
-	import type { SolutionStep } from '$lib/types';
+	import type { Step } from '$lib/data2/types';
 
 	import ExerciseSolutionStep from '$lib/components/exercise/ExerciseSolutionStep.svelte';
 
 	interface Props {
-		steps: SolutionStep[];
+		steps: Step[];
 	}
 
 	let { steps }: Props = $props();
@@ -44,7 +44,7 @@
 	</div>
 
 	<div class="p-6 flex flex-col gap-6">
-		{#each steps as step , index (step.title)}
+		{#each steps as step , index }
 			{@const stepNumber = index + 1}
 			{@const isOpen = openedSteps.has(stepNumber)}
 			{@const isRevealed = revealedSteps.has(stepNumber)}

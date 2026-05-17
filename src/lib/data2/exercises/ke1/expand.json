@@ -1,0 +1,187 @@
+{
+	"expansionspfad": {
+		"title": "Grenzrate der Substitution und Expansionspfad",
+		"subtitle": "Bestimmung der Grenzproduktivitäten, der GRS und des Expansionspfades bei einer substitutionalen Produktionsfunktion.",
+		"formulas": [
+			{
+				"id": "grenzproduktivitaet-1",
+				"name": "Grenzproduktivität Faktor 1",
+				"math": "GP_1 = \\frac{\\partial M}{\\partial r_1}",
+				"result": { "symbol": "GP_1", "description": "Grenzproduktivität des ersten Faktors" },
+				"params": [
+					{ "symbol": "M", "description": "Produktionsfunktion" },
+					{ "symbol": "r_1", "description": "Einsatzmenge Faktor 1" }
+				]
+			},
+			{
+				"id": "grenzproduktivitaet-2",
+				"name": "Grenzproduktivität Faktor 2",
+				"math": "GP_2 = \\frac{\\partial M}{\\partial r_2}",
+				"result": { "symbol": "GP_2", "description": "Grenzproduktivität des zweiten Faktors" },
+				"params": [
+					{ "symbol": "M", "description": "Produktionsfunktion" },
+					{ "symbol": "r_2", "description": "Einsatzmenge Faktor 2" }
+				]
+			},
+			{
+				"id": "grs",
+				"name": "Grenzrate der Substitution",
+				"math": "GRS_{2,1} = \\frac{GP_1}{GP_2}",
+				"result": {
+					"symbol": "GRS_{2,1}",
+					"description": "Grenzrate der Substitution von Faktor 2 durch Faktor 1"
+				},
+				"params": [
+					{ "symbol": "GP_1", "description": "Grenzproduktivität Faktor 1" },
+					{ "symbol": "GP_2", "description": "Grenzproduktivität Faktor 2" }
+				]
+			},
+			{
+				"id": "expansionspfad",
+				"name": "Bedingung für den Expansionspfad",
+				"math": "GRS_{2,1} = \\frac{q_1}{q_2}",
+				"result": { "symbol": "r_2", "description": "Expansionspfad als Funktion von r_1" },
+				"params": [
+					{ "symbol": "GRS_{2,1}", "description": "Grenzrate der Substitution" },
+					{ "symbol": "q_1", "description": "Preis von Faktor 1" },
+					{ "symbol": "q_2", "description": "Preis von Faktor 2" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassische Expansionspfad-Aufgabe",
+				"descriptionTemplate": "Gegeben sei die substitutionale Produktionsfunktion {M}. Die Preise der Einsatzfaktoren betragen {q_1} und {q_2}.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = r_1 \\cdot r_2^2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "q_1",
+						"value": 3,
+						"unit": "GE/ME",
+						"label": "Faktorpreis 1"
+					},
+					{
+						"type": "value",
+						"symbol": "q_2",
+						"value": 4,
+						"unit": "GE/ME",
+						"label": "Faktorpreis 2"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Grenzproduktivitäten $GP_1$ und $GP_2$ sowie die Grenzrate der Substitution $GRS_{2,1}$.",
+						"formulaRefs": ["grenzproduktivitaet-1", "grenzproduktivitaet-2", "grs"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Grenzproduktivität Faktor 1",
+								"description": "Partielle Ableitung der Produktionsfunktion nach $r_1$.",
+								"math": "GP_1 = \\frac{\\partial M}{\\partial r_1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ableiten nach r_1",
+								"description": "Da $r_2^2$ wie eine Konstante behandelt wird, bleibt es beim Ableiten erhalten.",
+								"math": "= 1 \\cdot r_2^2"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis GP_1",
+								"description": "",
+								"math": "GP_1 = r_2^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzproduktivität Faktor 2",
+								"description": "Partielle Ableitung der Produktionsfunktion nach $r_2$.",
+								"math": "GP_2 = \\frac{\\partial M}{\\partial r_2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ableiten nach r_2",
+								"description": "Die $2$ vom Exponenten wird als Faktor nach vorne gezogen, $r_1$ bleibt als Konstante stehen.",
+								"math": "= r_1 \\cdot 2 \\cdot r_2"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis GP_2",
+								"description": "",
+								"math": "GP_2 = 2 \\cdot r_1 \\cdot r_2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzrate der Substitution",
+								"description": "Die $GRS_{2,1}$ berechnet sich aus dem Verhältnis der beiden Grenzproduktivitäten.",
+								"math": "GRS_{2,1} = \\frac{GP_1}{GP_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "",
+								"math": "GRS_{2,1} = \\frac{r_2^2}{2 \\cdot r_1 \\cdot r_2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch kürzen",
+								"description": "Ein $r_2$ kann im Zähler und im Nenner gekürzt werden.",
+								"math": "= \\frac{r_2}{2 \\cdot r_1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis GRS",
+								"description": "",
+								"math": "GRS_{2,1} = \\frac{r_2}{2 \\cdot r_1}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Expansionspfad.",
+						"formulaRefs": ["expansionspfad"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung für das Kostenminimum",
+								"description": "Auf dem Expansionspfad entspricht das technische Austauschverhältnis dem ökonomischen Preisverhältnis.",
+								"math": "GRS_{2,1} = \\frac{q_1}{q_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der berechneten GRS und der gegebenen Faktorpreise.",
+								"math": "\\frac{r_2}{2 \\cdot r_1} = \\frac{3}{4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach r_2 umstellen (Schritt 1)",
+								"description": "Beide Seiten der Gleichung mit $2 \\cdot r_1$ multiplizieren.",
+								"math": "r_2 = \\frac{3}{4} \\cdot 2 \\cdot r_1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch vereinfachen",
+								"description": "Die Zahlenwerte im Zähler multiplizieren.",
+								"math": "r_2 = \\frac{6}{4} \\cdot r_1"
+							},
+							{
+								"type": "result",
+								"title": "Expansionspfad",
+								"description": "Bruch gekürzt und als Dezimalzahl dargestellt.",
+								"math": "r_2 = 1{,}5 \\cdot r_1"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

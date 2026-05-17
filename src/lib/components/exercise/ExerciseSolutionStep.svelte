@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { SolutionStep } from '$lib/types';
+	import type { Step } from '$lib/data2/types';
 	import StepRevealBox from '$lib/components/exercise/StepRevealBox.svelte';
 	import { slide } from 'svelte/transition';
+	import { inlineMath } from '$lib/data2/types';
 
 	interface Props {
-		step: SolutionStep;
+		step: Step;
 		stepNumber: number;
 		isOpen: boolean;
 		isRevealed: boolean;
@@ -31,7 +32,7 @@
 		class="border rounded-xl transition-all duration-300 {isOpen ? 'border-indigo-200 shadow-sm' : 'border-slate-100'}">
 
 		<button
-			onclick={() => onToggle()}
+			onclick={() => {onToggle(); console.log('toggle step', stepNumber);}}
 			class="w-full flex items-center justify-between p-4 text-left"
 		>
 			<div class="flex flex-col">
@@ -51,7 +52,10 @@
 		{#if isOpen}
 			<div transition:slide={{ duration: 300 }} class="px-4 pb-5 flex flex-col gap-4">
 				<p class="text-sm text-slate-500 leading-relaxed pl-1">
-					{step.description}
+					{#if step.description}
+						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+						{@html inlineMath(step.description)}
+					{/if}
 				</p>
 
 				<StepRevealBox

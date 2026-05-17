@@ -19,21 +19,21 @@ export function load({ params })  {
 	if (!topic2) throw error(404, `Aufgabentyp "${params.topic}" nicht gefunden`);
 
 // old ---
-	const { unit, topic } = params;
-
-	const exerciseData = exerciseDatabase[unit]?.[topic];
-
-	if (!exerciseData) {
-		error(404, {
-			message: 'Dieses Thema wurde leider nicht gefunden.'
-		});
-	}
+// 	const { unit, topic } = params;
+//
+// 	const exerciseData = exerciseDatabase[unit]?.[topic];
+//
+// 	if (!exerciseData) {
+// 		error(404, {
+// 			message: 'Dieses Thema wurde leider nicht gefunden.'
+// 		});
+// 	}
 
 
 	return {
 		topic: topic2,
-		unitId: unit,
-		topicId: topic,
-		exercise: exerciseData
+		// unitId: unit,
+		// topicId: topic,
+		// exercise: exerciseData
 	};
 }

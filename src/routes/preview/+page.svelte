@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Zutatenlager from '$lib/components/generated/Zutatenlager.svelte';
-	import StoreItemCard from '$lib/components/generated/StoreItemCard.svelte';
+	import Finanzuebersicht from '$lib/components/generated/Finanzuebersicht.svelte';
 </script>
 
-<div class="p-8 pb-32 flex flex-col gap-12 items-center w-full min-h-screen bg-[#2b2738]">
-	<StoreItemCard />
+<div class="p-8 pb-32 flex flex-col gap-12 items-center w-full min-h-screen bg-indigo-50">
+	<Finanzuebersicht />
 </div>

@@ -2,6 +2,8 @@
 // Formeln
 // ---------------------------------------------------------------------------
 
+import katex from 'katex';
+
 export type SidebarTopic = {
 	id: string;
 	title: string;
@@ -40,9 +42,9 @@ export interface Formula {
 	name: string;
 	/** Die Formel als LaTeX-String */
 	math: string;
-	result?: FormulaResult;
+	result: FormulaResult;
 	/** Legende der in der Formel verwendeten Symbole */
-	params?: FormulaParam[];
+	params: FormulaParam[];
 }
 
 // ---------------------------------------------------------------------------
@@ -89,7 +91,7 @@ export interface DataTable {
 // Lösungsschritte
 // ---------------------------------------------------------------------------
 
-export type StepType = 'formula' | 'substitution' | 'calculation' | 'result';
+export type StepType = 'formula' | 'substitution' | 'calculation' | 'result' | 'other';
 
 export interface Step {
 	/**
@@ -188,4 +190,12 @@ export function resolveFormulaRefs(subTask: SubTask, topic: Topic): Formula[] {
 	return subTask.formulaRefs
 		.map((id) => topic.formulas.find((f) => f.id === id))
 		.filter((f): f is Formula => f !== undefined);
+}
+
+function math(latex: string, display = false): string {
+	return katex.renderToString(latex, { displayMode: display, throwOnError: false });
+}
+
+export function inlineMath(text: string): string {
+	return text.replace(/\$([^$]+)\$/g, (_, latex) => math(latex, false));
 }

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { math } from '$lib/actions/math';
-	import type { SolutionStep } from '$lib/types';
+	import type { Step } from '$lib/data2/types';
 
 	interface Props {
-		step: SolutionStep;
+		step: Step;
 		isRevealed: boolean;
 		onReveal: () => void;
 	}

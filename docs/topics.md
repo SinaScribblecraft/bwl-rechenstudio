@@ -10,3 +10,7 @@
 - [ ] Produktionsaufteilungsplanung nach Gutenberg
  
 
+todo für skill:
+
+füge interpretation hinzu. 
+mehrere endergebnisse.. oder fragen.. lieber in teilaufgaben?

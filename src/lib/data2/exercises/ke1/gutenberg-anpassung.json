@@ -1,0 +1,587 @@
+{
+  "gutenberg-anpassung": {
+    "title": "Zeitliche und intensitätsmäßige Anpassung",
+    "subtitle": "Bestimme optimalen Leistungsgrad und Kostenfunktionen bei zeitlicher und intensitätsmäßiger Anpassung eines Aggregates (Produktionsfunktion Typ B).",
+    "formulas": [
+      {
+        "id": "ausbringung-zeit-intensitaet",
+        "name": "Ausbringung",
+        "math": "M = x \\cdot t",
+        "result": { "symbol": "M", "description": "Ausbringungsmenge als Produkt aus Intensität und Einsatzzeit" },
+        "params": [
+          { "symbol": "x", "description": "Intensität / Leistungsgrad" },
+          { "symbol": "t", "description": "Einsatzzeit des Aggregates" }
+        ]
+      },
+      {
+        "id": "optimaler-leistungsgrad",
+        "name": "Optimaler Leistungsgrad",
+        "math": "k'(x) = \\frac{dk(x)}{dx} \\stackrel{!}{=} 0",
+        "result": { "symbol": "x^{opt}", "description": "Stückkostenminimale Intensität — globales Minimum der Stückkostenfunktion im zulässigen Bereich" },
+        "params": [
+          { "symbol": "k(x)", "description": "Stückkostenfunktion in Abhängigkeit der Intensität" }
+        ]
+      },
+      {
+        "id": "zeitliche-anpassung",
+        "name": "Zeitliche Anpassung",
+        "math": "K_T(M) = k_{v,min} \\cdot M \\quad \\text{für} \\quad 0 \\leq M \\leq x^{opt} \\cdot t_{max}",
+        "result": { "symbol": "K_T(M)", "description": "Gesamtkostenfunktion bei konstanter optimaler Intensität und variabler Einsatzzeit" },
+        "params": [
+          { "symbol": "k_{v,min}", "description": "Minimale variable Stückkosten bei $x^{opt}$" },
+          { "symbol": "t_{max}",   "description": "Maximale Einsatzzeit des Aggregates" }
+        ]
+      },
+      {
+        "id": "intensitaetsmaessige-anpassung",
+        "name": "Intensitätsmäßige Anpassung",
+        "math": "K_T(M) = k\\!\\left(\\frac{M}{t_{max}}\\right) \\cdot M \\quad \\text{für} \\quad x^{opt} \\cdot t_{max} < M \\leq x_{max} \\cdot t_{max}",
+        "result": { "symbol": "K_T(M)", "description": "Gesamtkostenfunktion bei voller Einsatzzeit und steigender Intensität" },
+        "params": [
+          { "symbol": "x_{max}", "description": "Maximal zulässige Intensität" },
+          { "symbol": "t_{max}", "description": "Maximale Einsatzzeit" }
+        ]
+      },
+      {
+        "id": "grenzkosten",
+        "name": "Grenzkosten",
+        "math": "K'_T(M) = \\frac{dK_T(M)}{dM}",
+        "result": { "symbol": "K'_T(M)", "description": "Erste Ableitung der Gesamtkostenfunktion nach $M$" },
+        "params": [
+          { "symbol": "K_T(M)", "description": "Gesamtkostenfunktion" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Aufgabe 6 (Skript) — Quadratische Stückkostenfunktion",
+        "descriptionTemplate": "Ein Unternehmen verfügt über ein Aggregat mit folgender Stückkostenfunktion {kfunc} in Abhängigkeit von der Fertigungsintensität $x$ und folgenden Zulässigkeitsbereichen für Intensität und Einsatzzeit $t$: {xbound}, {tbound}. Für den Zusammenhang zwischen Intensität, Einsatzzeit und Ausbringungsmenge $M$ gilt: $M = x \\cdot t$.",
+        "given": [
+          { "type": "formula", "symbol": "kfunc",  "math": "k(x) = 0{,}02 x^2 - x + 50",     "label": "Stückkostenfunktion" },
+          { "type": "formula", "symbol": "xbound", "math": "0 \\leq x \\leq 40",             "label": "Intensitätsbereich" },
+          { "type": "formula", "symbol": "tbound", "math": "0 \\leq t \\leq 10",             "label": "Einsatzzeitbereich" },
+          { "type": "value",   "symbol": "x_max",  "value": 40, "unit": "",                  "label": "Maximale Intensität" },
+          { "type": "value",   "symbol": "t_max",  "value": 10, "unit": "",                  "label": "Maximale Einsatzzeit" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Ermitteln Sie die stückkostenminimale Intensität $x^{opt}$ und die minimalen Stückkosten $k_{min}(x^{opt})$.",
+            "formulaRefs": ["optimaler-leistungsgrad"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Notwendige Bedingung — erste Ableitung null setzen",
+                "math": "k'(x) = 0{,}04 x - 1 \\stackrel{!}{=} 0"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $x$ auflösen",
+                "math": "x^{opt} = \\frac{1}{0{,}04} = 25"
+              },
+              {
+                "type": "substitution",
+                "title": "Minimale Stückkosten",
+                "math": "k_{min}(25) = 0{,}02 \\cdot 25^2 - 25 + 50"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausrechnen",
+                "math": "k_{min}(25) = 12{,}5 - 25 + 50"
+              },
+              {
+                "type": "result",
+                "title": "Optimaler Leistungsgrad und Stückkosten",
+                "math": "x^{opt} = 25, \\quad k_{min} = 37{,}5 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie das Intervall der Ausbringungsmengen $M$, das im Rahmen einer zeitlichen Anpassung erzeugt wird, sowie die zugehörige Gesamtkostenfunktion $K_T(M)$ und Grenzkostenfunktion $K'_T(M)$.",
+            "formulaRefs": ["zeitliche-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Bereich der zeitlichen Anpassung",
+                "description": "Bei konstanter optimaler Intensität $x^{opt}$ kann die Ausbringung höchstens $M_{max}(x^{opt}) = x^{opt} \\cdot t_{max}$ betragen.",
+                "math": "0 \\leq M \\leq x^{opt} \\cdot t_{max}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "0 \\leq M \\leq 25 \\cdot 10 = 250"
+              },
+              {
+                "type": "formula",
+                "title": "Gesamtkostenfunktion in der ZA",
+                "math": "K_T(M) = k_{min} \\cdot M"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "K_T(M) = 37{,}5 \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkosten",
+                "math": "K'_T(M) = \\frac{dK_T(M)}{dM} = 37{,}5"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis zeitliche Anpassung",
+                "math": "K_T(M) = 37{,}5 \\cdot M, \\quad K'_T(M) = 37{,}5 \\quad \\text{für} \\quad 0 \\leq M \\leq 250"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Bestimmen Sie das Intervall der Ausbringungsmengen $M$, das im Rahmen einer intensitätsmäßigen Anpassung erzeugt wird, sowie die zugehörige Gesamtkostenfunktion $K_T(M)$ und Grenzkostenfunktion $K'_T(M)$.",
+            "formulaRefs": ["intensitaetsmaessige-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Bereich der intensitätsmäßigen Anpassung",
+                "math": "x^{opt} \\cdot t_{max} < M \\leq x_{max} \\cdot t_{max}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "250 < M \\leq 40 \\cdot 10 = 400"
+              },
+              {
+                "type": "formula",
+                "title": "Intensität als Funktion der Ausbringung",
+                "description": "Bei voller Ausnutzung der Einsatzzeit $t_{max}$ gilt:",
+                "math": "x = \\frac{M}{t_{max}} = \\frac{M}{10}"
+              },
+              {
+                "type": "substitution",
+                "title": "$x$ in die Stückkostenfunktion einsetzen",
+                "math": "k\\!\\left(\\frac{M}{10}\\right) = 0{,}02 \\cdot \\left(\\frac{M}{10}\\right)^2 - \\frac{M}{10} + 50"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "k\\!\\left(\\frac{M}{10}\\right) = 0{,}0002 \\cdot M^2 - 0{,}1 \\cdot M + 50"
+              },
+              {
+                "type": "calculation",
+                "title": "Gesamtkostenfunktion durch Multiplikation mit $M$",
+                "math": "K_T(M) = (0{,}0002 \\cdot M^2 - 0{,}1 \\cdot M + 50) \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausmultiplizieren",
+                "math": "K_T(M) = 0{,}0002 \\cdot M^3 - 0{,}1 \\cdot M^2 + 50 \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkosten — erste Ableitung",
+                "math": "K'_T(M) = 0{,}0006 \\cdot M^2 - 0{,}2 \\cdot M + 50"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis intensitätsmäßige Anpassung",
+                "math": "K_T(M) = 0{,}0002 M^3 - 0{,}1 M^2 + 50 M, \\quad K'_T(M) = 0{,}0006 M^2 - 0{,}2 M + 50 \\quad \\text{für} \\quad 250 < M \\leq 400"
+              }
+            ]
+          },
+          {
+            "label": "d",
+            "question": "Geben Sie an, mit welcher Kombination von Intensität und Einsatzzeit die Ausbringungsmengen $M = 100$ und $M = 300$ kostenminimal hergestellt werden können.",
+            "formulaRefs": ["ausbringung-zeit-intensitaet", "zeitliche-anpassung", "intensitaetsmaessige-anpassung"],
+            "steps": [
+              {
+                "type": "other",
+                "title": "Fallunterscheidung für $M = 100$",
+                "description": "Da $M = 100 \\leq 250 = x^{opt} \\cdot t_{max}$, liegt zeitliche Anpassung vor.",
+                "math": "x = x^{opt} = 25"
+              },
+              {
+                "type": "calculation",
+                "title": "Einsatzzeit für $M = 100$",
+                "math": "t = \\frac{M}{x^{opt}} = \\frac{100}{25} = 4"
+              },
+              {
+                "type": "other",
+                "title": "Fallunterscheidung für $M = 300$",
+                "description": "Da $250 < M = 300 \\leq 400$, liegt intensitätsmäßige Anpassung vor.",
+                "math": "t = t_{max} = 10"
+              },
+              {
+                "type": "calculation",
+                "title": "Intensität für $M = 300$",
+                "math": "x = \\frac{M}{t_{max}} = \\frac{300}{10} = 30"
+              },
+              {
+                "type": "result",
+                "title": "Optimale Kombinationen",
+                "math": "M = 100: \\; (x, t) = (25, 4); \\quad M = 300: \\; (x, t) = (30, 10)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Anpassung mit größeren Faktoren",
+        "descriptionTemplate": "Gegeben sei ein Aggregat mit der Stückkostenfunktion {kfunc} sowie den Zulässigkeitsbereichen {xbound} und {tbound}. Für den Zusammenhang zwischen Intensität, Einsatzzeit und Ausbringungsmenge gilt $M = x \\cdot t$.",
+        "given": [
+          { "type": "formula", "symbol": "kfunc",  "math": "k(x) = 0{,}05 x^2 - 2 x + 30", "label": "Stückkostenfunktion" },
+          { "type": "formula", "symbol": "xbound", "math": "0 \\leq x \\leq 30",           "label": "Intensitätsbereich" },
+          { "type": "formula", "symbol": "tbound", "math": "0 \\leq t \\leq 5",            "label": "Einsatzzeitbereich" },
+          { "type": "value",   "symbol": "x_max",  "value": 30, "unit": "",                "label": "Maximale Intensität" },
+          { "type": "value",   "symbol": "t_max",  "value": 5,  "unit": "",                "label": "Maximale Einsatzzeit" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die stückkostenminimale Intensität $x^{opt}$ und die minimalen Stückkosten.",
+            "formulaRefs": ["optimaler-leistungsgrad"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Notwendige Bedingung",
+                "math": "k'(x) = 0{,}1 x - 2 \\stackrel{!}{=} 0"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $x$ auflösen",
+                "math": "x^{opt} = 20"
+              },
+              {
+                "type": "substitution",
+                "title": "Minimale Stückkosten",
+                "math": "k_{min}(20) = 0{,}05 \\cdot 400 - 2 \\cdot 20 + 30"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausrechnen",
+                "math": "k_{min}(20) = 20 - 40 + 30"
+              },
+              {
+                "type": "result",
+                "title": "Optimaler Leistungsgrad",
+                "math": "x^{opt} = 20, \\quad k_{min} = 10 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie das Intervall der Ausbringungsmengen bei zeitlicher Anpassung sowie die Gesamtkostenfunktion $K_T(M)$ und Grenzkostenfunktion $K'_T(M)$.",
+            "formulaRefs": ["zeitliche-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Bereich der zeitlichen Anpassung",
+                "math": "0 \\leq M \\leq x^{opt} \\cdot t_{max}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "0 \\leq M \\leq 20 \\cdot 5 = 100"
+              },
+              {
+                "type": "formula",
+                "title": "Gesamtkostenfunktion",
+                "math": "K_T(M) = k_{min} \\cdot M = 10 \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkosten",
+                "math": "K'_T(M) = 10"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis zeitliche Anpassung",
+                "math": "K_T(M) = 10 M, \\quad K'_T(M) = 10 \\quad \\text{für} \\quad 0 \\leq M \\leq 100"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Bestimmen Sie das Intervall der Ausbringungsmengen bei intensitätsmäßiger Anpassung sowie die zugehörige Gesamt- und Grenzkostenfunktion.",
+            "formulaRefs": ["intensitaetsmaessige-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Bereich der intensitätsmäßigen Anpassung",
+                "math": "x^{opt} \\cdot t_{max} < M \\leq x_{max} \\cdot t_{max}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "math": "100 < M \\leq 30 \\cdot 5 = 150"
+              },
+              {
+                "type": "formula",
+                "title": "Intensität in Abhängigkeit von $M$",
+                "math": "x = \\frac{M}{t_{max}} = \\frac{M}{5}"
+              },
+              {
+                "type": "substitution",
+                "title": "$x$ in Stückkostenfunktion einsetzen",
+                "math": "k\\!\\left(\\frac{M}{5}\\right) = 0{,}05 \\cdot \\left(\\frac{M}{5}\\right)^2 - 2 \\cdot \\frac{M}{5} + 30"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "k\\!\\left(\\frac{M}{5}\\right) = 0{,}002 \\cdot M^2 - 0{,}4 \\cdot M + 30"
+              },
+              {
+                "type": "calculation",
+                "title": "Gesamtkostenfunktion",
+                "math": "K_T(M) = 0{,}002 M^3 - 0{,}4 M^2 + 30 M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkostenfunktion",
+                "math": "K'_T(M) = 0{,}006 M^2 - 0{,}8 M + 30"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis intensitätsmäßige Anpassung",
+                "math": "K_T(M) = 0{,}002 M^3 - 0{,}4 M^2 + 30 M, \\quad K'_T(M) = 0{,}006 M^2 - 0{,}8 M + 30 \\quad \\text{für} \\quad 100 < M \\leq 150"
+              }
+            ]
+          },
+          {
+            "label": "d",
+            "question": "Mit welcher Kombination von Intensität und Einsatzzeit werden $M = 60$ und $M = 130$ kostenminimal hergestellt?",
+            "formulaRefs": ["ausbringung-zeit-intensitaet"],
+            "steps": [
+              {
+                "type": "other",
+                "title": "$M = 60$ — zeitliche Anpassung",
+                "description": "$M = 60 \\leq 100$, also zeitliche Anpassung mit $x = x^{opt} = 20$.",
+                "math": "t = \\frac{60}{20} = 3"
+              },
+              {
+                "type": "other",
+                "title": "$M = 130$ — intensitätsmäßige Anpassung",
+                "description": "$100 < 130 \\leq 150$, also intensitätsmäßige Anpassung mit $t = t_{max} = 5$.",
+                "math": "x = \\frac{130}{5} = 26"
+              },
+              {
+                "type": "result",
+                "title": "Kombinationen",
+                "math": "M = 60: \\; (x, t) = (20, 3); \\quad M = 130: \\; (x, t) = (26, 5)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Anpassung mit ganzzahligen Werten",
+        "descriptionTemplate": "Ein Aggregat weist die Stückkostenfunktion {kfunc} sowie die Zulässigkeitsbereiche {xbound} und {tbound} auf. Es gilt $M = x \\cdot t$.",
+        "given": [
+          { "type": "formula", "symbol": "kfunc",  "math": "k(x) = x^2 - 12 x + 50", "label": "Stückkostenfunktion" },
+          { "type": "formula", "symbol": "xbound", "math": "0 \\leq x \\leq 15",     "label": "Intensitätsbereich" },
+          { "type": "formula", "symbol": "tbound", "math": "0 \\leq t \\leq 4",      "label": "Einsatzzeitbereich" },
+          { "type": "value",   "symbol": "x_max",  "value": 15, "unit": "",          "label": "Maximale Intensität" },
+          { "type": "value",   "symbol": "t_max",  "value": 4,  "unit": "",          "label": "Maximale Einsatzzeit" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie $x^{opt}$ und $k_{min}$.",
+            "formulaRefs": ["optimaler-leistungsgrad"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Erste Ableitung null setzen",
+                "math": "k'(x) = 2 x - 12 \\stackrel{!}{=} 0"
+              },
+              {
+                "type": "calculation",
+                "title": "Nach $x$ auflösen",
+                "math": "x^{opt} = 6"
+              },
+              {
+                "type": "substitution",
+                "title": "Minimale Stückkosten",
+                "math": "k_{min}(6) = 36 - 72 + 50"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis",
+                "math": "x^{opt} = 6, \\quad k_{min} = 14 \\text{ GE/ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Geben Sie das Intervall der zeitlichen Anpassung sowie $K_T(M)$ und $K'_T(M)$ an.",
+            "formulaRefs": ["zeitliche-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "substitution",
+                "title": "Bereich der zeitlichen Anpassung",
+                "math": "0 \\leq M \\leq x^{opt} \\cdot t_{max} = 6 \\cdot 4 = 24"
+              },
+              {
+                "type": "formula",
+                "title": "Gesamtkostenfunktion",
+                "math": "K_T(M) = k_{min} \\cdot M = 14 \\cdot M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkosten",
+                "math": "K'_T(M) = 14"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis ZA",
+                "math": "K_T(M) = 14 M, \\quad K'_T(M) = 14 \\quad \\text{für} \\quad 0 \\leq M \\leq 24"
+              }
+            ]
+          },
+          {
+            "label": "c",
+            "question": "Geben Sie das Intervall der intensitätsmäßigen Anpassung sowie $K_T(M)$ und $K'_T(M)$ an.",
+            "formulaRefs": ["intensitaetsmaessige-anpassung", "grenzkosten"],
+            "steps": [
+              {
+                "type": "substitution",
+                "title": "Bereich der intensitätsmäßigen Anpassung",
+                "math": "24 < M \\leq x_{max} \\cdot t_{max} = 15 \\cdot 4 = 60"
+              },
+              {
+                "type": "formula",
+                "title": "Intensität als Funktion von $M$",
+                "math": "x = \\frac{M}{t_{max}} = \\frac{M}{4}"
+              },
+              {
+                "type": "substitution",
+                "title": "In Stückkostenfunktion einsetzen",
+                "math": "k\\!\\left(\\frac{M}{4}\\right) = \\left(\\frac{M}{4}\\right)^2 - 12 \\cdot \\frac{M}{4} + 50"
+              },
+              {
+                "type": "calculation",
+                "title": "Vereinfachen",
+                "math": "k\\!\\left(\\frac{M}{4}\\right) = \\frac{M^2}{16} - 3 M + 50"
+              },
+              {
+                "type": "calculation",
+                "title": "Gesamtkostenfunktion",
+                "math": "K_T(M) = \\frac{M^3}{16} - 3 M^2 + 50 M"
+              },
+              {
+                "type": "calculation",
+                "title": "Grenzkostenfunktion",
+                "math": "K'_T(M) = \\frac{3 M^2}{16} - 6 M + 50"
+              },
+              {
+                "type": "result",
+                "title": "Ergebnis IA",
+                "math": "K_T(M) = \\frac{M^3}{16} - 3 M^2 + 50 M, \\quad K'_T(M) = \\frac{3 M^2}{16} - 6 M + 50 \\quad \\text{für} \\quad 24 < M \\leq 60"
+              }
+            ]
+          },
+          {
+            "label": "d",
+            "question": "Welche Kombination $(x, t)$ ist kostenminimal für $M = 18$ und $M = 48$?",
+            "formulaRefs": ["ausbringung-zeit-intensitaet"],
+            "steps": [
+              {
+                "type": "other",
+                "title": "$M = 18$ — zeitliche Anpassung",
+                "description": "$M = 18 \\leq 24$, also ZA mit $x = x^{opt} = 6$.",
+                "math": "t = \\frac{18}{6} = 3"
+              },
+              {
+                "type": "other",
+                "title": "$M = 48$ — intensitätsmäßige Anpassung",
+                "description": "$24 < 48 \\leq 60$, also IA mit $t = t_{max} = 4$.",
+                "math": "x = \\frac{48}{4} = 12"
+              },
+              {
+                "type": "result",
+                "title": "Kombinationen",
+                "math": "M = 18: \\; (x, t) = (6, 3); \\quad M = 48: \\; (x, t) = (12, 4)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Kompakte Anpassungsentscheidung",
+        "descriptionTemplate": "Ein Aggregat verfügt über die Stückkostenfunktion {kfunc} mit den Zulässigkeitsbereichen {xbound} und {tbound}. Für die Ausbringung gilt $M = x \\cdot t$.",
+        "given": [
+          { "type": "formula", "symbol": "kfunc",  "math": "k(x) = 0{,}1 x^2 - 4 x + 60", "label": "Stückkostenfunktion" },
+          { "type": "formula", "symbol": "xbound", "math": "0 \\leq x \\leq 30",         "label": "Intensitätsbereich" },
+          { "type": "formula", "symbol": "tbound", "math": "0 \\leq t \\leq 8",          "label": "Einsatzzeitbereich" },
+          { "type": "value",   "symbol": "x_max",  "value": 30, "unit": "",              "label": "Maximale Intensität" },
+          { "type": "value",   "symbol": "t_max",  "value": 8,  "unit": "",              "label": "Maximale Einsatzzeit" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie den optimalen Leistungsgrad $x^{opt}$, die minimalen Stückkosten $k_{min}$ sowie die Grenzen der Anpassungsbereiche $M_{ZA,max}$ und $M_{IA,max}$.",
+            "formulaRefs": ["optimaler-leistungsgrad", "zeitliche-anpassung", "intensitaetsmaessige-anpassung"],
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Erste Ableitung",
+                "math": "k'(x) = 0{,}2 x - 4 \\stackrel{!}{=} 0"
+              },
+              {
+                "type": "calculation",
+                "title": "Optimaler Leistungsgrad",
+                "math": "x^{opt} = 20"
+              },
+              {
+                "type": "substitution",
+                "title": "Minimale Stückkosten",
+                "math": "k_{min}(20) = 0{,}1 \\cdot 400 - 80 + 60 = 20 \\text{ GE/ME}"
+              },
+              {
+                "type": "calculation",
+                "title": "Obergrenze zeitliche Anpassung",
+                "math": "M_{ZA,max} = x^{opt} \\cdot t_{max} = 20 \\cdot 8 = 160"
+              },
+              {
+                "type": "calculation",
+                "title": "Obergrenze intensitätsmäßige Anpassung (= Kapazitätsgrenze)",
+                "math": "M_{IA,max} = x_{max} \\cdot t_{max} = 30 \\cdot 8 = 240"
+              },
+              {
+                "type": "result",
+                "title": "Kenngrößen",
+                "math": "x^{opt} = 20, \\; k_{min} = 20, \\; M_{ZA,max} = 160, \\; M_{IA,max} = 240"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Geben Sie für $M = 120$ und $M = 200$ jeweils die Anpassungsart sowie die zugehörige Kombination $(x, t)$ an.",
+            "formulaRefs": ["ausbringung-zeit-intensitaet", "zeitliche-anpassung", "intensitaetsmaessige-anpassung"],
+            "steps": [
+              {
+                "type": "other",
+                "title": "Fallunterscheidung $M = 120$",
+                "description": "$M = 120 \\leq 160 = M_{ZA,max}$, also zeitliche Anpassung. Intensität bleibt $x = x^{opt} = 20$.",
+                "math": "t = \\frac{120}{20} = 6"
+              },
+              {
+                "type": "other",
+                "title": "Fallunterscheidung $M = 200$",
+                "description": "$160 < 200 \\leq 240$, also intensitätsmäßige Anpassung. Einsatzzeit bleibt $t = t_{max} = 8$.",
+                "math": "x = \\frac{200}{8} = 25"
+              },
+              {
+                "type": "result",
+                "title": "Anpassungsentscheidung",
+                "math": "M = 120: \\; \\text{ZA}, (x, t) = (20, 6); \\quad M = 200: \\; \\text{IA}, (x, t) = (25, 8)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

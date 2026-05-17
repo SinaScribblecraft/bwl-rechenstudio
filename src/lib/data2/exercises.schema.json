@@ -1,0 +1,263 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+
+	"$defs": {
+		"FormulaParam": {
+			"type": "object",
+			"description": "Ein Symbol mit Erklärung in der Parameterlegende einer Formel",
+			"required": ["symbol", "description"],
+			"additionalProperties": false,
+			"properties": {
+				"symbol": {
+					"type": "string",
+					"description": "LaTeX-Symbol, z.B. 'C_r' oder 'y^{opt}'"
+				},
+				"description": {
+					"type": "string",
+					"description": "Bedeutung des Symbols in Prosa"
+				}
+			}
+		},
+
+		"FormulaResult": {
+			"type": "object",
+			"description": "Das Ergebnis-Symbol der Formel (was wird damit berechnet?)",
+			"required": ["symbol", "description"],
+			"additionalProperties": false,
+			"properties": {
+				"symbol": { "type": "string" },
+				"description": { "type": "string" }
+			}
+		},
+
+		"Formula": {
+			"type": "object",
+			"description": "Eine benannte Formel mit ID, damit subTasks per formulaRefs darauf referenzieren können",
+			"required": ["id", "name", "math"],
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Eindeutiger Bezeichner innerhalb des Topics, z.B. 'andler' oder 'lagerkostensatz'",
+					"pattern": "^[a-z0-9_-]+$"
+				},
+				"name": {
+					"type": "string",
+					"description": "Anzeigename der Formel"
+				},
+				"result": {
+					"$ref": "#/$defs/FormulaResult"
+				},
+				"math": {
+					"type": "string",
+					"description": "Die Formel als LaTeX-String"
+				},
+				"params": {
+					"type": "array",
+					"description": "Legende der in der Formel verwendeten Symbole",
+					"items": { "$ref": "#/$defs/FormulaParam" }
+				}
+			}
+		},
+
+		"GivenValue": {
+			"type": "object",
+			"description": "Ein numerischer Gegebenen-Wert, z.B. R = 800 ME/Jahr",
+			"required": ["type", "symbol", "value", "label"],
+			"additionalProperties": false,
+			"properties": {
+				"type": { "const": "value" },
+				"symbol": {
+					"type": "string",
+					"description": "Bezeichner, der im descriptionTemplate als {symbol} referenziert wird"
+				},
+				"value": {
+					"type": ["number", "string"],
+					"description": "Der konkrete Wert. String erlaubt für Fälle wie '10%' oder Textdarstellungen"
+				},
+				"unit": {
+					"type": "string",
+					"description": "Einheit, z.B. 'ME/Jahr' oder '€/Bestellung'. Leer lassen wenn einheitenlos"
+				},
+				"label": {
+					"type": "string",
+					"description": "Beschriftung in der aufklappbaren Gegeben-Tabelle"
+				}
+			}
+		},
+
+		"GivenFormula": {
+			"type": "object",
+			"description": "Eine gegebene Funktion oder Gleichung, z.B. eine Produktionsfunktion",
+			"required": ["type", "symbol", "math", "label"],
+			"additionalProperties": false,
+			"properties": {
+				"type": { "const": "formula" },
+				"symbol": {
+					"type": "string",
+					"description": "Bezeichner für Interpolation im descriptionTemplate, z.B. 'M' oder 'k'"
+				},
+				"math": {
+					"type": "string",
+					"description": "Die gegebene Funktion als LaTeX-String, z.B. 'M(r_1, r_2) = 4r_1^2 \\cdot r_2'"
+				},
+				"label": {
+					"type": "string",
+					"description": "Beschriftung in der aufklappbaren Gegeben-Tabelle"
+				}
+			}
+		},
+
+		"GivenItem": {
+			"oneOf": [{ "$ref": "#/$defs/GivenValue" }, { "$ref": "#/$defs/GivenFormula" }]
+		},
+
+		"DataTable": {
+			"type": "object",
+			"description": "Eine tabellarische Darstellung — entweder als Aufgabenstellung (inputTable) oder als Zwischenergebnis innerhalb eines Steps",
+			"required": ["headers", "rows"],
+			"additionalProperties": false,
+			"properties": {
+				"headers": {
+					"type": "array",
+					"items": { "type": "string" },
+					"minItems": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": { "type": ["string", "number"] }
+					}
+				}
+			}
+		},
+
+		"Step": {
+			"type": "object",
+			"description": "Ein einzelner Lösungsschritt innerhalb einer Teilaufgabe",
+			"required": ["type", "title"],
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": ["formula", "substitution", "calculation", "result"],
+					"description": "formula: Formel hinschreiben. substitution: Werte einsetzen. calculation: Zwischenrechnung. result: Endergebnis der Teilaufgabe"
+				},
+				"title": {
+					"type": "string",
+					"description": "Kurze Überschrift des Schritts, z.B. 'Lagerkostensatz bestimmen'"
+				},
+				"description": {
+					"type": "string",
+					"description": "Optionaler Begleittext, der erklärt warum dieser Schritt so gemacht wird"
+				},
+				"math": {
+					"type": "string",
+					"description": "Optionaler LaTeX-String mit der konkreten Rechnung"
+				},
+				"dataTable": {
+					"$ref": "#/$defs/DataTable",
+					"description": "Optionale Tabelle als Zwischenergebnis dieses Schritts (z.B. bei Prognose-Tabellen)"
+				}
+			}
+		},
+
+		"SubTask": {
+			"type": "object",
+			"description": "Eine Teilaufgabe (a, b, c ...) mit eigenem Lösungsweg",
+			"required": ["label", "question", "steps"],
+			"additionalProperties": false,
+			"properties": {
+				"label": {
+					"type": "string",
+					"description": "Bezeichnung der Teilaufgabe, typischerweise 'a', 'b', 'c'"
+				},
+				"question": {
+					"type": "string",
+					"description": "Die Fragestellung dieser Teilaufgabe"
+				},
+				"formulaRefs": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"description": "Muss einer formula.id aus dem übergeordneten Topic entsprechen"
+					},
+					"description": "Referenzen auf die für diese Teilaufgabe relevanten Formeln"
+				},
+				"steps": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/Step" },
+					"minItems": 1,
+					"description": "Lösungsschritte in chronologischer Reihenfolge. Der letzte Step sollte type 'result' sein"
+				}
+			}
+		},
+
+		"Exercise": {
+			"type": "object",
+			"description": "Eine vollständige Aufgabe mit Aufgabenstellung, Gegebenen-Werten und Teilaufgaben",
+			"required": ["title", "descriptionTemplate", "given", "subTasks"],
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string",
+					"description": "Titel der Aufgabe, z.B. 'Möbelhändler Zurwegen'"
+				},
+				"descriptionTemplate": {
+					"type": "string",
+					"description": "Klausur-Fließtext mit {symbol}-Platzhaltern. {symbol} wird zur Laufzeit durch den Wert oder die LaTeX-Formel aus given interpoliert"
+				},
+				"given": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/GivenItem" },
+					"minItems": 1,
+					"description": "Alle gegebenen Größen — sowohl numerische Werte als auch Funktionen. Dient als Single Source of Truth für die Interpolation und die aufklappbare Hilfs-Tabelle"
+				},
+				"inputTable": {
+					"oneOf": [{ "$ref": "#/$defs/DataTable" }, { "type": "null" }],
+					"description": "Optionale Tabelle, die Teil der Aufgabenstellung ist (z.B. Verbrauchswerte bei Prognose-Aufgaben)"
+				},
+				"subTasks": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/SubTask" },
+					"minItems": 1
+				}
+			}
+		},
+
+		"Topic": {
+			"type": "object",
+			"description": "Ein Aufgabentyp mit gemeinsamen Formeln und mehreren konkreten Aufgaben",
+			"required": ["title", "formulas", "exercises"],
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string",
+					"description": "Anzeigename des Aufgabentyps, z.B. 'Optimale Bestellmenge (Andler)'"
+				},
+				"subtitle": {
+					"type": "string",
+					"description": "Optionale kurze Beschreibung des Aufgabentyps"
+				},
+				"formulas": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/Formula" },
+					"description": "Alle für diesen Aufgabentyp relevanten Formeln. IDs müssen innerhalb des Topics eindeutig sein"
+				},
+				"exercises": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/Exercise" },
+					"minItems": 1
+				}
+			}
+		}
+	},
+
+	"type": "object",
+	"description": "Root-Objekt: Jeder Key ist eine Aufgabentyp-ID (z.B. 'andler', 'gozinto'), jeder Value ein Topic",
+	"properties": {
+		"$schema": { "type": "string" }
+	},
+	"additionalProperties": { "$ref": "#/$defs/Topic" }
+}

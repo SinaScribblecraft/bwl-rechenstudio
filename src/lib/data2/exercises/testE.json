@@ -1,0 +1,32 @@
+{
+	"andler": {
+		"title": "",
+		"exercises": [
+			{
+				"title": "",
+				"descriptionTemplate": "",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "",
+						"value": 2,
+						"label": ""
+					}
+				],
+				"subTasks": [
+					{
+						"label": "",
+						"question": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": ""
+							}
+						]
+					}
+				]
+			}
+		],
+		"formulas": []
+	}
+}

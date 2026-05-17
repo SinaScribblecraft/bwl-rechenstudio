@@ -1,8 +1,12 @@
 ## Kurseinheit 1 - Grundlagen und  Leistungsprozess
 
 
-- Gewinn- und Rentabilitätsmaximum
-- Verbrauchsgebundene Bedarfsplanung
-- Optimale Bestellmenge
-- 
+- [ ] Berechnung von Gewinn- und Rentabilitätsmaxima
+- [ ] Bedarfsermittlung mittels Stücklisten und Gozinto-Graphen
+- [ ] Prognoseverfahren zur Materialbedarfsplanung
+- [ ] Ermittlung der optimalen Bestellmenge (Andler-Formel)
+- [ ] Bestimmung des Homogenitätsgrads
+- [ ] Berechnung der Minimalkostenkombination
+- [ ] Produktionsaufteilungsplanung nach Gutenberg
+ 
 

@@ -3,17 +3,13 @@
 	import type { SolutionStep } from '$lib/types';
 
 	import ExerciseSolutionStep from '$lib/components/exercise/ExerciseSolutionStep.svelte';
-	import FinalResult from '$lib/components/exercise/FinalResult.svelte';
 
 	interface Props {
 		steps: SolutionStep[];
-		finalResultText?: string;
-		finalResultMath?: string;
 	}
 
-	let { steps, finalResultText, finalResultMath }: Props = $props();
+	let { steps }: Props = $props();
 
-	let resultRevealed = $state(false);
 	let openedSteps = $state(new Set<number>());
 	let revealedSteps = $state(new Set<number>());
 
@@ -34,7 +30,6 @@
 	function reset() {
 		openedSteps = new Set();
 		revealedSteps = new Set();
-		resultRevealed = false; // Zur Sicherheit auch das finale Ergebnis resetten
 	}
 </script>
 
@@ -63,11 +58,5 @@
 
 		{/each}
 
-		{#if finalResultText || finalResultMath}
-			<FinalResult {finalResultText} {finalResultMath}
-			             isRevealed={resultRevealed}
-			             onRevealClick={() => {resultRevealed=true}}
-			/>
-		{/if}
 	</div>
 </div>

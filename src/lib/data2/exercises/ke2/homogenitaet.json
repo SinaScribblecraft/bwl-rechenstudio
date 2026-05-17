@@ -1,0 +1,163 @@
+{
+  "homogenitaet": {
+    "title": "Homogenität von Produktionsfunktionen",
+    "subtitle": "Bestimme den Homogenitätsgrad t und klassifiziere die Skalenerträge.",
+
+    "formulas": [
+      {
+        "id": "homogenitaet-def",
+        "name": "Definition: Homogenität vom Grad t",
+        "math": "f(\\lambda r_1, \\lambda r_2) = \\lambda^t \\cdot f(r_1, r_2)",
+        "result": {
+          "symbol": "t",
+          "description": "Homogenitätsgrad"
+        },
+        "params": [
+          { "symbol": "\\lambda", "description": "Skalierungsfaktor (lambda > 0)" },
+          { "symbol": "t",        "description": "Homogenitätsgrad — abgelesen am Exponenten von lambda" }
+        ]
+      },
+      {
+        "id": "cobb-douglas-grad",
+        "name": "Homogenitätsgrad bei Cobb-Douglas-Funktionen",
+        "math": "M = c \\cdot r_1^{\\alpha} \\cdot r_2^{\\beta} \\implies t = \\alpha + \\beta",
+        "result": {
+          "symbol": "t",
+          "description": "Summe der Exponenten aller Faktoren"
+        },
+        "params": [
+          { "symbol": "\\alpha,\\, \\beta", "description": "Exponenten der jeweiligen Produktionsfaktoren" },
+          { "symbol": "c",                  "description": "Skalierungskonstante (irrelevant für Homogenitätsgrad)" }
+        ]
+      },
+      {
+        "id": "klassifikation",
+        "name": "Klassifikation nach Homogenitätsgrad",
+        "math": "\\begin{cases} t = 1 & \\text{linearhomogen — konstante Skalenerträge} \\\\ t > 1 & \\text{überlinearhomogen — steigende Skalenerträge} \\\\ t < 1 & \\text{unterlinearhomogen — sinkende Skalenerträge} \\end{cases}",
+        "params": [
+          { "symbol": "t", "description": "Homogenitätsgrad der Produktionsfunktion" }
+        ]
+      }
+    ],
+
+    "exercises": [
+      {
+        "title": "Unterlinearhomogene Funktion",
+        "descriptionTemplate": "Gegeben sei die Produktionsfunktion {M}. Bestimmen Sie den Homogenitätsgrad und klassifizieren Sie die Skalenerträge.",
+        "given": [
+          {
+            "type": "formula",
+            "symbol": "M",
+            "math": "M(r_1, r_2) = 5 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}3}",
+            "label": "Produktionsfunktion"
+          }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie den Homogenitätsgrad $t$ der Produktionsfunktion.",
+            "formulaRefs": ["homogenitaet-def", "cobb-douglas-grad"],
+            "steps": [
+              {
+                "type": "substitution",
+                "title": "Lambda-fache Faktoreinsatzmengen einsetzen",
+                "description": "Ersetze r1 durch lambda*r1 und r2 durch lambda*r2.",
+                "math": "M(\\lambda r_1,\\, \\lambda r_2) = 5 \\cdot (\\lambda r_1)^{0{,}6} \\cdot (\\lambda r_2)^{0{,}3}"
+              },
+              {
+                "type": "calculation",
+                "title": "Lambda ausklammern",
+                "description": "Die Potenzen von lambda werden addiert.",
+                "math": "= 5 \\cdot \\lambda^{0{,}6} \\cdot r_1^{0{,}6} \\cdot \\lambda^{0{,}3} \\cdot r_2^{0{,}3} = \\lambda^{0{,}6 + 0{,}3} \\cdot 5 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}3}"
+              },
+              {
+                "type": "result",
+                "title": "Homogenitätsgrad ablesen",
+                "description": "Die Funktion ist homogen, da lambda vollständig ausgeklammert werden kann.",
+                "math": "M(\\lambda r_1,\\, \\lambda r_2) = \\lambda^{0{,}9} \\cdot M(r_1, r_2) \\implies t = 0{,}9"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Welche Art von Homogenität liegt vor, und was bedeutet das für die Skalenerträge?",
+            "formulaRefs": ["klassifikation"],
+            "steps": [
+              {
+                "type": "calculation",
+                "title": "Homogenitätsgrad einordnen",
+                "description": "Da t = 0,9 < 1, liegt eine unterlinearhomogene Produktionsfunktion vor.",
+                "math": "t = 0{,}9 < 1 \\implies \\text{unterlinearhomogen}"
+              },
+              {
+                "type": "result",
+                "title": "Skalenerträge interpretieren",
+                "description": "Eine Verdopplung beider Faktoreinsatzmengen steigert die Ausbringung nur um Faktor 2^0,9 — also weniger als das Doppelte.",
+                "math": "2^{0{,}9} \\approx 1{,}87 < 2 \\implies \\text{sinkende Skalenerträge}"
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "title": "Überlinearhomogene Funktion",
+        "descriptionTemplate": "Gegeben sei die Produktionsfunktion {M}. Bestimmen Sie den Homogenitätsgrad und klassifizieren Sie die Skalenerträge.",
+        "given": [
+          {
+            "type": "formula",
+            "symbol": "M",
+            "math": "M(r_1, r_2) = 3 \\cdot r_1^{0{,}4} \\cdot r_2^{0{,}8}",
+            "label": "Produktionsfunktion"
+          }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie den Homogenitätsgrad $t$ der Produktionsfunktion.",
+            "formulaRefs": ["homogenitaet-def", "cobb-douglas-grad"],
+            "steps": [
+              {
+                "type": "substitution",
+                "title": "Lambda-fache Faktoreinsatzmengen einsetzen",
+                "description": "Ersetze r1 durch lambda*r1 und r2 durch lambda*r2.",
+                "math": "M(\\lambda r_1,\\, \\lambda r_2) = 3 \\cdot (\\lambda r_1)^{0{,}4} \\cdot (\\lambda r_2)^{0{,}8}"
+              },
+              {
+                "type": "calculation",
+                "title": "Lambda ausklammern",
+                "math": "= 3 \\cdot \\lambda^{0{,}4} \\cdot r_1^{0{,}4} \\cdot \\lambda^{0{,}8} \\cdot r_2^{0{,}8} = \\lambda^{0{,}4 + 0{,}8} \\cdot 3 \\cdot r_1^{0{,}4} \\cdot r_2^{0{,}8}"
+              },
+              {
+                "type": "result",
+                "title": "Homogenitätsgrad ablesen",
+                "math": "M(\\lambda r_1,\\, \\lambda r_2) = \\lambda^{1{,}2} \\cdot M(r_1, r_2) \\implies t = 1{,}2"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Welche Art von Homogenität liegt vor, und was bedeutet das für die Skalenerträge?",
+            "formulaRefs": ["klassifikation"],
+            "steps": [
+              {
+                "type": "calculation",
+                "title": "Homogenitätsgrad einordnen",
+                "description": "Da t = 1,2 > 1, liegt eine überlinearhomogene Produktionsfunktion vor.",
+                "math": "t = 1{,}2 > 1 \\implies \\text{überlinearhomogen}"
+              },
+              {
+                "type": "result",
+                "title": "Skalenerträge interpretieren",
+                "description": "Eine Verdopplung beider Faktoreinsatzmengen steigert die Ausbringung um Faktor 2^1,2 — also mehr als das Doppelte.",
+                "math": "2^{1{,}2} \\approx 2{,}30 > 2 \\implies \\text{steigende Skalenerträge}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

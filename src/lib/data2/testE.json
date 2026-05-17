@@ -1,0 +1,33 @@
+{
+	"$schema": "./exercises.schema.json",
+	"andler": {
+		"title": "",
+		"formulas": [],
+		"exercises": [
+			{
+				"title": "",
+				"descriptionTemplate": "",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "",
+						"value": 2,
+						"label": ""
+					}
+				],
+				"subTasks": [
+					{
+						"label": "",
+						"question": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": ""
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

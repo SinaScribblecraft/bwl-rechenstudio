@@ -1,30 +1,33 @@
 <script lang="ts">
-	import type { CourseUnit } from '$lib/types';
+	import type { CourseUnit } from '$lib/data2/types';
 	import { page } from '$app/state';
+	import { sidebarData } from '$lib/data2/exercises';
 
-	const units: CourseUnit[] = [
-		{
-			id: 'ke1',
-			title: 'KE1 Grundlagen',
-			icon: '⏱️',
-			topics: [
-				{ id: 'gewinn', title: 'Gewinn vs. Rentabilität', href: '/ke1/gewinn' },
-				{ id: 'prognose', title: 'Prognoseverfahren', href: '/ke1/prognose' },
-				{ id: 'gozinto', title: 'Gozinto', href: '/ke1/gozinto' },
-				{ id: 'andler', title: 'Andler-Formel', href: '/ke1/andler' },
-				{ id: 'expo', title: 'Exponential Glättung', href: '/ke1/expo' }
-			]
-		},
-		{
-			id: 'ke2',
-			title: 'KE2 - Leistungsprozess',
-			icon: '📈',
-			topics: [
-				{ id: 'prozesse', title: 'Prozesse & Aktivitäten', href: '/ke2/prozesse' },
-				{ id: 'ketten', title: 'Prozessketten & Wertschöpfung', href: '/ke2/ketten' }
-			]
-		}
-	];
+	// const units: CourseUnit[] = [
+	// 	{
+	// 		id: 'ke1',
+	// 		title: 'KE1 Grundlagen',
+	// 		icon: '⏱️',
+	// 		topics: [
+	// 			{ id: 'gewinn', title: 'Gewinn vs. Rentabilität', href: '/ke1/gewinn' },
+	// 			{ id: 'prognose', title: 'Prognoseverfahren', href: '/ke1/prognose' },
+	// 			{ id: 'gozinto', title: 'Gozinto', href: '/ke1/gozinto' },
+	// 			{ id: 'andler', title: 'Andler-Formel', href: '/ke1/andler' },
+	// 			{ id: 'expo', title: 'Exponential Glättung', href: '/ke1/expo' }
+	// 		]
+	// 	},
+	// 	{
+	// 		id: 'ke2',
+	// 		title: 'KE2 - Leistungsprozess',
+	// 		icon: '📈',
+	// 		topics: [
+	// 			{ id: 'prozesse', title: 'Prozesse & Aktivitäten', href: '/ke2/prozesse' },
+	// 			{ id: 'ketten', title: 'Prozessketten & Wertschöpfung', href: '/ke2/ketten' }
+	// 		]
+	// 	}
+	// ];
+
+	const units = sidebarData;
 
 	let expandedUnits = $state<Record<string, boolean>>({
 		'ke1': true,
@@ -59,13 +62,15 @@
 
 	<div class="flex items-center gap-3 w-full">
 		<div class="text-2xl shrink-0">📖</div>
-		<div class="overflow-hidden whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}">
+		<div
+			class="overflow-hidden whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}">
 			<h1 class="m-0 text-lg font-bold text-slate-900">BWL</h1>
 			<p class="m-0 text-sm text-slate-500">Rechenstudio</p>
 		</div>
 	</div>
 
-	<div class="w-full transition-all duration-300 overflow-hidden {isSidebarOpen ? 'h-[42px] opacity-100' : 'h-0 opacity-0'}">
+	<div
+		class="w-full transition-all duration-300 overflow-hidden {isSidebarOpen ? 'h-[42px] opacity-100' : 'h-0 opacity-0'}">
 		<input
 			type="text"
 			placeholder="🔍 Suchen..."
@@ -77,7 +82,8 @@
 		<a href="/" class="flex items-center gap-3 p-3 text-slate-900 font-semibold hover:bg-slate-50 rounded-lg transition-colors no-underline
                       {isSidebarOpen ? '' : 'justify-center'}">
 			<span class="shrink-0">🏠</span>
-			<span class="whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
+			<span
+				class="whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
      Dashboard
     </span>
 		</a>
@@ -90,10 +96,12 @@
 					onclick={() => toggleUnit(unit.id)}
 				>
 					<span class="shrink-0">{unit.icon}</span>
-					<span class="whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
+					<span
+						class="whitespace-nowrap transition-all duration-300 {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
        {unit.title}
       </span>
-					<span class="ml-auto transition-transform duration-200 {expandedUnits[unit.id] ? 'rotate-180' : ''} {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
+					<span
+						class="ml-auto transition-transform duration-200 {expandedUnits[unit.id] ? 'rotate-180' : ''} {isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden'}">
        ⌄
       </span>
 				</button>

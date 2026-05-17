@@ -5,11 +5,11 @@
 	interface Props {
 		finalResultText?: string;
 		finalResultMath?: string;
-		isRevealed: boolean;
-		onRevealClick: () => void;
+
 	}
 
-	let { onRevealClick, finalResultText, finalResultMath, isRevealed }: Props = $props();
+	let {  finalResultText, finalResultMath }: Props = $props();
+	let isRevealed = $state(false);
 
 
 </script>
@@ -34,10 +34,18 @@
 
 	{#if !isRevealed}
 		<button
-			onclick={() => onRevealClick()}
+			onclick={() => {isRevealed = true}}
 			class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-sm font-bold rounded-lg transition-colors flex items-center gap-2 shadow-sm"
 		>
-			👁️ Lösung prüfen
+			Lösung prüfen
+		</button>
+		{:else}
+		<button
+			onclick={() => {isRevealed = false}}
+			class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-sm font-bold rounded-lg transition-colors flex items-center gap-2 shadow-sm"
+		>
+			Lösung verbergen
 		</button>
 	{/if}
+
 </div>

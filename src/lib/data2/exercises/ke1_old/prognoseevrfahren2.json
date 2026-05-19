@@ -1,0 +1,316 @@
+{
+	"prognoseverfahren-tabellen": {
+		"title": "Prognoseverfahren anhand von Verbrauchsreihen",
+		"subtitle": "Anwendung von arithmetischem Mittel, gleitendem Mittelwert und exponentieller Glättung mit tabellarischen Eingabedaten.",
+		"formulas": [
+			{
+				"id": "arithmetisches-mittel",
+				"name": "Arithmetisches Mittel",
+				"math": "P_{T+1}^{am} = \\frac{1}{T} \\cdot \\sum_{t=1}^{T} V_t",
+				"result": { "symbol": "P_{T+1}^{am}", "description": "Prognosewert für die nächste Periode" },
+				"params": [
+					{ "symbol": "T", "description": "Anzahl der insgesamt erfassten Vergangenheitsperioden" },
+					{ "symbol": "V_t", "description": "Tatsächlicher Verbrauch in Periode t" }
+				]
+			},
+			{
+				"id": "gleitender-mittelwert",
+				"name": "Gleitender Mittelwert",
+				"math": "P_{T+1}^{gm} = \\frac{1}{m} \\cdot \\sum_{i=1}^{m} V_{T-m+i}",
+				"result": { "symbol": "P_{T+1}^{gm}", "description": "Prognosewert auf Basis der jüngsten m Perioden" },
+				"params": [
+					{ "symbol": "m", "description": "Anzahl der berücksichtigten Vergangenheitsperioden" },
+					{ "symbol": "V", "description": "Tatsächlicher Verbrauch in der jeweiligen Periode" }
+				]
+			},
+			{
+				"id": "exponentielle-glaettung",
+				"name": "Exponentielle Glättung",
+				"math": "P_{T+1}^{eg} = \\alpha \\cdot V_T + (1 - \\alpha) \\cdot P_T^{eg}",
+				"result": { "symbol": "P_{T+1}^{eg}", "description": "Prognosewert für die nächste Periode" },
+				"params": [
+					{ "symbol": "\\alpha", "description": "Glättungsfaktor" },
+					{ "symbol": "V_T", "description": "Tatsächlicher Verbrauch der aktuellen Periode T" },
+					{ "symbol": "P_T^{eg}", "description": "Prognosewert der aktuellen Periode T" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Arithmetisches vs. Gleitendes Mittel bei Zeitreihen",
+				"descriptionTemplate": "Die Materialwirtschaft hat für das vergangene Halbjahr ($T={T}$) die monatlichen Verbräuche eines Rohstoffs in der untenstehenden Tabelle erfasst. Die Disposition muss nun eine solide Bedarfsprognose für Monat 7 erstellen.",
+				"given": [
+					{ "type": "value", "symbol": "T", "value": 6, "unit": "Monate", "label": "Anzahl Perioden" },
+					{ "type": "value", "symbol": "m", "value": 3, "unit": "Monate", "label": "Gleitende Perioden" }
+				],
+				"inputTable": {
+					"headers": ["Monat ($t$)", "Verbrauch $V_t$ (ME)"],
+					"rows": [
+						["1", "100"],
+						["2", "120"],
+						["3", "110"],
+						["4", "140"],
+						["5", "130"],
+						["6", "150"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Prognose $P_7^{am}$ mithilfe des einfachen arithmetischen Mittels über alle sechs Monate.",
+						"formulaRefs": ["arithmetisches-mittel"],
+						"interpretation": "Das arithmetische Mittel berücksichtigt alle historischen Daten der Tabelle gleichwertig. Es eignet sich besonders für konstante Verbräuche ohne erkennbaren Trend.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel aufstellen",
+								"description": "Wir summieren die Verbräuche aller 6 Perioden und teilen durch $T=6$.",
+								"math": "P_{7}^{am} = \\frac{1}{6} \\cdot (V_1 + V_2 + V_3 + V_4 + V_5 + V_6)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der Verbrauchsdaten aus der Tabelle.",
+								"math": "P_{7}^{am} = \\frac{1}{6} \\cdot (100 + 120 + 110 + 140 + 130 + 150)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe berechnen",
+								"description": "Die Summe der Klammer ausrechnen.",
+								"math": "P_{7}^{am} = \\frac{1}{6} \\cdot 750"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das arithmetische Mittel lautet:",
+								"math": "P_{7}^{am} = 125 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Prognose $P_7^{gm}$ mithilfe des gleitenden Mittelwerts über die letzten $m={m}$ Monate.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "Da der Verbrauch tendenziell leicht ansteigt, liefert der gleitende Mittelwert durch die stärkere Gewichtung der jüngeren Vergangenheit einen höheren und passenderen Prognosewert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel anpassen",
+								"description": "Für $m=3$ werden nur die letzten drei Perioden aus der Tabelle (Monat 4, 5 und 6) herangezogen.",
+								"math": "P_{7}^{gm} = \\frac{1}{3} \\cdot (V_4 + V_5 + V_6)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Verbräuche der Monate 4 bis 6 ein.",
+								"math": "P_{7}^{gm} = \\frac{1}{3} \\cdot (140 + 130 + 150)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe berechnen",
+								"description": "Die Werte aufaddieren.",
+								"math": "P_{7}^{gm} = \\frac{1}{3} \\cdot 420"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Division ergibt:",
+								"math": "P_{7}^{gm} = 140 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Iterative exponentielle Glättung auf Basis einer Quartalsreihe",
+				"descriptionTemplate": "Für ein Elektronikbauteil liegt die untenstehende tabellarische Absatzreihe vor. Das Controlling hatte zu Beginn (für Quartal 1) einen Absatz von $P_1 = {P_1}$ Stück prognostiziert. Der festgelegte Glättungsfaktor beträgt $\\alpha = {alpha}$.",
+				"given": [
+					{ "type": "value", "symbol": "P_1", "value": 400, "unit": "Stück", "label": "Startprognose Q1" },
+					{ "type": "value", "symbol": "alpha", "value": 0.4, "unit": "", "label": "Glättungsfaktor" }
+				],
+				"inputTable": {
+					"headers": ["Quartal ($t$)", "Absatz $V_t$ (Stück)"],
+					"rows": [
+						["1", "500"],
+						["2", "550"],
+						["3", "480"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Prognosen $P_2^{eg}$ und $P_3^{eg}$ für die Quartale 2 und 3.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz für P2",
+								"description": "Die Prognose für Periode 2 speist sich aus der ersten Prognose und dem tatsächlichen Verbrauch der ersten Periode aus der Tabelle.",
+								"math": "P_{2}^{eg} = \\alpha \\cdot V_1 + (1 - \\alpha) \\cdot P_1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für P2",
+								"description": "Wir entnehmen der Tabelle $V_1=500$ und setzen $\\alpha=0{,}4$ sowie $P_1=400$ ein.",
+								"math": "P_{2}^{eg} = 0{,}4 \\cdot 500 + 0{,}6 \\cdot 400"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilergebnisse berechnen",
+								"description": "Produkte ausrechnen und addieren.",
+								"math": "P_{2}^{eg} = 200 + 240"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis P2",
+								"description": "Prognose für das zweite Quartal:",
+								"math": "P_{2}^{eg} = 440 \\text{ Stück}"
+							},
+							{
+								"type": "formula",
+								"title": "Ansatz für P3",
+								"description": "Die Prognose für Quartal 3 verwendet nun den tatsächlichen Verbrauch von Quartal 2 laut Tabelle sowie die soeben errechnete Prognose $P_2^{eg}$.",
+								"math": "P_{3}^{eg} = \\alpha \\cdot V_2 + (1 - \\alpha) \\cdot P_{2}^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für P3 einsetzen",
+								"description": "Einsetzen von $V_2=550$ und $P_2^{eg}=440$.",
+								"math": "P_{3}^{eg} = 0{,}4 \\cdot 550 + 0{,}6 \\cdot 440"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilergebnisse berechnen",
+								"description": "Erneut die Produkte bilden.",
+								"math": "P_{3}^{eg} = 220 + 264"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis P3",
+								"description": "Prognose für das dritte Quartal:",
+								"math": "P_{3}^{eg} = 484 \\text{ Stück}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie abschließend die Prognose $P_4^{eg}$ für das kommende vierte Quartal.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Durch das fortwährende Aktualisieren (Glätten) der Daten passt sich die exponentielle Glättung dem Bedarfsverlauf kontinuierlich an, ohne dass das gesamte historische Datenmaterial gespeichert werden muss.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz für P4",
+								"description": "Analog zu vorher setzen wir die Daten aus Periode 3 an.",
+								"math": "P_{4}^{eg} = \\alpha \\cdot V_3 + (1 - \\alpha) \\cdot P_{3}^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir nutzen den tabellarischen Verbrauch aus Q3 und unsere Prognose für Q3.",
+								"math": "P_{4}^{eg} = 0{,}4 \\cdot 480 + 0{,}6 \\cdot 484"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Multiplikation ausführen.",
+								"math": "P_{4}^{eg} = 192 + 290{,}4"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der Prognosewert für das nächste Quartal lautet somit:",
+								"math": "P_{4}^{eg} = 482{,}4 \\text{ Stück}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ausreißer-Effekte beim Gleitenden Mittelwert untersuchen",
+				"descriptionTemplate": "Eine wöchentliche Aufzeichnung der Verbräuche liegt als Tabelle vor. In Kalenderwoche (KW) 4 gab es aufgrund einer Sonderaktion einen drastischen Peak. Es soll die Prognose für KW 6 berechnet werden, je nachdem, wie viele Perioden in die Glättung einfließen.",
+				"given": [
+					{ "type": "value", "symbol": "m_a", "value": 2, "unit": "Wochen", "label": "Glättung m=2" },
+					{ "type": "value", "symbol": "m_b", "value": 4, "unit": "Wochen", "label": "Glättung m=4" }
+				],
+				"inputTable": {
+					"headers": ["KW ($t$)", "Verbrauch $V_t$ (kg)"],
+					"rows": [
+						["1", "80"],
+						["2", "82"],
+						["3", "78"],
+						["4", "160"],
+						["5", "85"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den gleitenden Mittelwert $P_6^{gm}$ für $m={m_a}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Bei $m=2$ fließen lediglich die letzten zwei Wochen (KW 4 und KW 5) aus der Tabelle ein.",
+								"math": "P_{6}^{gm}(m=2) = \\frac{1}{2} \\cdot (V_4 + V_5)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der entsprechenden Tabellenwerte.",
+								"math": "P_{6}^{gm}(m=2) = \\frac{1}{2} \\cdot (160 + 85)"
+							},
+							{
+								"type": "calculation",
+								"title": "Rechnen",
+								"description": "Die Summe bilden.",
+								"math": "P_{6}^{gm}(m=2) = \\frac{1}{2} \\cdot 245"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Durch die starke Gewichtung der letzten beiden Wochen zieht der Ausreißer die Prognose stark nach oben.",
+								"math": "P_{6}^{gm}(m=2) = 122{,}5 \\text{ kg}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den gleitenden Mittelwert $P_6^{gm}$ für $m={m_b}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "Je größer $m$ gewählt wird, desto stärker wird der Ausreißer in der Tabelle geglättet. Eine größere Basis führt zu stabileren, aber auch trägeren Prognosen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Für $m=4$ verwenden wir die Wochen 2 bis 5.",
+								"math": "P_{6}^{gm}(m=4) = \\frac{1}{4} \\cdot (V_2 + V_3 + V_4 + V_5)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Die Verbräuche von KW 2 bis KW 5 werden aus der Tabelle entnommen und addiert.",
+								"math": "P_{6}^{gm}(m=4) = \\frac{1}{4} \\cdot (82 + 78 + 160 + 85)"
+							},
+							{
+								"type": "calculation",
+								"title": "Rechnen",
+								"description": "Summe berechnen.",
+								"math": "P_{6}^{gm}(m=4) = \\frac{1}{4} \\cdot 405"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Hier fällt der Einfluss des Ausreißers bereits deutlich geringer aus.",
+								"math": "P_{6}^{gm}(m=4) = 101{,}25 \\text{ kg}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

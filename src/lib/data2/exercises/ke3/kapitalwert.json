@@ -1,0 +1,721 @@
+{
+	"kapitalwert": {
+		"title": "Kapitalwertmethode",
+		"subtitle": "Berechnung des Kapitalwerts (NPV) für Investitionsprojekte, Differenzinvestitionen und unter Anwendung des Lücke-Theorems.",
+		"formulas": [
+			{
+				"id": "kapitalwert-grundformel",
+				"name": "Kapitalwert (allgemein)",
+				"math": "C_0 = \\sum_{t=0}^n g_t \\cdot (1+i)^{-t}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert (Net Present Value)" },
+				"params": [
+					{ "symbol": "g_t", "description": "Zahlung in der Periode t" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" },
+					{ "symbol": "n", "description": "Nutzungsdauer in Jahren" }
+				]
+			},
+			{
+				"id": "kapitalwert-explizit-2",
+				"name": "Kapitalwert (2 Perioden)",
+				"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert bei 2 Laufzeitjahren" },
+				"params": [
+					{ "symbol": "g_0", "description": "Anfangsauszahlung in t=0" },
+					{ "symbol": "g_1", "description": "Zahlungsstrom in t=1" },
+					{ "symbol": "g_2", "description": "Zahlungsstrom in t=2" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "kapitalwert-explizit-3",
+				"name": "Kapitalwert (3 Perioden)",
+				"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2} + g_3 \\cdot (1+i)^{-3}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert bei 3 Laufzeitjahren" },
+				"params": [
+					{ "symbol": "g_0", "description": "Anfangszahlung in t=0" },
+					{ "symbol": "g_t", "description": "Zahlungsströme in t=1 bis t=3" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "annuitaetenfaktor",
+				"name": "Annuitätenfaktor",
+				"math": "ANF_{n,i} = \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}",
+				"result": { "symbol": "ANF_{n,i}", "description": "Kapitalwiedergewinnungsfaktor" },
+				"params": [
+					{ "symbol": "i", "description": "Kalkulationszinssatz" },
+					{ "symbol": "n", "description": "Nutzungsdauer" }
+				]
+			},
+			{
+				"id": "annuitaet",
+				"name": "Annuität",
+				"math": "a = C_0 \\cdot \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}",
+				"result": { "symbol": "a", "description": "Jährlich gleichbleibende Entnahme" },
+				"params": [
+					{ "symbol": "C_0", "description": "Kapitalwert" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "luecke-theorem",
+				"name": "Lücke-Theorem",
+				"math": "C_0 = \\sum_{t=0}^n G_t^{kalk} \\cdot (1+i)^{-t}",
+				"result": {
+					"symbol": "C_0",
+					"description": "Kapitalwert basierend auf Betriebsergebnissen"
+				},
+				"params": [
+					{ "symbol": "G_t^{kalk}", "description": "Kalkulatorisches Betriebsergebnis in t" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "ewige-rente",
+				"name": "Ewige Rente",
+				"math": "C_0 = g_0 + \\frac{g}{i}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert bei unendlicher Laufzeit" },
+				"params": [
+					{ "symbol": "g_0", "description": "Anfangsinvestition" },
+					{ "symbol": "g", "description": "Jährlich konstanter Einzahlungsüberschuss" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlegende Sachinvestition",
+				"descriptionTemplate": "Für einen Betrieb gilt folgendes: Im Zeitpunkt t=0 wird eine Fertigungsanlage beschafft, die zu einer Auszahlung in Höhe von {A_0} GE führt. In den beiden folgenden Jahren werden jeweils bare Umsatzerlöse von {E} GE erzielt, denen auszahlungsgleiche Fertigungskosten von {K} GE gegenüberstehen. Der Kalkulationszins beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2023",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "A_0",
+						"value": 10000,
+						"unit": "GE",
+						"label": "Auszahlung Anlage t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "E",
+						"value": 8000,
+						"unit": "GE",
+						"label": "Umsatzerlöse pro Jahr"
+					},
+					{
+						"type": "value",
+						"symbol": "K",
+						"value": 3000,
+						"unit": "GE",
+						"label": "Auszahlungen pro Jahr"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.1,
+						"unit": "",
+						"label": "Kalkulationszins (Dezimal)"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 10,
+						"unit": "%",
+						"label": "Kalkulationszins"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Kapitalwert der Zahlungsreihe.",
+						"formulaRefs": ["kapitalwert-explizit-2"],
+						"interpretation": "Da der Kapitalwert negativ ist, erfüllt die Investition nicht die geforderte Mindestverzinsung von 10 %. Das Projekt sollte folglich abgelehnt werden.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Zahlungsstrom pro Periode bestimmen",
+								"description": "Zuerst fassen wir die Einzahlungen und Auszahlungen pro Jahr zu einem Netto-Zahlungsstrom $g_t$ zusammen. Die Anfangsinvestition ist $g_0$.",
+								"math": "g_0 = -10{.}000 \\text{ GE}, \\quad g_1 = g_2 = 8{.}000 - 3{.}000 = 5{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel aufstellen",
+								"description": "Wir nutzen die explizite Formel für zwei Laufzeitjahre, um alle Zahlungen auf $t=0$ abzuzinsen.",
+								"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die ermittelten Zahlungsströme sowie den Zins von $10 \\%$ ein.",
+								"math": "C_0 = -10{.}000 + 5{.}000 \\cdot (1+0{,}1)^{-1} + 5{.}000 \\cdot (1+0{,}1)^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte der einzelnen Perioden berechnen",
+								"description": "Wir zinsen die beiden Zahlungen der Folgejahre auf den heutigen Zeitpunkt ab.",
+								"math": "C_0 = -10{.}000 + 4{.}545{,}45 + 4{.}132{,}23"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe der Barwerte liefert den finalen Kapitalwert.",
+								"math": "C_0 = -1{.}322{,}32 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kapitalwert und Annuität",
+				"descriptionTemplate": "Gegeben sei eine Sachinvestition mit der Zahlungsreihe $g = ({g_0}, {g_1}, {g_2})$. Der einheitliche Kapitalmarktzins beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2024",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g_0",
+						"value": -200,
+						"unit": "GE",
+						"label": "Zahlung in t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "g_1",
+						"value": 44,
+						"unit": "GE",
+						"label": "Zahlung in t=1"
+					},
+					{
+						"type": "value",
+						"symbol": "g_2",
+						"value": 242,
+						"unit": "GE",
+						"label": "Zahlung in t=2"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Kalkulationszins" },
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 10,
+						"unit": "%",
+						"label": "Zins in Prozent"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Kapitalwert $C_0$ der Sachinvestition.",
+						"formulaRefs": ["kapitalwert-explizit-2"],
+						"interpretation": "Ein positiver Kapitalwert zeigt an, dass die Investition ökonomisch vorteilhaft ist, da sie eine Verzinsung über den geforderten 10 % hinaus erbringt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel notieren",
+								"description": "Die Barwertsumme der Zahlungsreihe wird gebildet.",
+								"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Elemente der Zahlungsreihe und den Kalkulationszins ein.",
+								"math": "C_0 = -200 + 44 \\cdot (1+0{,}1)^{-1} + 242 \\cdot (1+0{,}1)^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Diskontierung ausführen",
+								"description": "Die Abzinsung liefert die Barwerte der Rückflüsse.",
+								"math": "C_0 = -200 + 40 + 200"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Kapitalwert",
+								"description": "Die Aufsummierung ergibt den Net Present Value.",
+								"math": "C_0 = 40 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Annuität $a$ der Sachinvestition.",
+						"formulaRefs": ["annuitaet"],
+						"interpretation": "Die Annuität gibt an, welcher gleichbleibende Betrag während der Laufzeit jährlich entnommen werden kann, ohne das ursprünglich investierte Kapital plus Mindestverzinsung zu gefährden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Annuitätenformel",
+								"description": "Der Kapitalwert wird mittels Kapitalwiedergewinnungsfaktor auf die Nutzungsdauer verteilt.",
+								"math": "a = C_0 \\cdot \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den berechneten Kapitalwert $C_0 = 40$, $i = 0{,}1$ und $n = 2$ ein.",
+								"math": "a = 40 \\cdot \\frac{(1+0{,}1)^2 \\cdot 0{,}1}{(1+0{,}1)^2 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch auswerten",
+								"description": "Wir berechnen Zähler und Nenner des Annuitätenfaktors.",
+								"math": "a = 40 \\cdot \\frac{1{,}21 \\cdot 0{,}1}{1{,}21 - 1} = 40 \\cdot \\frac{0{,}121}{0{,}21}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Annuität",
+								"description": "Das Produkt aus Kapitalwert und Annuitätenfaktor liefert die jährliche Rente.",
+								"math": "a = 23{,}05 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Lücke-Theorem: Kapitalwert aus Erfolgsgrößen",
+				"descriptionTemplate": "Ein Betrieb erzielt bei einer Investition mit {n} Jahren Laufzeit und einem Kalkulationszins von {i_pct} % folgende kalkulatorische Betriebsergebnisse: Im Jahr 1 ein Ergebnis von {G_1} GE, im Jahr 2 von {G_2} GE. Die Anfangsauszahlung ist durch Abschreibungen und kalkulatorische Zinsen vollständig in den Periodenerfolgen verrechnet (Lücke-Bedingungen erfüllt).",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel Investitionsrechnung",
+				"given": [
+					{ "type": "value", "symbol": "n", "value": 2, "unit": "Jahre", "label": "Nutzungsdauer" },
+					{
+						"type": "value",
+						"symbol": "G_1",
+						"value": 110,
+						"unit": "GE",
+						"label": "Betriebsergebnis t=1"
+					},
+					{
+						"type": "value",
+						"symbol": "G_2",
+						"value": 121,
+						"unit": "GE",
+						"label": "Betriebsergebnis t=2"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Kalkulationszins" },
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 10,
+						"unit": "%",
+						"label": "Zins in Prozent"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Kapitalwert unter Anwendung des Lücke-Theorems.",
+						"formulaRefs": ["luecke-theorem"],
+						"interpretation": "Gemäß Lücke-Theorem stimmt der Barwert der korrekten kostenrechnerischen Periodenerfolge exakt mit dem Barwert der Zahlungsströme überein. Eine separate Betrachtung der Anschaffungsauszahlung in t=0 entfällt, da $G_0 = 0$.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lücke-Theorem Formel",
+								"description": "Wir diskontieren die Periodengewinne (Betriebsergebnisse) auf den Zeitpunkt $t=0$.",
+								"math": "C_0 = \\sum_{t=1}^n G_t^{kalk} \\cdot (1+i)^{-t}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen kalkulatorischen Ergebnisse und den Zinssatz ein.",
+								"math": "C_0 = 110 \\cdot (1+0{,}1)^{-1} + 121 \\cdot (1+0{,}1)^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte berechnen",
+								"description": "Die Diskontierung der einzelnen Gewinne wird durchgeführt.",
+								"math": "C_0 = \\frac{110}{1{,}1} + \\frac{121}{1{,}21} = 100 + 100"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe ergibt den Kapitalwert.",
+								"math": "C_0 = 200 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ewige Rente bei Stiftungen",
+				"descriptionTemplate": "Eine wohltätige Stiftung überlegt, {I_0} GE in einen unendlich laufenden Fonds zu investieren, der ihr jährlich gleichbleibende Ausschüttungen in Höhe von {g} GE sichert. Der Marktzins liegt bei {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Szenario 'Ewige Rente'",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "I_0",
+						"value": 1000000,
+						"unit": "GE",
+						"label": "Anfangsinvestition"
+					},
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 45000,
+						"unit": "GE",
+						"label": "Jährliche Rente"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.03,
+						"unit": "",
+						"label": "Zinssatz dezimal"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 3,
+						"unit": "%",
+						"label": "Zinssatz prozent"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Kapitalwert $C_0$ dieser Investition und beurteilen Sie die Vorteilhaftigkeit.",
+						"formulaRefs": ["ewige-rente"],
+						"interpretation": "Ein positiver Kapitalwert bedeutet, dass der Barwert der ewigen Zuflüsse die initialen Kosten übersteigt. Die Stiftung vermehrt somit langfristig ihr Vermögen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel der ewigen Rente",
+								"description": "Da die Laufzeit gegen unendlich geht ($n \\to \\infty$), vereinfacht sich der Rentenbarwertfaktor zu $1/i$.",
+								"math": "C_0 = -I_0 + \\frac{g}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Parameter einsetzen",
+								"description": "Wir setzen die Anfangsauszahlung (als negativen Wert), die jährliche Rente und den Zinssatz ein.",
+								"math": "C_0 = -1{.}000{.}000 + \\frac{45{.}000}{0{,}03}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwert der unendlichen Rente bestimmen",
+								"description": "Durch die Division der jährlichen Rente durch den Zins erhalten wir den Gegenwert aller zukünftigen Zahlungen heute.",
+								"math": "C_0 = -1{.}000{.}000 + 1{.}500{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Differenz stellt den Kapitalwert dar.",
+								"math": "C_0 = 500{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Differenzinvestition (Alternativenvergleich)",
+				"descriptionTemplate": "Es stehen zwei sich gegenseitig ausschließende Investitionsprojekte A und B zur Auswahl. Beide erfordern in $t=0$ eine Auszahlung von {I_0} GE. Projekt A liefert in den nächsten zwei Jahren gleichbleibende Einzahlungen von {gA_1} GE. Projekt B liefert im ersten Jahr nichts, dafür im zweiten Jahr {gB_2} GE. Der Zins beträgt {i_pct} %.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Beispielhafte Übungsaufgabe",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "I_0",
+						"value": 1000,
+						"unit": "GE",
+						"label": "Anschaffungskosten"
+					},
+					{
+						"type": "value",
+						"symbol": "gA_1",
+						"value": 600,
+						"unit": "GE",
+						"label": "Zahlungen A t=1,2"
+					},
+					{
+						"type": "value",
+						"symbol": "gB_2",
+						"value": 1300,
+						"unit": "GE",
+						"label": "Zahlung B in t=2"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Zins dezimal" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zins" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Kapitalwert $C_0^A$ für Projekt A.",
+						"formulaRefs": ["kapitalwert-explizit-2"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertgleichung Projekt A",
+								"description": "Wir setzen die allgemeine Barwertformel für zwei Jahre an.",
+								"math": "C_0^A = g_0^A + g_1^A \\cdot (1+i)^{-1} + g_2^A \\cdot (1+i)^{-2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Für Projekt A fließen in $t=1$ und $t=2$ jeweils $600$ GE zurück.",
+								"math": "C_0^A = -1{.}000 + 600 \\cdot 1{,}05^{-1} + 600 \\cdot 1{,}05^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte summieren",
+								"description": "Wir berechnen die abdiskontierten Werte der einzelnen Jahre.",
+								"math": "C_0^A = -1{.}000 + 571{,}43 + 544{,}22"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Projekt A",
+								"description": "Der resultierende Kapitalwert von A.",
+								"math": "C_0^A = 115{,}65 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Kapitalwert $C_0^B$ für Projekt B.",
+						"formulaRefs": ["kapitalwert-explizit-2"],
+						"interpretation": "Da Projekt B einen höheren Kapitalwert aufweist als Projekt A, ist B im Sinne der Vermögensmaximierung vorzuziehen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertgleichung Projekt B",
+								"description": "Wir verwenden dieselbe Methodik, haben jedoch in $t=1$ eine Nullzahlung.",
+								"math": "C_0^B = g_0^B + 0 \\cdot (1+i)^{-1} + g_2^B \\cdot (1+i)^{-2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir tragen die spezifischen Zahlungen für Projekt B ein.",
+								"math": "C_0^B = -1{.}000 + 1{.}300 \\cdot 1{,}05^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Abzinsung der Einmalzahlung",
+								"description": "Die gesamte Rückzahlung erfolgt in Jahr 2, muss also über 2 Perioden diskontiert werden.",
+								"math": "C_0^B = -1{.}000 + 1{.}179{,}14"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Projekt B",
+								"description": "Der resultierende Kapitalwert von B.",
+								"math": "C_0^B = 179{,}14 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Liquidationserlös am Ende der Laufzeit",
+				"descriptionTemplate": "Eine Maschine erfordert heute eine Auszahlung von {I_0} GE. Während der dreijährigen Laufzeit erwirtschaftet sie konstante Zahlungsüberschüsse in Höhe von {g} GE pro Jahr. Am Ende von Jahr 3 kann die Maschine zusätzlich zu einem Restwert (Liquidationserlös) von {L} GE veräußert werden. Der Zins liegt bei {i_pct} %.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Aufgabe zu Restwerten",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "I_0",
+						"value": 40000,
+						"unit": "GE",
+						"label": "Anfangsauszahlung"
+					},
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 12000,
+						"unit": "GE",
+						"label": "Jährlicher Überschuss"
+					},
+					{
+						"type": "value",
+						"symbol": "L",
+						"value": 8000,
+						"unit": "GE",
+						"label": "Restwert in t=3"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Zins" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zins Prozent" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Kapitalwert unter Berücksichtigung des Liquidationserlöses.",
+						"formulaRefs": ["kapitalwert-explizit-3"],
+						"interpretation": "Trotz der jährlichen Zuflüsse und des Restwerts ist der Kapitalwert negativ. Die Investition verzinst sich also mit weniger als den geforderten 5 %.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Zahlungen im letzten Jahr zusammenfassen",
+								"description": "In Periode $t=3$ fällt sowohl der operative Überschuss als auch der Restwert an.",
+								"math": "g_3 = 12{.}000 + 8{.}000 = 20{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Kapitalwertgleichung für 3 Jahre",
+								"description": "Wir stellen die Formel zur Diskontierung der drei Folgejahre auf.",
+								"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2} + g_3 \\cdot (1+i)^{-3}"
+							},
+							{
+								"type": "substitution",
+								"title": "Zahlenwerte einsetzen",
+								"description": "Wir setzen den zusammengefassten Wert $g_3$ sowie die übrigen Parameter in die Gleichung ein.",
+								"math": "C_0 = -40{.}000 + 12{.}000 \\cdot 1{,}05^{-1} + 12{.}000 \\cdot 1{,}05^{-2} + 20{.}000 \\cdot 1{,}05^{-3}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte summieren",
+								"description": "Die abgezinsten Zahlungen der einzelnen Perioden lauten:",
+								"math": "C_0 = -40{.}000 + 11{.}428{,}57 + 10{.}884{,}35 + 17{.}276{,}75"
+							},
+							{
+								"type": "result",
+								"title": "Abschluss der Berechnung",
+								"description": "Das Endresultat für $C_0$.",
+								"math": "C_0 = -410{,}33 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Finanzierungsprojekt (Unterjähriger Kredit)",
+				"descriptionTemplate": "Ein Projekt (z.B. ein aufzunehmender Kredit) bringt dem Unternehmen heute eine sofortige Einzahlung von {E_0} GE. In den darauffolgenden drei Jahren sind jeweils am Jahresende fixe Rückzahlungsraten (Tilgung und Zins) von {A} GE zu leisten. Der Kalkulationszins des Unternehmens, also die alternative Anlageverzinsung, liegt bei {i_pct} %.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Investition vs. Finanzierung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "E_0",
+						"value": 50000,
+						"unit": "GE",
+						"label": "Auszahlungsbetrag"
+					},
+					{
+						"type": "value",
+						"symbol": "A",
+						"value": 20000,
+						"unit": "GE",
+						"label": "Jährliche Rate"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.08,
+						"unit": "",
+						"label": "Diskontierungszins"
+					},
+					{ "type": "value", "symbol": "i_pct", "value": 8, "unit": "%", "label": "Zins Prozent" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Kapitalwert dieses Zahlungsstroms.",
+						"formulaRefs": ["kapitalwert-explizit-3"],
+						"interpretation": "Ein negativer Kapitalwert bei einem Finanzierungsprojekt (Start-Einzahlung) zeigt an, dass der Kredit im Vergleich zur Alternativanlage (8%) *zu teuer* ist. Der Effektivzins des Kredits ist folglich höher als 8 %.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufstellen der Kapitalwertgleichung",
+								"description": "Achtung auf die Vorzeichen: Die erste Zahlung ist positiv (Einzahlung), die Folgenden negativ (Auszahlungen).",
+								"math": "C_0 = g_0 - g_1 \\cdot (1+i)^{-1} - g_2 \\cdot (1+i)^{-2} - g_3 \\cdot (1+i)^{-3}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte eintragen",
+								"description": "Wir setzen die initialen $50{.}000$ sowie die jährlichen Abflüsse von $20{.}000$ ein.",
+								"math": "C_0 = 50{.}000 - 20{.}000 \\cdot 1{,}08^{-1} - 20{.}000 \\cdot 1{,}08^{-2} - 20{.}000 \\cdot 1{,}08^{-3}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte der Raten",
+								"description": "Wir berechnen den Gegenwert der zukünftigen Ratenbelastungen im Zeitpunkt $t=0$.",
+								"math": "C_0 = 50{.}000 - 18{.}518{,}52 - 17{.}146{,}78 - 15{.}876{,}65"
+							},
+							{
+								"type": "result",
+								"title": "Endgültiger Kapitalwert",
+								"description": "Zieht man die Barwerte der Rückzahlungen vom erhaltenen Kredit ab, bleibt ein Fehlbetrag.",
+								"math": "C_0 = -1{.}541{,}95 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Einfacher Kapitalwert (Kurze Laufzeit)",
+				"descriptionTemplate": "Es liegt eine Zahlungsreihe mit $g_0 = {g_0}$ GE, $g_1 = {g_1}$ GE und $g_2 = {g_2}$ GE vor. Der interne Kalkulationszins beträgt $i = {i_pct} \\%$.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 09-2024",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g_0",
+						"value": -900,
+						"unit": "GE",
+						"label": "Anfangsinvestition"
+					},
+					{
+						"type": "value",
+						"symbol": "g_1",
+						"value": 540,
+						"unit": "GE",
+						"label": "Rückfluss Jahr 1"
+					},
+					{
+						"type": "value",
+						"symbol": "g_2",
+						"value": 540,
+						"unit": "GE",
+						"label": "Rückfluss Jahr 2"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Kalkulationszins" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zins Prozent" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Kapitalwert auf Basis der Zahlungsgrößen.",
+						"formulaRefs": ["kapitalwert-explizit-2"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel verwenden",
+								"description": "Wir nutzen die klassische Formel für die Abzinsung von zwei zukünftigen Zahlungen.",
+								"math": "C_0 = g_0 + g_1 \\cdot (1+i)^{-1} + g_2 \\cdot (1+i)^{-2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Parameter übertragen",
+								"description": "Die expliziten Werte aus der Klausuraufgabe werden substituiert.",
+								"math": "C_0 = -900 + 540 \\cdot (1+0{,}1)^{-1} + 540 \\cdot (1+0{,}1)^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Diskontierung",
+								"description": "Wir teilen die Rückflüsse durch den Zinsfaktor $1{,}1$ bzw. $1{,}21$.",
+								"math": "C_0 = -900 + 490{,}91 + 446{,}28"
+							},
+							{
+								"type": "result",
+								"title": "Lösung",
+								"description": "Die finale Summierung liefert das geforderte Ergebnis.",
+								"math": "C_0 = 37{,}19 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

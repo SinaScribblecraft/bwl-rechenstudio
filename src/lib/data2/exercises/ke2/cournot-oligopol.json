@@ -1,0 +1,986 @@
+{
+	"cournot-oligopol": {
+		"title": "Cournot-Oligopol",
+		"subtitle": "Ermittlung von Gleichgewichtsmengen, Preisen und Gewinnen im Mengenwettbewerb.",
+		"formulas": [
+			{
+				"id": "paf",
+				"name": "Preis-Absatz-Funktion",
+				"math": "p(X) = a - b \\cdot X",
+				"result": { "symbol": "p", "description": "Marktpreis in Abhängigkeit der Gesamtmenge" },
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "b", "description": "Steigung der Nachfrage" },
+					{ "symbol": "X", "description": "Gesamtmenge auf dem Markt" }
+				]
+			},
+			{
+				"id": "gewinn-1",
+				"name": "Gewinnfunktion Unternehmen 1",
+				"math": "G_1 = p(X) \\cdot x_1 - K_1(x_1)",
+				"result": { "symbol": "G_1", "description": "Gewinn des ersten Unternehmens" },
+				"params": [
+					{ "symbol": "p(X)", "description": "Marktpreis" },
+					{ "symbol": "x_1", "description": "Produktionsmenge U1" },
+					{ "symbol": "K_1", "description": "Kostenfunktion U1" }
+				]
+			},
+			{
+				"id": "reaktion-1",
+				"name": "Reaktionsfunktion Unternehmen 1",
+				"math": "x_1(x_2) = \\frac{a - c_1 - b \\cdot x_2}{2 \\cdot b}",
+				"result": { "symbol": "x_1", "description": "Optimale Antwortmenge von U1 auf x_2" },
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c_1", "description": "Grenzkosten U1" },
+					{ "symbol": "b", "description": "Steigung PAF" },
+					{ "symbol": "x_2", "description": "Menge U2" }
+				]
+			},
+			{
+				"id": "cournot-sym",
+				"name": "Symmetrische Cournot-Menge",
+				"math": "x^* = \\frac{a - c}{3 \\cdot b}",
+				"result": {
+					"symbol": "x^*",
+					"description": "Gleichgewichtsmenge je Unternehmen bei gleichen Kosten"
+				},
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c", "description": "Konstante Grenzkosten beider" },
+					{ "symbol": "b", "description": "Steigung PAF" }
+				]
+			},
+			{
+				"id": "cournot-asym-1",
+				"name": "Asymmetrische Cournot-Menge U1",
+				"math": "x_1^* = \\frac{a - 2 \\cdot c_1 + c_2}{3 \\cdot b}",
+				"result": {
+					"symbol": "x_1^*",
+					"description": "Gleichgewichtsmenge U1 bei asymmetrischen Kosten"
+				},
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c_1", "description": "Grenzkosten U1" },
+					{ "symbol": "c_2", "description": "Grenzkosten U2" },
+					{ "symbol": "b", "description": "Steigung PAF" }
+				]
+			},
+			{
+				"id": "cournot-asym-2",
+				"name": "Asymmetrische Cournot-Menge U2",
+				"math": "x_2^* = \\frac{a - 2 \\cdot c_2 + c_1}{3 \\cdot b}",
+				"result": {
+					"symbol": "x_2^*",
+					"description": "Gleichgewichtsmenge U2 bei asymmetrischen Kosten"
+				},
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c_1", "description": "Grenzkosten U1" },
+					{ "symbol": "c_2", "description": "Grenzkosten U2" },
+					{ "symbol": "b", "description": "Steigung PAF" }
+				]
+			},
+			{
+				"id": "gesamtmenge",
+				"name": "Marktgesamtmenge",
+				"math": "X = x_1 + x_2",
+				"result": { "symbol": "X", "description": "Summe der angebotenen Mengen" },
+				"params": [
+					{ "symbol": "x_1", "description": "Menge U1" },
+					{ "symbol": "x_2", "description": "Menge U2" }
+				]
+			},
+			{
+				"id": "marktpreis",
+				"name": "Gleichgewichtspreis",
+				"math": "p^* = a - b \\cdot X^*",
+				"result": { "symbol": "p^*", "description": "Preis im Marktgleichgewicht" },
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "b", "description": "Steigung PAF" },
+					{ "symbol": "X^*", "description": "Gesamtmenge im Gleichgewicht" }
+				]
+			},
+			{
+				"id": "kartellmenge",
+				"name": "Kartell- / Monopolmenge",
+				"math": "X^K = \\frac{a - c}{2 \\cdot b}",
+				"result": {
+					"symbol": "X^K",
+					"description": "Gesamtmenge bei Gewinnmaximierung des Gesamtsystems"
+				},
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c", "description": "Grenzkosten" },
+					{ "symbol": "b", "description": "Steigung PAF" }
+				]
+			},
+			{
+				"id": "oligopol-n",
+				"name": "Cournot-Menge bei n Anbietern",
+				"math": "x_i^* = \\frac{a - c}{(n + 1) \\cdot b}",
+				"result": {
+					"symbol": "x_i^*",
+					"description": "Menge eines einzelnen Anbieters im n-Oligopol"
+				},
+				"params": [
+					{ "symbol": "a", "description": "Prohibitivpreis" },
+					{ "symbol": "c", "description": "Grenzkosten" },
+					{ "symbol": "b", "description": "Steigung PAF" },
+					{ "symbol": "n", "description": "Anzahl der Anbieter" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Symmetrisches Standard-Duopol",
+				"descriptionTemplate": "Auf einem Markt agieren zwei Unternehmen im Mengenwettbewerb (Cournot-Duopol). Die Preis-Absatz-Funktion ist gegeben durch {p_func}. Beide Unternehmen produzieren mit identischen und konstanten Grenzkosten in Höhe von {c} GE/ME. Fixkosten fallen nicht an.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Grundlagenbeispiel aus dem Skript",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 100 - X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 100,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 1, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 10, "unit": "GE/ME", "label": "Grenzkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Cournot-Gleichgewichtsmenge $x^*$ für ein einzelnes Unternehmen.",
+						"formulaRefs": ["cournot-sym"],
+						"interpretation": "Da beide Unternehmen die gleiche Kostenstruktur haben, werden sie im Gleichgewicht exakt dieselbe Menge anbieten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für symmetrische Mengen",
+								"description": "Wir nutzen die direkte Formel für die Gleichgewichtsmenge im symmetrischen Cournot-Duopol.",
+								"math": "x^* = \\frac{a - c}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen Prohibitivpreis $a=100$, Grenzkosten $c=10$ und die Steigung $b=1$ ein.",
+								"math": "x^* = \\frac{100 - 10}{3 \\cdot 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Zähler und Nenner werden vereinfacht.",
+								"math": "x^* = \\frac{90}{3}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das ist die optimale Produktionsmenge für jedes der beiden Unternehmen.",
+								"math": "x^* = 30 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den resultierenden Gleichgewichtspreis $p^*$.",
+						"formulaRefs": ["gesamtmenge", "marktpreis"],
+						"interpretation": "Der Preis bildet sich aus der Gesamtmenge beider Anbieter am Markt gemäß der Preis-Absatz-Funktion.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gesamtmenge bestimmen",
+								"description": "Zuerst addieren wir die Mengen beider Duopolisten.",
+								"math": "X^* = x_1^* + x_2^*"
+							},
+							{
+								"type": "substitution",
+								"title": "Gesamtmenge berechnen",
+								"description": "Da beide $30$ ME produzieren, ergibt sich die Gesamtmenge.",
+								"math": "X^* = 30 + 30 = 60 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "In PAF einsetzen",
+								"description": "Die Gesamtmenge wird in die Preis-Absatz-Funktion eingesetzt.",
+								"math": "p^* = 100 - X^*"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Wir ziehen die $60$ ME vom Prohibitivpreis ab.",
+								"math": "p^* = 100 - 60"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preis",
+								"description": "Dies ist der markträumende Gleichgewichtspreis.",
+								"math": "p^* = 40 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Asymmetrische Kostenstrukturen",
+				"descriptionTemplate": "In einem Cournot-Duopol mit der Preis-Absatz-Funktion {p_func} produzieren zwei Unternehmen. Unternehmen 1 hat einen Kostenvorteil mit konstanten Grenzkosten von {c_1} GE/ME, während Unternehmen 2 Grenzkosten von {c_2} GE/ME aufweist.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Klausuraufgabe zu asymmetrischen Oligopolen",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 120 - 2 \\cdot X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 120,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 2, "unit": "", "label": "Steigung PAF" },
+					{
+						"type": "value",
+						"symbol": "c_1",
+						"value": 20,
+						"unit": "GE/ME",
+						"label": "Grenzkosten U1"
+					},
+					{
+						"type": "value",
+						"symbol": "c_2",
+						"value": 40,
+						"unit": "GE/ME",
+						"label": "Grenzkosten U2"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die optimalen Mengen $x_1^*$ und $x_2^*$.",
+						"formulaRefs": ["cournot-asym-1", "cournot-asym-2"],
+						"interpretation": "Das Unternehmen mit den niedrigeren Grenzkosten wird im Cournot-Gleichgewicht einen höheren Marktanteil erobern.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Menge U1 ansetzen",
+								"description": "Wir nutzen die Formel für asymmetrische Grenzkosten für das erste Unternehmen.",
+								"math": "x_1^* = \\frac{a - 2 \\cdot c_1 + c_2}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für U1 einsetzen",
+								"description": "Einsetzen der Parameter $a=120$, $c_1=20$, $c_2=40$ und $b=2$.",
+								"math": "x_1^* = \\frac{120 - 2 \\cdot 20 + 40}{3 \\cdot 2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler U1 berechnen",
+								"description": "Zusammenfassen der Werte im Zähler und Nenner.",
+								"math": "x_1^* = \\frac{120 - 40 + 40}{6} = \\frac{120}{6}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_1*",
+								"description": "Gleichgewichtsmenge des effizienteren Unternehmens 1.",
+								"math": "x_1^* = 20 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Menge U2 ansetzen",
+								"description": "Nun wenden wir die Formel für das zweite Unternehmen an.",
+								"math": "x_2^* = \\frac{a - 2 \\cdot c_2 + c_1}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für U2 einsetzen",
+								"description": "Achtung: Hier werden die Grenzkosten $c_2$ verdoppelt abgezogen.",
+								"math": "x_2^* = \\frac{120 - 2 \\cdot 40 + 20}{3 \\cdot 2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler U2 berechnen",
+								"description": "Zusammenfassen für Unternehmen 2.",
+								"math": "x_2^* = \\frac{120 - 80 + 20}{6} = \\frac{60}{6}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_2*",
+								"description": "Gleichgewichtsmenge des weniger effizienten Unternehmens 2.",
+								"math": "x_2^* = 10 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Gewinn $G_1^*$ des ersten Unternehmens (ohne Fixkosten).",
+						"formulaRefs": ["gesamtmenge", "marktpreis", "gewinn-1"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Gesamtmenge",
+								"description": "Wir addieren die beiden individuellen Mengen.",
+								"math": "X^* = 20 + 10 = 30 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Wir setzen die Gesamtmenge in die Preis-Absatz-Funktion ein.",
+								"math": "p^* = 120 - 2 \\cdot 30"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis Preis",
+								"description": "Der markträumende Preis beträgt $60$ GE/ME.",
+								"math": "p^* = 60 \\text{ GE/ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion U1 aufstellen",
+								"description": "Der Gewinn ist Umsatz minus variable Kosten (da keine Fixkosten).",
+								"math": "G_1^* = (p^* - c_1) \\cdot x_1^*"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in Gewinnfunktion einsetzen",
+								"description": "Wir setzen Preis, Grenzkosten und die eigene Menge ein.",
+								"math": "G_1^* = (60 - 20) \\cdot 20"
+							},
+							{
+								"type": "calculation",
+								"title": "Gewinn ausrechnen",
+								"description": "Die Stückdeckungsspanne von $40$ GE/ME wird mit der Menge multipliziert.",
+								"math": "G_1^* = 40 \\cdot 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn",
+								"description": "Dies ist der maximale Gewinn für Unternehmen 1 im Gleichgewicht.",
+								"math": "G_1^* = 800 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Cournot vs. Kartell",
+				"descriptionTemplate": "Gegeben ist die Marktnachfrage {p_func}. Zwei Anbieter produzieren mit denselben Grenzkosten von {c} GE/ME. Man überlegt, ob sich eine Kartellbildung lohnen würde.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "KI-generierter Vergleich von Marktstrukturen",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 280 - 4 \\cdot X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 280,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 4, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 40, "unit": "GE/ME", "label": "Grenzkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gesamtmenge $X^*$ im Cournot-Gleichgewicht.",
+						"formulaRefs": ["cournot-sym", "gesamtmenge"],
+						"interpretation": "Im Mengenwettbewerb produzieren die Unternehmen zusammen mehr als ein Monopolist, da sie die negativen Preiseffekte ihrer eigenen Mengenausweitung auf den Konkurrenten ignorieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Individuelle Menge bestimmen",
+								"description": "Zunächst bestimmen wir die Menge für ein einzelnes Unternehmen.",
+								"math": "x^* = \\frac{a - c}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $a=280$, $c=40$ und $b=4$ ein.",
+								"math": "x^* = \\frac{280 - 40}{3 \\cdot 4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir vereinfachen Zähler und Nenner.",
+								"math": "x^* = \\frac{240}{12}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis Einzelmenge",
+								"description": "Jedes Unternehmen bietet $20$ ME an.",
+								"math": "x^* = 20 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Gesamtmenge berechnen",
+								"description": "Da beide symmetrisch sind, verdoppeln wir die Einzelmenge.",
+								"math": "X^* = 2 \\cdot x^*"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Cournot-Gesamtmenge",
+								"description": "Die summierte Menge im Markt.",
+								"math": "X^* = 40 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Gesamtmenge $X^K$, die bei Bildung eines Kartells (Kollusion) auf den Markt gebracht würde.",
+						"formulaRefs": ["kartellmenge"],
+						"interpretation": "Ein Kartell verhält sich wie ein Monopolist. Es maximiert den gemeinsamen Gewinn, was zu einer geringeren Gesamtmenge und einem höheren Preis führt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Monopolmenge ansetzen",
+								"description": "Die Kartellmenge entspricht der gewinnmaximalen Monopolmenge.",
+								"math": "X^K = \\frac{a - c}{2 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir nutzen dieselben Parameter wie in Teilaufgabe a.",
+								"math": "X^K = \\frac{280 - 40}{2 \\cdot 4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir teilen $240$ durch $8$.",
+								"math": "X^K = \\frac{240}{8}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kartellmenge",
+								"description": "Die strategisch reduzierte Menge des Kartells.",
+								"math": "X^K = 30 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Einfluss von Fixkosten auf den Gewinn",
+				"descriptionTemplate": "Gegeben ist die PAF {p_func}. Beide Anbieter haben variable Stückkosten von {c} GE/ME. Unternehmen 1 hat zudem Fixkosten von {K_f1} GE, Unternehmen 2 von {K_f2} GE.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Skriptbeispiel zum Thema Gewinnschwelle im Oligopol",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 80 - X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 80,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 1, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 20, "unit": "GE/ME", "label": "Grenzkosten" },
+					{
+						"type": "value",
+						"symbol": "K_f1",
+						"value": 100,
+						"unit": "GE",
+						"label": "Fixkosten U1"
+					},
+					{ "type": "value", "symbol": "K_f2", "value": 200, "unit": "GE", "label": "Fixkosten U2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gleichgewichtsmenge für beide Anbieter sowie den Marktpreis.",
+						"formulaRefs": ["cournot-sym", "gesamtmenge", "marktpreis"],
+						"interpretation": "Fixkosten haben keinen Einfluss auf die Grenzkosten und somit auch keinen Einfluss auf das strategische Verhalten bezüglich der optimalen Menge. Die Mengen bleiben symmetrisch.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Cournot-Menge ansetzen",
+								"description": "Da die Grenzkosten identisch sind, nutzen wir die symmetrische Formel.",
+								"math": "x^* = \\frac{a - c}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $a=80$, $c=20$ und $b=1$ ein.",
+								"math": "x^* = \\frac{80 - 20}{3 \\cdot 1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Einzelmenge",
+								"description": "Jedes Unternehmen produziert $20$ Einheiten.",
+								"math": "x_1^* = x_2^* = 20 \\text{ ME}"
+							},
+							{
+								"type": "calculation",
+								"title": "Marktpreis berechnen",
+								"description": "Der Preis ergibt sich aus der Gesamtmenge von $40$ ME.",
+								"math": "p^* = 80 - 40"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preis",
+								"description": "Der Gleichgewichtspreis.",
+								"math": "p^* = 40 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie die Gewinne $G_1^*$ und $G_2^*$ im Gleichgewicht.",
+						"formulaRefs": ["gewinn-1"],
+						"interpretation": "Trotz gleicher Preis- und Mengenstrategie weichen die Gewinne aufgrund der unterschiedlichen Fixkostenbelastung voneinander ab.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinn U1 ansetzen",
+								"description": "Der Gewinn ist Umsatz minus variable Kosten minus Fixkosten.",
+								"math": "G_1^* = (p^* - c) \\cdot x_1^* - K_{f1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für U1 einsetzen",
+								"description": "Deckungsspanne ist $40-20=20$. Menge ist $20$. Fixkosten $100$.",
+								"math": "G_1^* = (40 - 20) \\cdot 20 - 100"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen U1",
+								"description": "Deckungsbeitrag minus Fixkosten.",
+								"math": "G_1^* = 400 - 100"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn U1",
+								"description": "Gewinn des ersten Unternehmens.",
+								"math": "G_1^* = 300 \\text{ GE}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gewinn U2 ansetzen",
+								"description": "Für Unternehmen 2 setzen wir dessen höhere Fixkosten von $200$ ein.",
+								"math": "G_2^* = (40 - 20) \\cdot 20 - 200"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen U2",
+								"description": "Der Deckungsbeitrag bleibt gleich bei $400$.",
+								"math": "G_2^* = 400 - 200"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn U2",
+								"description": "Gewinn des zweiten Unternehmens.",
+								"math": "G_2^* = 200 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Oligopol mit n Anbietern",
+				"descriptionTemplate": "Auf dem Markt für ein Spezialbauteil agieren insgesamt $n={n}$ Unternehmen im Mengenwettbewerb. Die Preis-Absatz-Funktion lautet {p_func}. Alle Unternehmen produzieren mit konstanten Grenzkosten von {c} GE/ME.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an typische Erweiterungsaufgaben im Oligopol",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 140 - X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 140,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 1, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 20, "unit": "GE/ME", "label": "Grenzkosten" },
+					{ "type": "value", "symbol": "n", "value": 3, "unit": "", "label": "Anzahl Anbieter" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Produktionsmenge $x_i^*$ eines einzelnen Anbieters im Cournot-Gleichgewicht.",
+						"formulaRefs": ["oligopol-n"],
+						"interpretation": "Mit steigender Anzahl an Anbietern ($n$) sinkt die Marktanteilsquote und somit die individuelle Produktionsmenge jedes einzelnen Akteurs.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Allgemeine Formel n-Oligopol",
+								"description": "Die Gleichgewichtsmenge im symmetrischen $n$-Oligopol skaliert mit dem Faktor $1/(n+1)$.",
+								"math": "x_i^* = \\frac{a - c}{(n + 1) \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $a=140$, $c=20$, $b=1$ und $n=3$ ein.",
+								"math": "x_i^* = \\frac{140 - 20}{(3 + 1) \\cdot 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir teilen $120$ durch $4$.",
+								"math": "x_i^* = \\frac{120}{4}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die optimale Menge für jeden der drei Anbieter.",
+								"math": "x_i^* = 30 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Gleichgewichtspreis $p^*$ auf dem Gesamtmarkt.",
+						"formulaRefs": ["marktpreis"],
+						"interpretation": "Durch die Präsenz von drei statt zwei Anbietern ist die Gesamtmenge größer, was zu einem geringeren Marktpreis und damit mehr Konsumentenrente führt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gesamtmenge bestimmen",
+								"description": "Da es $n=3$ symmetrische Anbieter gibt, ist die Gesamtmenge $X = 3 \\cdot x_i^*$.",
+								"math": "X^* = 3 \\cdot 30"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis Gesamtmenge",
+								"description": "Es werden insgesamt $90$ ME produziert.",
+								"math": "X^* = 90 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "In PAF einsetzen",
+								"description": "Wir setzen die $90$ ME in die PAF ein.",
+								"math": "p^* = 140 - 90"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preis",
+								"description": "Der resultierende Marktpreis.",
+								"math": "p^* = 50 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Mathematische Herleitung der Reaktionsfunktion",
+				"descriptionTemplate": "Es liege die PAF {p_func} vor. Unternehmen 1 produziert mit Grenzkosten von {c} GE/ME. Fixkosten fallen nicht an.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Mathematische Vertiefungsaufgabe",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 100 - 2 \\cdot X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{ "type": "value", "symbol": "c", "value": 20, "unit": "GE/ME", "label": "Grenzkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Leiten Sie die Reaktionsfunktion $x_1(x_2)$ des ersten Unternehmens Schritt für Schritt mathematisch her.",
+						"formulaRefs": ["gewinn-1"],
+						"interpretation": "Die Reaktionsfunktion beschreibt die geometrische Menge aller gewinnmaximalen Antworten eines Unternehmens auf eine beliebige, hypothetisch gesetzte Angebotsmenge des Konkurrenten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion aufstellen",
+								"description": "Wir ersetzen $X$ durch $x_1 + x_2$ in der Gewinnfunktion.",
+								"math": "G_1 = (100 - 2 \\cdot (x_1 + x_2)) \\cdot x_1 - 20 \\cdot x_1"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammern auflösen",
+								"description": "Wir multiplizieren $x_1$ in die Klammer hinein.",
+								"math": "G_1 = 100 \\cdot x_1 - 2 \\cdot x_1^2 - 2 \\cdot x_1 \\cdot x_2 - 20 \\cdot x_1"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir fassen die $x_1$-Terme zusammen ($100 - 20 = 80$).",
+								"math": "G_1 = 80 \\cdot x_1 - 2 \\cdot x_1^2 - 2 \\cdot x_1 \\cdot x_2"
+							},
+							{
+								"type": "formula",
+								"title": "Ableiten und Null setzen",
+								"description": "Für das Gewinnmaximum leiten wir $G_1$ partiell nach der eigenen Aktionsvariablen $x_1$ ab und setzen die Ableitung null.",
+								"math": "\\frac{\\partial G_1}{\\partial x_1} = 80 - 4 \\cdot x_1 - 2 \\cdot x_2 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Umstellen nach x_1",
+								"description": "Wir bringen den Term $4 \\cdot x_1$ auf die andere Seite der Gleichung.",
+								"math": "4 \\cdot x_1 = 80 - 2 \\cdot x_2"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x_1 auflösen",
+								"description": "Wir dividieren die gesamte Gleichung durch $4$, um die Reaktionsfunktion zu isolieren.",
+								"math": "x_1 = \\frac{80}{4} - \\frac{2 \\cdot x_2}{4}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Reaktionsfunktion",
+								"description": "Dies ist die fertige Reaktionsfunktion von Unternehmen 1.",
+								"math": "x_1(x_2) = 20 - 0{,}5 \\cdot x_2"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kommazahlen im Cournot-Modell",
+				"descriptionTemplate": "Zwei Duopolisten konkurrieren bei einer PAF von {p_func}. Beide haben die gleichen Grenzkosten in Höhe von {c} GE/ME.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Aufgabe zur Übung mit Dezimalzahlen",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 50 - 0{,}5 \\cdot X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 50,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 0.5, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 14, "unit": "GE/ME", "label": "Grenzkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Gesamtmenge $X^*$ im Gleichgewicht und den Marktpreis $p^*$.",
+						"formulaRefs": ["cournot-sym", "gesamtmenge", "marktpreis"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Einzelmengen bestimmen",
+								"description": "Wir nutzen die symmetrische Cournot-Formel.",
+								"math": "x^* = \\frac{a - c}{3 \\cdot b}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $a=50$, $c=14$ und $b=0{,}5$ ein.",
+								"math": "x^* = \\frac{50 - 14}{3 \\cdot 0{,}5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Zähler ist $36$, Nenner ist $1{,}5$.",
+								"math": "x^* = \\frac{36}{1{,}5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis Einzelmenge",
+								"description": "Wir erweitern den Bruch mit $2$ (also $72/3$) und erhalten $24$.",
+								"math": "x^* = 24 \\text{ ME}"
+							},
+							{
+								"type": "calculation",
+								"title": "Gesamtmenge",
+								"description": "Die summierte Marktmenge ist doppelt so groß.",
+								"math": "X^* = 48 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Einsetzen der $48$ ME in die Preis-Absatz-Funktion.",
+								"math": "p^* = 50 - 0{,}5 \\cdot 48"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preis",
+								"description": "Der markträumende Preis.",
+								"math": "p^* = 26 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Gewinn $G_1^*$ eines der beiden Duopolisten.",
+						"formulaRefs": ["gewinn-1"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion",
+								"description": "Der Gewinn ist die Stückdeckungsspanne multipliziert mit der eigenen Menge.",
+								"math": "G_1^* = (p^* - c) \\cdot x_1^*"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $p^*=26$, $c=14$ und $x_1^*=24$ ein.",
+								"math": "G_1^* = (26 - 14) \\cdot 24"
+							},
+							{
+								"type": "calculation",
+								"title": "Deckungsspanne",
+								"description": "Die Spanne pro Stück beträgt $12$ GE/ME.",
+								"math": "G_1^* = 12 \\cdot 24"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn",
+								"description": "Der resultierende Gewinn im Gleichgewicht.",
+								"math": "G_1^* = 288 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Monopolpreis vs. Cournot-Preis",
+				"descriptionTemplate": "Ein Markt weist die Nachfragefunktion {p_func} auf. Die Produktion erfolgt mit konstanten Grenzkosten von {c} GE/ME. Vergleichen Sie den Marktpreis im Monopol mit dem Marktpreis in einem symmetrischen Cournot-Duopol.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Synthese-Aufgabe",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p_func",
+						"math": "p(X) = 300 - 2 \\cdot X",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "value",
+						"symbol": "a",
+						"value": 300,
+						"unit": "GE/ME",
+						"label": "Prohibitivpreis"
+					},
+					{ "type": "value", "symbol": "b", "value": 2, "unit": "", "label": "Steigung PAF" },
+					{ "type": "value", "symbol": "c", "value": 60, "unit": "GE/ME", "label": "Grenzkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Marktpreis $p^C$ im Cournot-Gleichgewicht.",
+						"formulaRefs": ["cournot-sym", "gesamtmenge", "marktpreis"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Cournot-Menge ansetzen",
+								"description": "Wir setzen direkt in die Formel für $X^C = 2 \\cdot \\frac{a-c}{3b}$ ein (oder berechnen $x^*$ und verdoppeln).",
+								"math": "x^* = \\frac{300 - 60}{3 \\cdot 2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Einzelmenge",
+								"description": "Berechnung der Einzelmenge.",
+								"math": "x^* = \\frac{240}{6} = 40 \\text{ ME}"
+							},
+							{
+								"type": "calculation",
+								"title": "Gesamtmenge Cournot",
+								"description": "Wir verdoppeln die Menge.",
+								"math": "X^C = 80 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Einsetzen in die PAF.",
+								"math": "p^C = 300 - 2 \\cdot 80"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Cournot-Preis",
+								"description": "Der Preis im Duopol.",
+								"math": "p^C = 140 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den Monopolpreis $p^M$ und geben Sie die Preisdifferenz an.",
+						"formulaRefs": ["kartellmenge", "marktpreis"],
+						"interpretation": "Der Monopolist kann den Preis höher setzen, da es keinen Wettbewerber gibt, der durch Mengenausweitung den Preis drückt.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Monopolmenge ansetzen",
+								"description": "Wir setzen in die Formel $X^M = \\frac{a-c}{2b}$ ein.",
+								"math": "X^M = \\frac{300 - 60}{2 \\cdot 2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Monopolmenge berechnen",
+								"description": "Wir teilen $240$ durch $4$.",
+								"math": "X^M = 60 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Monopolpreis berechnen",
+								"description": "Einsetzen der geringeren Menge in die PAF.",
+								"math": "p^M = 300 - 2 \\cdot 60"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis Monopolpreis",
+								"description": "Der Preis im Monopol liegt bei $180$ GE/ME.",
+								"math": "p^M = 180 \\text{ GE/ME}"
+							},
+							{
+								"type": "calculation",
+								"title": "Preisdifferenz ermitteln",
+								"description": "Wir ziehen den Cournot-Preis vom Monopolpreis ab.",
+								"math": "\\Delta p = 180 - 140"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preisdifferenz",
+								"description": "Das ist der Preisaufschlag durch die Monopolmacht.",
+								"math": "\\Delta p = 40 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

@@ -122,12 +122,13 @@ export interface SubTask {
 	formulaRefs?: string[];
 	/** Mindestens ein Schritt; letzter Schritt sollte type 'result' sein */
 	steps: Step[];
+	interpretation?: string;
 }
 
 // ---------------------------------------------------------------------------
 // Aufgaben
 // ---------------------------------------------------------------------------
-
+export type ExerciseSource = 'Klausur' | 'Skript' | 'AI-generated' | 'Manuell';
 export interface Exercise {
 	title: string;
 	/**
@@ -136,13 +137,20 @@ export interface Exercise {
 	 * Beispiel: "Jahresbedarf: {R} {R.unit}, Zinssatz: {i_pct} %"
 	 */
 	descriptionTemplate: string;
+	/** * Gibt an, ob die Aufgabe manuell von einem Menschen geprüft wurde.
+	 * Wird bei KI-Generierung standardmäßig immer auf false gesetzt.
+	 */
+	verified?: boolean;
+	/** Kategorisierung der Aufgabenquelle */
+	sourceType?: ExerciseSource;
+	/** Optionale Zusatzinfos zur Quelle, z.B. 'Klausur WS 25/26' oder 'Skript S. 42' */
+	sourceDetails?: string | null;
 	/** Single Source of Truth für alle gegebenen Größen */
 	given: GivenItem[];
 	/** Optionale Tabelle als Teil der Aufgabenstellung */
 	inputTable?: DataTable | null;
 	subTasks: SubTask[];
 }
-
 // ---------------------------------------------------------------------------
 // Topic
 // ---------------------------------------------------------------------------
@@ -192,7 +200,7 @@ export function resolveFormulaRefs(subTask: SubTask, topic: Topic): Formula[] {
 		.filter((f): f is Formula => f !== undefined);
 }
 
-function math(latex: string, display = false): string {
+export function math(latex: string, display = false): string {
 	return katex.renderToString(latex, { displayMode: display, throwOnError: false });
 }
 

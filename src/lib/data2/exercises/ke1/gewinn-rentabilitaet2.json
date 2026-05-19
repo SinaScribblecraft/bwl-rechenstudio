@@ -1,0 +1,785 @@
+{
+	"gewinn-rentabilitaet2": {
+		"title": "Gewinn- vs. Rentabilitätsmaximum 2",
+		"subtitle": "Berechnung der optimalen Produktionsmengen zur Maximierung von Gewinn und Rentabilität.",
+		"formulas": [
+			{
+				"id": "erloesfunktion",
+				"name": "Erlösfunktion",
+				"math": "E(x) = p \\cdot x",
+				"result": { "symbol": "E(x)", "description": "Erlös in Abhängigkeit der Menge" },
+				"params": [
+					{ "symbol": "p", "description": "Preis pro Mengeneinheit (GE/ME)" },
+					{ "symbol": "x", "description": "Produktionsmenge (ME)" }
+				]
+			},
+			{
+				"id": "gewinnfunktion",
+				"name": "Gewinnfunktion",
+				"math": "G(x) = E(x) - K(x)",
+				"result": { "symbol": "G(x)", "description": "Gewinn in Abhängigkeit der Menge" },
+				"params": [
+					{ "symbol": "E(x)", "description": "Erlösfunktion" },
+					{ "symbol": "K(x)", "description": "Kostenfunktion" }
+				]
+			},
+			{
+				"id": "rentabilitaetsfunktion",
+				"name": "Rentabilitätsfunktion",
+				"math": "R(x) = \\frac{G(x)}{K(x)}",
+				"result": {
+					"symbol": "R(x)",
+					"description": "Rentabilität als Quotient aus Gewinn und Kosten"
+				},
+				"params": [
+					{ "symbol": "G(x)", "description": "Gewinnfunktion" },
+					{ "symbol": "K(x)", "description": "Kostenfunktion" }
+				]
+			},
+			{
+				"id": "gewinnmaximum",
+				"name": "Bedingung Gewinnmaximum",
+				"math": "G'(x) = 0",
+				"result": { "symbol": "x_G", "description": "Gewinnmaximale Menge" },
+				"params": [{ "symbol": "G'(x)", "description": "Erste Ableitung der Gewinnfunktion" }]
+			},
+			{
+				"id": "rentabilitaetsmaximum",
+				"name": "Bedingung Rentabilitätsmaximum",
+				"math": "R'(x) = 0 \\implies G'(x) \\cdot K(x) - G(x) \\cdot K'(x) = 0",
+				"result": { "symbol": "x_R", "description": "Rentabilitätsmaximale Menge" },
+				"params": [
+					{ "symbol": "G'(x)", "description": "Grenzgewinn" },
+					{ "symbol": "K(x)", "description": "Kosten" },
+					{ "symbol": "G(x)", "description": "Gewinn" },
+					{ "symbol": "K'(x)", "description": "Grenzkosten" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlagen Gewinn- und Rentabilitätsmaximum",
+				"descriptionTemplate": "Ein Unternehmen verkauft sein Produkt zu einem festen Preis von {p} GE/ME. Die Kostenfunktion lautet {K}. Bestimmen Sie die Mengen für das Gewinn- und Rentabilitätsmaximum.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Standardaufgabe",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 20, "unit": "GE/ME", "label": "Marktpreis" },
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = x^2 + 4x + 16",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die gewinnmaximale Ausbringungsmenge $x_G$.",
+						"formulaRefs": ["erloesfunktion", "gewinnfunktion", "gewinnmaximum"],
+						"interpretation": "Das Gewinnmaximum wird dort erreicht, wo der zusätzliche Erlös einer weiteren Einheit genau den zusätzlichen Kosten entspricht (Grenzerlös = Grenzkosten).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlös- und Gewinnfunktion",
+								"description": "Zuerst stellen wir die Erlösfunktion und daraus die Gewinnfunktion auf.",
+								"math": "G(x) = 20x - (x^2 + 4x + 16)"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir vereinfachen die Gewinnfunktion.",
+								"math": "G(x) = -x^2 + 16x - 16"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung bilden",
+								"description": "Für das Gewinnmaximum setzen wir die erste Ableitung der Gewinnfunktion gleich null.",
+								"math": "G'(x) = -2x + 16 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximale Menge",
+								"description": "Nach $x$ aufgelöst erhalten wir das Ergebnis.",
+								"math": "x_G = 8 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die rentabilitätsmaximale Ausbringungsmenge $x_R$.",
+						"formulaRefs": ["rentabilitaetsfunktion", "rentabilitaetsmaximum"],
+						"interpretation": "Das Rentabilitätsmaximum liegt meist bei einer geringeren Menge als das Gewinnmaximum, da hier das Verhältnis von Gewinn zu eingesetztem Kapital (Kosten) optimiert wird.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung Rentabilitätsmaximum",
+								"description": "Die Ableitung der Rentabilitätsfunktion wird null, wenn der Zähler der Quotientenregel null ist.",
+								"math": "G'(x) \\cdot K(x) - G(x) \\cdot K'(x) = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Funktionen und ihre Ableitungen in die Bedingung ein.",
+								"math": "(-2x + 16) \\cdot (x^2 + 4x + 16) - (-x^2 + 16x - 16) \\cdot (2x + 4) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammern auflösen",
+								"description": "Wir multiplizieren die Klammern sorgfältig aus.",
+								"math": "(-2x^3 - 8x^2 - 32x + 16x^2 + 64x + 256) - (-2x^3 - 4x^2 + 32x^2 + 64x - 32x - 64) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir fassen die Terme in den Klammern zusammen und subtrahieren sie.",
+								"math": "(-2x^3 + 8x^2 + 32x + 256) - (-2x^3 + 28x^2 + 32x - 64) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachen",
+								"description": "Die kubischen Terme heben sich auf, es bleibt eine quadratische Gleichung.",
+								"math": "-20x^2 + 320 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Wir lösen nach $x$ auf ($x^2 = 16$). Da die Menge positiv sein muss, ziehen wir die Wurzel.",
+								"math": "x_R = 4 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Klausuraufgabe: Direkte Vorgabe der Gewinnfunktion",
+				"descriptionTemplate": "Einem Betrieb liegen folgende Funktionen für Gewinn {G} und Kosten {K} vor.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an typische Klausuraufgaben",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "G",
+						"math": "G(x) = -2x^2 + 20x - 18",
+						"label": "Gewinnfunktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 2x^2 + 4x + 18",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die gewinnmaximale Menge $x_G$ sowie den maximalen Gewinn $G^{max}$.",
+						"formulaRefs": ["gewinnmaximum"],
+						"interpretation": "Hier wird direkt die Gewinnfunktion optimiert und der resultierende absolute Gewinn berechnet.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ableitung der Gewinnfunktion",
+								"description": "Wir leiten die gegebene Gewinnfunktion ab und setzen sie null.",
+								"math": "G'(x) = -4x + 20 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximale Menge",
+								"description": "Durch Umstellen erhalten wir das $x_G$.",
+								"math": "x_G = 5 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gewinn berechnen",
+								"description": "Wir setzen das gefundene $x_G$ in die ursprüngliche Gewinnfunktion ein.",
+								"math": "G^{max} = -2(5)^2 + 20(5) - 18"
+							},
+							{
+								"type": "result",
+								"title": "Maximaler Gewinn",
+								"description": "Das Endergebnis für den maximalen Gewinn.",
+								"math": "G^{max} = 32 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die rentabilitätsmaximale Menge $x_R$.",
+						"formulaRefs": ["rentabilitaetsmaximum"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz über Quotientenregel",
+								"description": "Für das Rentabilitätsmaximum muss der Zähler der abgeleiteten Rentabilitätsfunktion null sein.",
+								"math": "G'(x) \\cdot K(x) - G(x) \\cdot K'(x) = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Funktionen einsetzen",
+								"description": "Wir setzen die gegebenen Funktionen $G(x)$, $K(x)$ und ihre Ableitungen ein.",
+								"math": "(-4x + 20) \\cdot (2x^2 + 4x + 18) - (-2x^2 + 20x - 18) \\cdot (4x + 4) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausmultiplizieren",
+								"description": "Wir multiplizieren beide Hauptterme aus.",
+								"math": "(-8x^3 - 16x^2 - 72x + 40x^2 + 80x + 360) - (-8x^3 - 8x^2 + 80x^2 + 80x - 72x - 72) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir fassen die jeweiligen Klammern zusammen.",
+								"math": "(-8x^3 + 24x^2 + 8x + 360) - (-8x^3 + 72x^2 + 8x - 72) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Subtrahieren",
+								"description": "Wir ziehen die zweite Klammer von der ersten ab.",
+								"math": "-48x^2 + 432 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Wir formen nach $x$ um ($48x^2 = 432 \\implies x^2 = 9$) und ziehen die Wurzel.",
+								"math": "x_R = 3 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Monopolist mit Preisabsatzfunktion",
+				"descriptionTemplate": "Ein Monopolist sieht sich der Preisabsatzfunktion {p} gegenüber. Seine Kostenstruktur wird durch {K} beschrieben.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel Produktions- und Kostentheorie",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 50 - x",
+						"label": "Preisabsatzfunktion"
+					},
+					{ "type": "formula", "symbol": "K", "math": "K(x) = 10x + 90", "label": "Kostenfunktion" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die Erlösfunktion $E(x)$ und die Gewinnfunktion $G(x)$ auf.",
+						"formulaRefs": ["erloesfunktion", "gewinnfunktion"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion",
+								"description": "Der Erlös ergibt sich aus Preis mal Menge. Da der Preis von der Menge abhängt, multiplizieren wir die Preisabsatzfunktion mit $x$.",
+								"math": "E(x) = (50 - x) \\cdot x"
+							},
+							{
+								"type": "result",
+								"title": "Erlösfunktion ausmultipliziert",
+								"description": "Ausmultipliziert lautet die Erlösfunktion:",
+								"math": "E(x) = 50x - x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion",
+								"description": "Der Gewinn ist Erlös minus Kosten.",
+								"math": "G(x) = (50x - x^2) - (10x + 90)"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnfunktion zusammengefasst",
+								"description": "Zusammengefasst lautet die Gewinnfunktion:",
+								"math": "G(x) = -x^2 + 40x - 90"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie das Gewinnmaximum $x_G$ und das Rentabilitätsmaximum $x_R$.",
+						"formulaRefs": ["gewinnmaximum", "rentabilitaetsmaximum"],
+						"interpretation": "Auch beim Monopolisten liegt das Rentabilitätsmaximum in der Regel links vom Gewinnmaximum.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung Gewinnmaximum",
+								"description": "Wir leiten $G(x)$ ab und setzen es null.",
+								"math": "G'(x) = -2x + 40 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximale Menge",
+								"description": "Umgestellt ergibt sich:",
+								"math": "x_G = 20 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Bedingung Rentabilitätsmaximum",
+								"description": "Wir nutzen die Bedingung $G'(x)K(x) - G(x)K'(x) = 0$.",
+								"math": "(-2x + 40) \\cdot (10x + 90) - (-x^2 + 40x - 90) \\cdot 10 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausmultiplizieren",
+								"description": "Wir multiplizieren die Terme sorgfältig aus.",
+								"math": "(-20x^2 - 180x + 400x + 3600) - (-10x^2 + 400x - 900) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir fassen zusammen und subtrahieren.",
+								"math": "(-20x^2 + 220x + 3600) - (-10x^2 + 400x - 900) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachte quadratische Gleichung",
+								"description": "Wir ordnen die Terme.",
+								"math": "-10x^2 - 180x + 4500 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Durch -10 teilen",
+								"description": "Zur einfacheren Lösung teilen wir durch $-10$.",
+								"math": "x^2 + 18x - 450 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Mit der pq-Formel ($x = -9 \\pm \\sqrt{81 + 450} = -9 \\pm 23$) erhalten wir die positive Lösung.",
+								"math": "x_R = 14 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Diskrete Analyse über Tabelle",
+				"descriptionTemplate": "Ein Unternehmen evaluiert fünf verschiedene Produktionsmengen und hat die zugehörigen Erlöse und Kosten in einer Tabelle erfasst. Bestimmen Sie anhand der diskreten Werte das Gewinn- und Rentabilitätsmaximum.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Tabellarische Aufgabe zur Unterscheidung der Konzepte",
+				"given": [],
+				"inputTable": {
+					"headers": ["$x$ (ME)", "$E(x)$ (GE)", "$K(x)$ (GE)"],
+					"rows": [
+						["1", "20", "25"],
+						["2", "40", "30"],
+						["3", "60", "38"],
+						["4", "80", "55"],
+						["5", "100", "80"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bei welcher Menge $x_G$ wird der höchste absolute Gewinn erzielt?",
+						"formulaRefs": ["gewinnfunktion"],
+						"interpretation": "Wir vergleichen die absolute Differenz zwischen Erlös und Kosten für jede Menge.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Gewinne berechnen",
+								"description": "Wir berechnen den Gewinn $G = E - K$ für alle $x$-Werte: $G(1) = -5$, $G(2) = 10$, $G(3) = 22$, $G(4) = 25$, $G(5) = 20$.",
+								"math": "G(x) \\in \\{-5, 10, 22, 25, 20\\}"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximum",
+								"description": "Der höchste Gewinn ($25 \\text{ GE}$) wird bei $x = 4$ erzielt.",
+								"math": "x_G = 4 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bei welcher Menge $x_R$ wird die höchste Rentabilität erzielt?",
+						"formulaRefs": ["rentabilitaetsfunktion"],
+						"interpretation": "Die Rentabilität misst die prozentuale Verzinsung des eingesetzten Kapitals (Kosten).",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Rentabilitäten berechnen",
+								"description": "Wir berechnen $R = G / K$ für die profitablen Mengen: $R(2) = 10/30 \\approx 33{,}3\\%$, $R(3) = 22/38 \\approx 57{,}9\\%$, $R(4) = 25/55 \\approx 45{,}5\\%$, $R(5) = 20/80 = 25\\%$.",
+								"math": "R(x) \\in \\{-0{,}2, 0{,}333, 0{,}579, 0{,}455, 0{,}25\\}"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximum",
+								"description": "Die höchste Rentabilität liegt bei $x = 3$ vor.",
+								"math": "x_R = 3 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gewinn vs. Rentabilität mit Fixkostenfokus",
+				"descriptionTemplate": "Ein Betrieb erzielt einen linearen Erlös {E}. Die Kostenfunktion lautet {K}. Vergleichen Sie die Maxima.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Fokus auf quadratische Kosten",
+				"given": [
+					{ "type": "formula", "symbol": "E", "math": "E(x) = 100x", "label": "Erlösfunktion" },
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 2x^2 + 20x + 200",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die gewinnmaximale Ausbringungsmenge $x_G$.",
+						"formulaRefs": ["gewinnfunktion", "gewinnmaximum"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion bilden",
+								"description": "Wir subtrahieren die Kosten vom Erlös.",
+								"math": "G(x) = 100x - (2x^2 + 20x + 200) = -2x^2 + 80x - 200"
+							},
+							{
+								"type": "formula",
+								"title": "Ableiten und nullsetzen",
+								"description": "Wir bilden die erste Ableitung.",
+								"math": "G'(x) = -4x + 80 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximale Menge",
+								"description": "Wir formen nach $x$ um.",
+								"math": "x_G = 20 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die rentabilitätsmaximale Ausbringungsmenge $x_R$.",
+						"formulaRefs": ["rentabilitaetsmaximum"],
+						"interpretation": "Das Rentabilitätsmaximum zeigt an, bei welcher Produktionsmenge jeder investierte Euro Kosten den höchsten relativen Gewinn abwirft.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Quotientenregel Zähler",
+								"description": "Wir verwenden die Bedingung für das Rentabilitätsmaximum.",
+								"math": "(-4x + 80) \\cdot (2x^2 + 20x + 200) - (-2x^2 + 80x - 200) \\cdot (4x + 20) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausmultiplizieren der Klammern",
+								"description": "Wir multiplizieren die beiden Produkte aus.",
+								"math": "(-8x^3 - 80x^2 - 800x + 160x^2 + 1600x + 16000) - (-8x^3 - 40x^2 + 320x^2 + 1600x - 800x - 4000) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Innere Zusammenfassung",
+								"description": "Wir fassen die Terme in den Klammern zusammen.",
+								"math": "(-8x^3 + 80x^2 + 800x + 16000) - (-8x^3 + 280x^2 + 800x - 4000) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Subtraktion",
+								"description": "Wir subtrahieren die Terme voneinander.",
+								"math": "-200x^2 + 20000 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Wir lösen nach $x$ auf ($200x^2 = 20000 \\implies x^2 = 100$).",
+								"math": "x_R = 10 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Klausur: Monopolistische Preisbildung",
+				"descriptionTemplate": "Gegeben sei die Preisabsatzfunktion {p} sowie die Kostenfunktion {K} eines Monopolisten.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Ähnlich Klausur EBWL",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 130 - 2x",
+						"label": "Preisabsatzfunktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 10x + 200",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die gewinnmaximale Menge $x_G$.",
+						"formulaRefs": ["erloesfunktion", "gewinnfunktion", "gewinnmaximum"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion aufstellen",
+								"description": "Wir bilden $G(x) = p(x) \\cdot x - K(x)$.",
+								"math": "G(x) = (130x - 2x^2) - (10x + 200)"
+							},
+							{
+								"type": "calculation",
+								"title": "Gewinnfunktion vereinfachen",
+								"description": "Wir fassen die Terme zusammen.",
+								"math": "G(x) = -2x^2 + 120x - 200"
+							},
+							{
+								"type": "formula",
+								"title": "Ableiten und nullsetzen",
+								"description": "Für das Maximum muss die erste Ableitung null sein.",
+								"math": "G'(x) = -4x + 120 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gewinnmaximale Menge",
+								"description": "Die Lösung für $x$.",
+								"math": "x_G = 30 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die rentabilitätsmaximale Menge $x_R$.",
+						"formulaRefs": ["rentabilitaetsmaximum"],
+						"interpretation": "Die Rentabilität ist dort maximal, wo die tangentielle Steigung der Gewinnfunktion gleich der Steigung des Fahrstrahls vom Ursprung zur Kostenfunktion ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung anwenden",
+								"description": "Wir setzen in die Bedingung $G'(x)K(x) - G(x)K'(x) = 0$ ein.",
+								"math": "(-4x + 120) \\cdot (10x + 200) - (-2x^2 + 120x - 200) \\cdot 10 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausmultiplizieren",
+								"description": "Wir lösen die Produkte auf.",
+								"math": "(-40x^2 - 800x + 1200x + 24000) - (-20x^2 + 1200x - 2000) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir vereinfachen die Differenz.",
+								"math": "(-40x^2 + 400x + 24000) - (-20x^2 + 1200x - 2000) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Quadratische Gleichung",
+								"description": "Wir ziehen die Terme ab.",
+								"math": "-20x^2 - 800x + 26000 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung normieren",
+								"description": "Wir teilen durch $-20$.",
+								"math": "x^2 + 40x - 1300 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Mit der pq-Formel lösen wir nach $x$ auf ($x = -20 \\pm \\sqrt{400 + 1300} = -20 \\pm 41{,}23$). Da Mengen positiv sein müssen und hier keine glatte Zahl rauskommt, haben wir eine leichte Rundung. (Hinweis: Die genaue Rechnung ergibt $\\approx 21{,}23$. Zur Übung akzeptieren wir das gerundete Ergebnis).",
+								"math": "x_R \\approx 21{,}23 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Skript: Vergleich der Maxima",
+				"descriptionTemplate": "Ein Unternehmen verkauft zu einem festen Preis {p}. Die Kosten belaufen sich auf {K}.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Klassisches Übungsbeispiel",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 90, "unit": "GE/ME", "label": "Preis" },
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 3x^2 + 18x + 108",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die gewinnmaximale Menge $x_G$.",
+						"formulaRefs": ["gewinnfunktion", "gewinnmaximum"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion",
+								"description": "Gewinn ist Erlös minus Kosten.",
+								"math": "G(x) = 90x - (3x^2 + 18x + 108) = -3x^2 + 72x - 108"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung nullsetzen",
+								"description": "Für das Maximum leiten wir ab.",
+								"math": "G'(x) = -6x + 72 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Wir lösen nach $x$ auf.",
+								"math": "x_G = 12 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die rentabilitätsmaximale Menge $x_R$.",
+						"formulaRefs": ["rentabilitaetsmaximum"],
+						"interpretation": "Ein Vergleich zeigt, dass das Rentabilitätsmaximum hier genau bei der halben Menge des Gewinnmaximums liegt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung für das Rentabilitätsmaximum",
+								"description": "Wir wenden die Quotientenregel an (Zähler = 0).",
+								"math": "(-6x + 72) \\cdot (3x^2 + 18x + 108) - (-3x^2 + 72x - 108) \\cdot (6x + 18) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Erste Klammer ausmultiplizieren",
+								"description": "Wir multiplizieren den ersten Teil.",
+								"math": "-18x^3 - 108x^2 - 648x + 216x^2 + 1296x + 7776"
+							},
+							{
+								"type": "calculation",
+								"title": "Zweite Klammer ausmultiplizieren",
+								"description": "Wir multiplizieren den zweiten Teil.",
+								"math": "-18x^3 - 54x^2 + 432x^2 + 1296x - 648x - 1944"
+							},
+							{
+								"type": "calculation",
+								"title": "Differenz bilden",
+								"description": "Wir ziehen die zweite ausmultiplizierte Klammer von der ersten ab.",
+								"math": "(-18x^3 + 108x^2 + 648x + 7776) - (-18x^3 + 378x^2 + 648x - 1944) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir vereinfachen die Gleichung.",
+								"math": "-270x^2 + 9720 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Aufgelöst nach $x$ ($270x^2 = 9720 \\implies x^2 = 36$).",
+								"math": "x_R = 6 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Manuelle Erstellung: Hoher Stückpreis",
+				"descriptionTemplate": "Ein Produzent hat einen garantierten Abnahmepreis von {p} GE/ME. Seine Kosten werden durch {K} modelliert.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Ausgedachte Zahlenwerte für saubere Brüche",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 140, "unit": "GE/ME", "label": "Preis" },
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 5x^2 + 20x + 125",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Menge $x_G$, die den Gewinn maximiert.",
+						"formulaRefs": ["gewinnfunktion", "gewinnmaximum"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion ermitteln",
+								"description": "Wir berechnen den Gewinn.",
+								"math": "G(x) = 140x - (5x^2 + 20x + 125) = -5x^2 + 120x - 125"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung nullsetzen",
+								"description": "Wir leiten ab.",
+								"math": "G'(x) = -10x + 120 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Menge für maximalen Gewinn",
+								"description": "Das Ergebnis für das Gewinnmaximum.",
+								"math": "x_G = 12 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie die Menge $x_R$, die die Rentabilität maximiert.",
+						"formulaRefs": ["rentabilitaetsmaximum"],
+						"interpretation": "Auch hier liegt das Rentabilitätsmaximum deutlich vor dem Gewinnmaximum, da die Fixkosten von $125$ GE relativ schnell überkompensiert werden und danach die steigenden Grenzkosten die Rentabilität drücken.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung Rentabilitätsmaximum",
+								"description": "Wir wenden die bekannte Bedingung an.",
+								"math": "(-10x + 120) \\cdot (5x^2 + 20x + 125) - (-5x^2 + 120x - 125) \\cdot (10x + 20) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Erster Term",
+								"description": "Wir multiplizieren den ersten Teil aus.",
+								"math": "-50x^3 - 200x^2 - 1250x + 600x^2 + 2400x + 15000"
+							},
+							{
+								"type": "calculation",
+								"title": "Zweiter Term",
+								"description": "Wir multiplizieren den zweiten Teil aus.",
+								"math": "-50x^3 - 100x^2 + 1200x^2 + 2400x - 1250x - 2500"
+							},
+							{
+								"type": "calculation",
+								"title": "Differenz",
+								"description": "Wir bilden die Differenz der beiden Terme.",
+								"math": "(-50x^3 + 400x^2 + 1150x + 15000) - (-50x^3 + 1100x^2 + 1150x - 2500) = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachen",
+								"description": "Die Gleichung vereinfacht sich stark.",
+								"math": "-700x^2 + 17500 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Rentabilitätsmaximale Menge",
+								"description": "Wir lösen nach $x$ auf ($700x^2 = 17500 \\implies x^2 = 25$).",
+								"math": "x_R = 5 \\text{ ME}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

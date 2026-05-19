@@ -1,0 +1,644 @@
+{
+	"produktionsprogramm": {
+		"title": "Produktionsprogrammplanung und Deckungsspanne",
+		"subtitle": "Optimale Programmplanung, Engpässe, relative Deckungsspannen und wertmäßige Kosten.",
+		"formulas": [
+			{
+				"id": "deckungsspanne",
+				"name": "Absolute Deckungsspanne",
+				"math": "DS_j = p_j - k_{v,j}",
+				"result": { "symbol": "DS_j", "description": "Absolute Deckungsspanne des Produkts j" },
+				"params": [
+					{ "symbol": "p_j", "description": "Absatzpreis des Produkts j" },
+					{ "symbol": "k_{v,j}", "description": "Variable Stückkosten des Produkts j" }
+				]
+			},
+			{
+				"id": "relative-ds",
+				"name": "Relative Deckungsspanne",
+				"math": "rDS_j = \\frac{DS_j}{a_{i,j}}",
+				"result": { "symbol": "rDS_j", "description": "Deckungsspanne pro Engpasseinheit" },
+				"params": [
+					{ "symbol": "DS_j", "description": "Absolute Deckungsspanne" },
+					{
+						"symbol": "a_{i,j}",
+						"description": "Produktionskoeffizient / Kapazitätsbedarf je Stück"
+					}
+				]
+			},
+			{
+				"id": "kapazitaetsbedarf",
+				"name": "Gesamtkapazitätsbedarf",
+				"math": "K_{bed} = x_1 \\cdot a_1 + x_2 \\cdot a_2",
+				"result": { "symbol": "K_{bed}", "description": "Benötigte Gesamtkapazität" },
+				"params": [
+					{ "symbol": "x_1", "description": "Menge Produkt 1" },
+					{ "symbol": "a_1", "description": "Kapazitätsbedarf Produkt 1" },
+					{ "symbol": "x_2", "description": "Menge Produkt 2" },
+					{ "symbol": "a_2", "description": "Kapazitätsbedarf Produkt 2" }
+				]
+			},
+			{
+				"id": "opportunitaetskosten",
+				"name": "Opportunitätskosten (Schattenpreis)",
+				"math": "OK = rDS_{verdr\\ddot{a}ngt}",
+				"result": {
+					"symbol": "OK",
+					"description": "Grenzerfolg einer zusätzlichen Engpasseinheit"
+				},
+				"params": [
+					{
+						"symbol": "rDS_{verdr\\ddot{a}ngt}",
+						"description": "Relative Deckungsspanne des marginalen Produkts"
+					}
+				]
+			},
+			{
+				"id": "wertmaessige-kosten",
+				"name": "Wertmäßige Kosten",
+				"math": "q_{wert} = q_{pag} + OK",
+				"result": { "symbol": "q_{wert}", "description": "Wertmäßige Kosten einer Faktoreinheit" },
+				"params": [
+					{ "symbol": "q_{pag}", "description": "Pagatorische Kosten (Beschaffungspreis)" },
+					{ "symbol": "OK", "description": "Opportunitätskosten des Faktors" }
+				]
+			},
+			{
+				"id": "wertmaessige-deckungsspanne",
+				"name": "Wertmäßige Deckungsspanne",
+				"math": "DS_{wert,j} = p_j - k_{wert,v,j}",
+				"result": { "symbol": "DS_{wert,j}", "description": "Wertmäßige Deckungsspanne" },
+				"params": [
+					{ "symbol": "p_j", "description": "Absatzpreis" },
+					{ "symbol": "k_{wert,v,j}", "description": "Variable wertmäßige Stückkosten" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlagen der Deckungsspanne",
+				"descriptionTemplate": "Ein Unternehmen stellt ein Produkt her. Der Verkaufspreis beträgt {p} GE/ME. An variablen Kosten fallen {kv} GE/ME an. Ein Kapazitätsengpass liegt nicht vor.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Skript KE 2, Grundlagen Leistungsprozess",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "p",
+						"value": 120,
+						"unit": "GE/ME",
+						"label": "Verkaufspreis"
+					},
+					{
+						"type": "value",
+						"symbol": "kv",
+						"value": 75,
+						"unit": "GE/ME",
+						"label": "Variable Kosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die absolute Deckungsspanne $DS$.",
+						"formulaRefs": ["deckungsspanne"],
+						"interpretation": "Die Deckungsspanne gibt an, wie viel ein Stück dieses Produkts zur Deckung der Fixkosten und zur Erzielung eines Gewinns beiträgt. Da sie positiv ist und kein Engpass vorliegt, sollte das Produkt produziert werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Deckungsspanne",
+								"description": "Die Deckungsspanne berechnet sich als Differenz aus Preis und variablen Kosten.",
+								"math": "DS = p - k_v"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Preis und die variablen Kosten ein.",
+								"math": "DS = 120 - 75"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das Endergebnis ist die absolute Deckungsspanne pro Stück.",
+								"math": "DS = 45 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Engpassprüfung und Kapazitätsbedarf",
+				"descriptionTemplate": "Ein Betrieb plant die Produktion von zwei Produkten. Von Produkt 1 sollen {x_1} ME hergestellt werden, von Produkt 2 sollen {x_2} ME hergestellt werden. Der Kapazitätsbedarf auf der Maschine beträgt {a_1} Std./ME für Produkt 1 und {a_2} Std./ME für Produkt 2. Die maximal verfügbare Kapazität der Maschine beträgt {K_max} Std.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Selbstausgedacht zur Engpasskontrolle",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "x_1",
+						"value": 100,
+						"unit": "ME",
+						"label": "Geplante Menge Prod. 1"
+					},
+					{
+						"type": "value",
+						"symbol": "x_2",
+						"value": 50,
+						"unit": "ME",
+						"label": "Geplante Menge Prod. 2"
+					},
+					{
+						"type": "value",
+						"symbol": "a_1",
+						"value": 2,
+						"unit": "Std./ME",
+						"label": "Bedarf Prod. 1"
+					},
+					{
+						"type": "value",
+						"symbol": "a_2",
+						"value": 5,
+						"unit": "Std./ME",
+						"label": "Bedarf Prod. 2"
+					},
+					{
+						"type": "value",
+						"symbol": "K_max",
+						"value": 400,
+						"unit": "Std.",
+						"label": "Verfügbare Kapazität"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den gesamten Kapazitätsbedarf $K_{bed}$.",
+						"formulaRefs": ["kapazitaetsbedarf"],
+						"interpretation": "Wenn der berechnete Kapazitätsbedarf größer als die verfügbare Kapazität ist, liegt ein Engpass vor und das geplante Programm kann so nicht durchgeführt werden. Hier ist der Bedarf (450) größer als das Angebot (400), es liegt also ein Engpass vor.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedarfsfunktion aufstellen",
+								"description": "Der Gesamtkapazitätsbedarf ergibt sich aus den geplanten Mengen multipliziert mit ihren jeweiligen Stückbedarfen.",
+								"math": "K_{bed} = x_1 \\cdot a_1 + x_2 \\cdot a_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Mengen und Produktionskoeffizienten ein.",
+								"math": "K_{bed} = 100 \\cdot 2 + 50 \\cdot 5"
+							},
+							{
+								"type": "calculation",
+								"title": "Produkte ausrechnen",
+								"description": "Wir berechnen die Bedarfe der einzelnen Produkte.",
+								"math": "K_{bed} = 200 + 250"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe liefert den Gesamtkapazitätsbedarf.",
+								"math": "K_{bed} = 450 \\text{ Std.}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Relative Deckungsspanne bei einem Maschinenengpass",
+				"descriptionTemplate": "Es liegt ein Maschinenengpass vor. Produkt A hat einen Preis von {p_A} GE/ME und variable Kosten von {kv_A} GE/ME. Die Bearbeitungszeit auf der Engpassmaschine beträgt {a_A} Std./ME. Produkt B hat einen Preis von {p_B} GE/ME, variable Kosten von {kv_B} GE/ME und eine Bearbeitungszeit von {a_B} Std./ME.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an typische Klausuraufgaben zur relativen DS",
+				"given": [
+					{ "type": "value", "symbol": "p_A", "value": 200, "unit": "GE/ME", "label": "Preis A" },
+					{
+						"type": "value",
+						"symbol": "kv_A",
+						"value": 140,
+						"unit": "GE/ME",
+						"label": "var. Kosten A"
+					},
+					{ "type": "value", "symbol": "a_A", "value": 4, "unit": "Std./ME", "label": "Bedarf A" },
+					{ "type": "value", "symbol": "p_B", "value": 150, "unit": "GE/ME", "label": "Preis B" },
+					{
+						"type": "value",
+						"symbol": "kv_B",
+						"value": 110,
+						"unit": "GE/ME",
+						"label": "var. Kosten B"
+					},
+					{ "type": "value", "symbol": "a_B", "value": 2, "unit": "Std./ME", "label": "Bedarf B" }
+				],
+				"inputTable": {
+					"headers": ["Produkt", "Preis", "kv", "Bedarf"],
+					"rows": [
+						["A", "{p_A}", "{kv_A}", "{a_A}"],
+						["B", "{p_B}", "{kv_B}", "{a_B}"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die absoluten Deckungsspannen $DS_A$ und $DS_B$.",
+						"formulaRefs": ["deckungsspanne"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Werte für A einsetzen",
+								"description": "Wir berechnen die Differenz für Produkt A.",
+								"math": "DS_A = 200 - 140"
+							},
+							{
+								"type": "result",
+								"title": "DS Produkt A",
+								"description": "Die absolute Deckungsspanne von A.",
+								"math": "DS_A = 60 \\text{ GE/ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für B einsetzen",
+								"description": "Wir berechnen die Differenz für Produkt B.",
+								"math": "DS_B = 150 - 110"
+							},
+							{
+								"type": "result",
+								"title": "DS Produkt B",
+								"description": "Die absolute Deckungsspanne von B.",
+								"math": "DS_B = 40 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die relativen Deckungsspannen $rDS_A$ und $rDS_B$.",
+						"formulaRefs": ["relative-ds"],
+						"interpretation": "Obwohl Produkt A die höhere absolute Deckungsspanne hat, weist Produkt B die höhere relative Deckungsspanne ($20 > 15$) auf. Bei einem Engpass sollte daher Produkt B bevorzugt gefertigt werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel relative DS",
+								"description": "Die absolute DS wird durch den Kapazitätsbedarf dividiert.",
+								"math": "rDS = \\frac{DS}{a}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen für A",
+								"description": "Wir setzen die Werte für A ein.",
+								"math": "rDS_A = \\frac{60}{4}"
+							},
+							{
+								"type": "result",
+								"title": "rDS Produkt A",
+								"description": "Relative Deckungsspanne von A.",
+								"math": "rDS_A = 15 \\text{ GE/Std.}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen für B",
+								"description": "Wir setzen die Werte für B ein.",
+								"math": "rDS_B = \\frac{40}{2}"
+							},
+							{
+								"type": "result",
+								"title": "rDS Produkt B",
+								"description": "Relative Deckungsspanne von B.",
+								"math": "rDS_B = 20 \\text{ GE/Std.}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Pagatorische vs. wertmäßige Kosten (Materialengpass)",
+				"descriptionTemplate": "Aus Klausur 03-2025: Der Rohstoff B stellt einen Engpass dar. Für Produkt 2 gilt eine absolute Deckungsspanne von $DS_2 = {DS_2}$ GE/ME. Zur Herstellung von einer ME von Produkt 2 werden {a_2B} FE des Rohstoffs B benötigt. Der Beschaffungspreis (pagatorische Kosten) für Rohstoff B liegt bei {q_pag} GE/FE. Produkt 2 ist das Produkt, welches aufgrund des Engpasses nicht voll produziert werden kann (marginales Produkt).",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2025 Aufgabe 4",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "DS_2",
+						"value": 49,
+						"unit": "GE/ME",
+						"label": "DS Produkt 2"
+					},
+					{
+						"type": "value",
+						"symbol": "a_2B",
+						"value": 7,
+						"unit": "FE/ME",
+						"label": "Bedarf B für Prod. 2"
+					},
+					{
+						"type": "value",
+						"symbol": "q_pag",
+						"value": 10,
+						"unit": "GE/FE",
+						"label": "Pagatorischer Preis B"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die pagatorischen Kosten $q_{pag}$ und die Opportunitätskosten $OK$ einer Faktoreinheit von Rohstoff B.",
+						"formulaRefs": ["opportunitaetskosten"],
+						"interpretation": "Die Opportunitätskosten entsprechen der relativen Deckungsspanne des Produkts, das wegen des Engpasses reduziert werden muss. Es entgehen dem Unternehmen 7 GE an Deckungsbeitrag für jede fehlende Einheit des Rohstoffs.",
+						"steps": [
+							{
+								"type": "result",
+								"title": "Pagatorische Kosten",
+								"description": "Die pagatorischen Kosten sind einfach der gegebene Beschaffungspreis, der direkt zu Auszahlungen führt.",
+								"math": "q_{pag} = 10 \\text{ GE/FE}"
+							},
+							{
+								"type": "formula",
+								"title": "Opportunitätskosten ansetzen",
+								"description": "Die Opportunitätskosten $OK$ berechnen sich aus der relativen Deckungsspanne des marginalen Produkts (Produkt 2).",
+								"math": "OK = \\frac{DS_2}{a_{2B}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die DS und den Materialbedarf ein.",
+								"math": "OK = \\frac{49}{7}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis OK",
+								"description": "Das sind die Opportunitätskosten pro Faktoreinheit.",
+								"math": "OK = 7 \\text{ GE/FE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die wertmäßigen Kosten $q_{wert}$ des Rohstoffs B.",
+						"formulaRefs": ["wertmaessige-kosten"],
+						"interpretation": "Die wertmäßigen Kosten spiegeln den wahren Ressourcenverzehr wider. Sie setzen sich zusammen aus den reinen Beschaffungskosten und dem entgangenen Nutzen (Opportunitätskosten).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für wertmäßige Kosten",
+								"description": "Wir addieren pagatorische Kosten und Opportunitätskosten.",
+								"math": "q_{wert} = q_{pag} + OK"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Die berechneten Werte einsetzen.",
+								"math": "q_{wert} = 10 + 7"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Dies sind die wertmäßigen Kosten für eine Einheit Rohstoff B.",
+								"math": "q_{wert} = 17 \\text{ GE/FE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Wertmäßige Deckungsspanne",
+				"descriptionTemplate": "Wir betrachten Produkt 1, das für {p_1} GE/ME verkauft wird. Für die Herstellung werden {a_1B} FE des Engpass-Rohstoffs B benötigt. Die wertmäßigen Kosten von Rohstoff B betragen {q_wertB} GE/FE. Weitere variable Kosten fallen für Produkt 1 nicht an.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an Klausur 03-2025 Aufgabe 4b",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "p_1",
+						"value": 90,
+						"unit": "GE/ME",
+						"label": "Preis Produkt 1"
+					},
+					{ "type": "value", "symbol": "a_1B", "value": 4, "unit": "FE/ME", "label": "Bedarf B" },
+					{
+						"type": "value",
+						"symbol": "q_wertB",
+						"value": 17,
+						"unit": "GE/FE",
+						"label": "Wertm. Kosten B"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die wertmäßige Deckungsspanne $DS_{wert,1}$ von Produkt 1.",
+						"formulaRefs": ["wertmaessige-deckungsspanne"],
+						"interpretation": "Eine positive wertmäßige Deckungsspanne signalisiert, dass das Produkt nicht nur die eigenen Auszahlungen, sondern auch die Opportunitätskosten des Engpasses überkompensiert. Es ist daher zwingend im Produktionsprogramm aufzunehmen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Wertmäßige variable Kosten",
+								"description": "Zuerst bestimmen wir die wertmäßigen variablen Stückkosten für Produkt 1.",
+								"math": "k_{wert,v,1} = a_{1B} \\cdot q_{wertB}"
+							},
+							{
+								"type": "substitution",
+								"title": "Kosten einsetzen",
+								"description": "Wir setzen den Bedarf und die wertmäßigen Kosten des Rohstoffs ein.",
+								"math": "k_{wert,v,1} = 4 \\cdot 17"
+							},
+							{
+								"type": "calculation",
+								"title": "Kosten berechnen",
+								"description": "Wir multiplizieren die Werte.",
+								"math": "k_{wert,v,1} = 68 \\text{ GE/ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Wertmäßige Deckungsspanne",
+								"description": "Nun ziehen wir diese wertmäßigen Kosten vom Absatzpreis ab.",
+								"math": "DS_{wert,1} = p_1 - k_{wert,v,1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Finale Werte einsetzen",
+								"description": "Preis und errechnete Kosten einsetzen.",
+								"math": "DS_{wert,1} = 90 - 68"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die wertmäßige Deckungsspanne von Produkt 1.",
+								"math": "DS_{wert,1} = 22 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Optimale Rangfolge bei Engpass",
+				"descriptionTemplate": "Gegeben sind die relativen Deckungsspannen dreier Produkte: $rDS_X = {rDS_X}$ GE/Std., $rDS_Y = {rDS_Y}$ GE/Std. und $rDS_Z = {rDS_Z}$ GE/Std. Es existiert ein Engpass in der Produktion.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "KI-generierte Kurzaufgabe zur Sortierung",
+				"given": [
+					{ "type": "value", "symbol": "rDS_X", "value": 12, "unit": "GE/Std.", "label": "rDS X" },
+					{ "type": "value", "symbol": "rDS_Y", "value": 25, "unit": "GE/Std.", "label": "rDS Y" },
+					{ "type": "value", "symbol": "rDS_Z", "value": 18, "unit": "GE/Std.", "label": "rDS Z" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Produktionsrangfolge der drei Produkte.",
+						"formulaRefs": [],
+						"interpretation": "Das Produkt mit der höchsten relativen Deckungsspanne nutzt den knappen Faktor am effizientesten und wird daher zuerst ins Programm genommen, bis seine Absatzhöchstmenge erreicht ist.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Vergleich der relativen DS",
+								"description": "Wir sortieren die Produkte absteigend nach ihrer relativen Deckungsspanne, da ein Engpass vorliegt.",
+								"math": "rDS_Y > rDS_Z > rDS_X"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte visualisieren",
+								"description": "Einsetzen der konkreten Zahlen zur Veranschaulichung.",
+								"math": "25 > 18 > 12"
+							},
+							{
+								"type": "result",
+								"title": "Rangfolge",
+								"description": "Das ergibt die finale Rangfolge für das Produktionsprogramm.",
+								"math": "\\text{Rangfolge: } Y \\to Z \\to X"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Schattenpreis bei Zusatzkapazität",
+				"descriptionTemplate": "Eine Maschine ist voll ausgelastet. Das letzte Produkt im Produktionsprogramm (marginale Produkt) erzielt eine Deckungsspanne von $DS_M = {DS_M}$ GE/ME und hat einen Kapazitätsbedarf von $a_M = {a_M}$ Std./ME auf dieser Maschine.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Standard-Verständnisfrage aus dem Skript",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "DS_M",
+						"value": 150,
+						"unit": "GE/ME",
+						"label": "DS marginales Produkt"
+					},
+					{
+						"type": "value",
+						"symbol": "a_M",
+						"value": 3,
+						"unit": "Std./ME",
+						"label": "Bedarf marginales Produkt"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Schattenpreis für eine zusätzliche Stunde Maschinenkapazität.",
+						"formulaRefs": ["relative-ds", "opportunitaetskosten"],
+						"interpretation": "Der Schattenpreis gibt an, wie viel das Unternehmen maximal für eine zusätzliche Maschinenstunde bezahlen darf (z.B. für Überstunden oder Fremdvergabe), ohne dass der Gewinn sinkt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Schattenpreis als relative DS",
+								"description": "Der Schattenpreis entspricht exakt der relativen Deckungsspanne des Produkts, das bei mehr Kapazität als Nächstes produziert werden könnte.",
+								"math": "OK = \\frac{DS_M}{a_M}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Werte des marginalen Produkts ein.",
+								"math": "OK = \\frac{150}{3}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Schattenpreis",
+								"description": "Maximaler Zusatzpreis pro Einheit des Engpassfaktors.",
+								"math": "OK = 50 \\text{ GE/Std.}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Make-or-Buy (Fremdbezug bei Engpass)",
+				"descriptionTemplate": "Ein Bauteil kann im eigenen Betrieb hergestellt werden. Es verursacht dort variable Kosten von $k_{v,E} = {kv_E}$ GE/Stück. Es benötigt zur Fertigung {a_E} Std. auf der Engpassmaschine. Der Schattenpreis dieser Maschine beträgt {OK} GE/Std. Alternativ kann das Bauteil für $p_F = {pF}$ GE/Stück bei einem Zulieferer gekauft werden.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "KI-generierte Aufgabe zur Programmentscheidung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "kv_E",
+						"value": 20,
+						"unit": "GE/Stk.",
+						"label": "Var. Kosten Eigen"
+					},
+					{
+						"type": "value",
+						"symbol": "a_E",
+						"value": 0.5,
+						"unit": "Std./Stk.",
+						"label": "Bedarf Eigen"
+					},
+					{
+						"type": "value",
+						"symbol": "OK",
+						"value": 40,
+						"unit": "GE/Std.",
+						"label": "Schattenpreis Maschine"
+					},
+					{
+						"type": "value",
+						"symbol": "pF",
+						"value": 45,
+						"unit": "GE/Stk.",
+						"label": "Fremdbezugspreis"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die wertmäßigen Kosten der Eigenfertigung $K_{wert,Eigen}$.",
+						"formulaRefs": ["wertmaessige-kosten"],
+						"interpretation": "Wenn die wertmäßigen Kosten der Eigenfertigung geringer sind als der Fremdbezugspreis, sollte das Unternehmen selbst fertigen. Hier ist Eigenfertigung (40 GE) günstiger als der Fremdbezug (45 GE).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kostenansatz Eigenfertigung",
+								"description": "Die wertmäßigen Kosten der Eigenfertigung setzen sich aus den direkten variablen Kosten und den Opportunitätskosten des Engpasses zusammen.",
+								"math": "K_{wert,Eigen} = k_{v,E} + a_E \\cdot OK"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der variablen Kosten, der Bearbeitungszeit und des Schattenpreises.",
+								"math": "K_{wert,Eigen} = 20 + 0{,}5 \\cdot 40"
+							},
+							{
+								"type": "calculation",
+								"title": "Opportunitätskosten berechnen",
+								"description": "Die Opportunitätskosten für die halbe Stunde auf der Maschine betragen 20 GE.",
+								"math": "K_{wert,Eigen} = 20 + 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Eigenfertigung",
+								"description": "Die wahren wertmäßigen Kosten der Eigenproduktion belaufen sich somit auf 40 GE/Stück.",
+								"math": "K_{wert,Eigen} = 40 \\text{ GE/Stk.}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

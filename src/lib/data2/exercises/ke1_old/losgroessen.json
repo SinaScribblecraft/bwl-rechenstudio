@@ -1,0 +1,429 @@
+{
+  "optimale-bestellmenge": {
+    "title": "Losgrößenplanung",
+    "subtitle": "Berechnung optimaler Losgrößen bei unendlicher und endlicher Produktionsgeschwindigkeit.",
+    "formulas": [
+      {
+        "id": "andler_klassisch",
+        "name": "Klassische Andler-Formel",
+        "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}",
+        "result": {
+          "symbol": "y^{opt}",
+          "description": "Kostenminimale Losgröße bei unendlicher Produktionsgeschwindigkeit"
+        },
+        "params": [
+          { "symbol": "R", "description": "Gesamtbedarf im Planungszeitraum (ME)" },
+          { "symbol": "C_r", "description": "Rüstkosten pro Rüstvorgang (GE)" },
+          { "symbol": "C_l", "description": "Lagerkostensatz pro ME und Periode (GE/ME)" }
+        ]
+      },
+      {
+        "id": "andler_geschlossen",
+        "name": "Losgröße (Geschlossene Produktion)",
+        "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot V \\cdot C_r}{C_l \\cdot (1 + \\frac{V}{P})}}",
+        "result": {
+          "symbol": "y^{opt}",
+          "description": "Kostenminimale Losgröße"
+        },
+        "params": [
+          { "symbol": "V", "description": "Verbrauchsrate pro Zeiteinheit" },
+          { "symbol": "P", "description": "Produktionsrate pro Zeiteinheit" },
+          { "symbol": "C_r", "description": "Rüstkosten pro Rüstvorgang" },
+          { "symbol": "C_l", "description": "Lagerkostensatz pro Zeiteinheit" }
+        ]
+      },
+      {
+        "id": "andler_offen",
+        "name": "Losgröße (Offene Produktion)",
+        "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot V \\cdot C_r}{C_l \\cdot (1 - \\frac{V}{P})}}",
+        "result": {
+          "symbol": "y^{opt}",
+          "description": "Kostenminimale Losgröße"
+        },
+        "params": [
+          { "symbol": "V", "description": "Verbrauchsrate pro Zeiteinheit" },
+          { "symbol": "P", "description": "Produktionsrate pro Zeiteinheit" },
+          { "symbol": "C_r", "description": "Rüstkosten pro Rüstvorgang" },
+          { "symbol": "C_l", "description": "Lagerkostensatz pro Zeiteinheit" }
+        ]
+      },
+      {
+        "id": "ruesthaeufigkeit",
+        "name": "Optimale Rüsthäufigkeit",
+        "math": "n^{opt} = \\frac{R}{y^{opt}}",
+        "result": {
+          "symbol": "n^{opt}",
+          "description": "Anzahl der Rüstvorgänge pro Planungsperiode"
+        },
+        "params": [
+          { "symbol": "R", "description": "Gesamtbedarf der Periode" },
+          { "symbol": "y^{opt}", "description": "Optimale Losgröße" }
+        ]
+      },
+      {
+        "id": "l_durch_geschlossen",
+        "name": "Durchschnittlicher Lagerbestand (Geschlossen)",
+        "math": "L_{durch} = \\frac{y}{2} \\cdot (1 + \\frac{V}{P})",
+        "result": {
+          "symbol": "L_{durch}",
+          "description": "Durchschnittlich im Lager befindliche Menge"
+        },
+        "params": [
+          { "symbol": "y", "description": "Losgröße" },
+          { "symbol": "V", "description": "Verbrauchsrate" },
+          { "symbol": "P", "description": "Produktionsrate" }
+        ]
+      },
+      {
+        "id": "l_max_offen",
+        "name": "Maximaler Lagerbestand (Offen)",
+        "math": "L_{max} = y \\cdot (1 - \\frac{V}{P})",
+        "result": {
+          "symbol": "L_{max}",
+          "description": "Höchststand des Lagers im Zyklus"
+        },
+        "params": [
+          { "symbol": "y", "description": "Losgröße" },
+          { "symbol": "V", "description": "Verbrauchsrate" },
+          { "symbol": "P", "description": "Produktionsrate" }
+        ]
+      },
+      {
+        "id": "k_l_jahr_offen",
+        "name": "Jährliche Lagerkosten",
+        "math": "K_L(y) = \\frac{L_{max}}{2} \\cdot C_l \\cdot T",
+        "result": {
+          "symbol": "K_L(y)",
+          "description": "Summe der Lagerkosten für den Planungszeitraum T"
+        },
+        "params": [
+          { "symbol": "L_{max}", "description": "Maximaler Lagerbestand" },
+          { "symbol": "C_l", "description": "Lagerkostensatz pro ME und kurzer Zeiteinheit" },
+          { "symbol": "T", "description": "Anzahl der kurzen Zeiteinheiten im Planungszeitraum" }
+        ]
+      },
+      {
+        "id": "c_r_umgestellt",
+        "name": "Rüstkosten nach Umstellung",
+        "math": "C_r = \\frac{(y^{opt})^2 \\cdot C_l \\cdot (1 - \\frac{V}{P})}{2 \\cdot V}",
+        "result": {
+          "symbol": "C_r",
+          "description": "Berechnete Rüstkosten pro Vorgang"
+        },
+        "params": [
+          { "symbol": "y^{opt}", "description": "Gegebene optimale Losgröße" },
+          { "symbol": "V", "description": "Verbrauchsrate" },
+          { "symbol": "P", "description": "Produktionsrate" },
+          { "symbol": "C_l", "description": "Lagerkostensatz" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Klassische Andler-Formel (Unendliche Produktionsgeschwindigkeit)",
+        "descriptionTemplate": "Die Zweirad-Werke benötigen jährlich {R} Komponenten für die Montage. Die Rüstkosten pro Produktionslauf betragen {C_r} GE. Der Lagerkostensatz beläuft sich auf {C_l} GE pro Stück und Jahr. Gehen Sie von einer unendlichen Produktionsgeschwindigkeit aus.",
+        "given": [
+          { "type": "value", "symbol": "R", "value": 10000, "unit": "ME/Jahr", "label": "Jahresbedarf" },
+          { "type": "value", "symbol": "C_r", "value": 200, "unit": "GE/Rüstvorgang", "label": "Rüstkosten" },
+          { "type": "value", "symbol": "C_l", "value": 4, "unit": "GE/(ME·Jahr)", "label": "Lagerkostensatz" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Bestimmen Sie die optimale Losgröße $y^{opt}$.",
+            "formulaRefs": ["andler_klassisch"],
+            "interpretation": "Die berechnete Menge minimiert die Summe aus jährlichen Rüst- und Lagerkosten.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Andler-Formel aufstellen",
+                "description": "Da eine unendliche Produktionsgeschwindigkeit unterstellt wird, verwenden wir das Grundmodell der klassischen Andler-Formel.",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "description": "Wir setzen den Jahresbedarf, die Rüstkosten und den Lagerkostensatz in die Formel ein.",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 10{.}000 \\cdot 200}{4}}"
+              },
+              {
+                "type": "calculation",
+                "title": "Zähler und Nenner vereinfachen",
+                "description": "Wir multiplizieren die Werte im Zähler aus und kürzen durch den Nenner.",
+                "math": "y^{opt} = \\sqrt{\\frac{4{.}000{.}000}{4}} = \\sqrt{1{.}000{.}000}"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Durch Ziehen der Quadratwurzel erhalten wir die optimale Bestellmenge.",
+                "math": "y^{opt} = 1{.}000 \\text{ ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie die optimale jährliche Rüsthäufigkeit $n^{opt}$.",
+            "formulaRefs": ["ruesthaeufigkeit"],
+            "interpretation": "Die Rüsthäufigkeit gibt an, wie oft die Maschinen pro Jahr auf das neue Los umgerüstet werden müssen.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Formel für Rüsthäufigkeit",
+                "description": "Die Rüsthäufigkeit berechnet sich aus dem Quotienten von Gesamtbedarf und der Losgröße.",
+                "math": "n^{opt} = \\frac{R}{y^{opt}}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "description": "Wir setzen den Jahresbedarf und die im vorherigen Schritt berechnete Losgröße ein.",
+                "math": "n^{opt} = \\frac{10{.}000}{1{.}000}"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Das Ergebnis ist die Anzahl der optimalen Rüstvorgänge pro Jahr.",
+                "math": "n^{opt} = 10"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Geschlossene Produktion bei endlicher Produktionsgeschwindigkeit",
+        "descriptionTemplate": "Eine Brauerei füllt ihr Spezialbier in Chargen ab. Die monatliche Nachfrage (Verbrauchsrate) liegt bei {V} Hektolitern, während die Abfüllanlage eine monatliche Produktionsrate von {P} Hektolitern aufweist. Es liegt eine geschlossene Produktion vor (das Los muß erst vollständig fertiggestellt werden, bevor Hektoliter daraus verbraucht werden können). Die Rüstkosten betragen {C_r} GE pro Vorgang, der Lagerkostensatz {C_l} GE pro Hektoliter und Monat.",
+        "given": [
+          { "type": "value", "symbol": "V", "value": 1000, "unit": "hl/Monat", "label": "Verbrauchsrate" },
+          { "type": "value", "symbol": "P", "value": 250, "unit": "hl/Monat", "label": "Produktionsrate" },
+          { "type": "value", "symbol": "C_r", "value": 10, "unit": "GE/Rüstvorgang", "label": "Rüstkosten" },
+          { "type": "value", "symbol": "C_l", "value": 0.4, "unit": "GE/(hl·Monat)", "label": "Lagerkostensatz" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Ermitteln Sie die optimale Losgröße $y^{opt}$.",
+            "formulaRefs": ["andler_geschlossen"],
+            "interpretation": "Durch die endliche Abfüllgeschwindigkeit und die Wartezeit vor der Entnahme muss die Formel um einen Term im Nenner erweitert werden.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Formel (Geschlossene Produktion)",
+                "description": "Für die geschlossene Produktion bei endlicher Produktionsgeschwindigkeit gilt:",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot V \\cdot C_r}{C_l \\cdot (1 + \\frac{V}{P})}}"
+              },
+              {
+                "type": "substitution",
+                "title": "Gegebene Werte einsetzen",
+                "description": "Wir setzen die monatlichen Raten sowie die Rüst- und Lagerkosten ein.",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 1{.}000 \\cdot 10}{0{,}4 \\cdot (1 + \\frac{1{.}000}{250})}}"
+              },
+              {
+                "type": "calculation",
+                "title": "Klammerterm und Zähler berechnen",
+                "description": "Wir berechnen den Term $1 + \\frac{V}{P}$ in der Klammer sowie den Zähler.",
+                "math": "y^{opt} = \\sqrt{\\frac{20{.}000}{0{,}4 \\cdot (1 + 4)}} = \\sqrt{\\frac{20{.}000}{0{,}4 \\cdot 5}}"
+              },
+              {
+                "type": "calculation",
+                "title": "Nenner ausrechnen",
+                "description": "Wir multiplizieren den Lagerkostensatz mit dem errechneten Faktor.",
+                "math": "y^{opt} = \\sqrt{\\frac{20{.}000}{2}}"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Durch Ziehen der Wurzel erhalten wir die optimale Menge in Hektolitern.",
+                "math": "y^{opt} = 100 \\text{ hl}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Ermitteln Sie den durchschnittlichen Lagerbestand $L_{durch}$.",
+            "formulaRefs": ["l_durch_geschlossen"],
+            "interpretation": "Bei geschlossener Produktion ist der durchschnittliche Lagerbestand deutlich höher, da das Los sich erst vollständig aufbaut, bevor der Abbau beginnt.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Formel für durchschnittlichen Lagerbestand",
+                "description": "Für die geschlossene Produktion lautet die Formel:",
+                "math": "L_{durch} = \\frac{y}{2} \\cdot (1 + \\frac{V}{P})"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "description": "Wir verwenden die zuvor berechnete Losgröße sowie die bekannten Verbrauchs- und Produktionsraten.",
+                "math": "L_{durch} = \\frac{100}{2} \\cdot (1 + \\frac{1{.}000}{250})"
+              },
+              {
+                "type": "calculation",
+                "title": "Klammerterm berechnen",
+                "description": "Der Ausdruck in der Klammer ergibt $1 + 4 = 5$.",
+                "math": "L_{durch} = 50 \\cdot 5"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Wir berechnen den finalen Durchschnittsbestand.",
+                "math": "L_{durch} = 250 \\text{ hl}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Offene Produktion (Zerreißlager)",
+        "descriptionTemplate": "Ein Hersteller produziert Kunststoffgehäuse. Es liegt eine offene Produktion (Zerreißlager) vor. Die Produktionsrate beträgt {P} ME pro Monat, die Verbrauchsrate liegt bei {V} ME pro Monat. Die Rüstkosten pro Rüstvorgang belaufen sich auf {C_r} GE. Die Lagerhaltung kostet {C_l} GE pro ME und Monat.",
+        "given": [
+          { "type": "value", "symbol": "V", "value": 200, "unit": "ME/Monat", "label": "Verbrauchsrate" },
+          { "type": "value", "symbol": "P", "value": 1000, "unit": "ME/Monat", "label": "Produktionsrate" },
+          { "type": "value", "symbol": "C_r", "value": 50, "unit": "GE/Rüstvorgang", "label": "Rüstkosten" },
+          { "type": "value", "symbol": "C_l", "value": 2.5, "unit": "GE/(ME·Monat)", "label": "Lagerkostensatz" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Ermitteln Sie die optimale Losgröße $y^{opt}$.",
+            "formulaRefs": ["andler_offen"],
+            "interpretation": "Durch die sofortige Entnahme der produzierten Gehäuse baut sich das Lager langsamer auf. Dies führt zu einem Vorfaktor im Nenner von $1 - \\frac{V}{P}$.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Formel für das Zerreißlager",
+                "description": "Für die offene Produktion bei endlicher Produktionsgeschwindigkeit gilt:",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot V \\cdot C_r}{C_l \\cdot (1 - \\frac{V}{P})}}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "description": "Wir setzen die gegebenen Raten und Kostenfaktoren ein.",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 200 \\cdot 50}{2{,}5 \\cdot (1 - \\frac{200}{1{.}000})}}"
+              },
+              {
+                "type": "calculation",
+                "title": "Nenner vereinfachen",
+                "description": "Der Term $1 - \\frac{200}{1{.}000}$ ergibt $0{,}8$.",
+                "math": "y^{opt} = \\sqrt{\\frac{20{.}000}{2{,}5 \\cdot 0{,}8}} = \\sqrt{\\frac{20{.}000}{2}}"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Nach dem Wurzelziehen erhalten wir die exakte Losgröße.",
+                "math": "y^{opt} = 100 \\text{ ME}"
+              }
+            ]
+          },
+          {
+            "label": "b",
+            "question": "Bestimmen Sie den maximalen Lagerbestand $L_{max}$ und die jährlichen Lagerkosten $K_L(y)$.",
+            "formulaRefs": ["l_max_offen", "k_l_jahr_offen"],
+            "interpretation": "Da die Verbrauchsrate parallel zur Produktion stattfindet, erreicht das Lager niemals die volle Höhe der Losgröße.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Formel Maximalbestand",
+                "description": "Der Maximalbestand entspricht der Losgröße reduziert um den synchronen Verbrauch.",
+                "math": "L_{max} = y \\cdot (1 - \\frac{V}{P})"
+              },
+              {
+                "type": "substitution",
+                "title": "Einsetzen",
+                "description": "Wir nutzen das Zwischenergebnis der Losgröße aus Teil a.",
+                "math": "L_{max} = 100 \\cdot (1 - \\frac{200}{1{.}000})"
+              },
+              {
+                "type": "result",
+                "title": "Zwischenergebnis Maximalbestand",
+                "description": "Der höchste Stand des Lagers liegt bei:",
+                "math": "L_{max} = 100 \\cdot 0{,}8 = 80 \\text{ ME}"
+              },
+              {
+                "type": "formula",
+                "title": "Jährliche Lagerkosten",
+                "description": "Die Lagerkosten ergeben sich aus dem durchschnittlichen Bestand (bei linearem Auf- und Abbau $L_{max} / 2$) multipliziert mit dem monatlichen Kostensatz und $12$ Monaten.",
+                "math": "K_L(y) = \\frac{L_{max}}{2} \\cdot C_l \\cdot 12"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte für Kosten einsetzen",
+                "description": "Wir setzen den Maximalbestand und den Kostensatz ein.",
+                "math": "K_L(y) = \\frac{80}{2} \\cdot 2{,}5 \\cdot 12"
+              },
+              {
+                "type": "calculation",
+                "title": "Ausmultiplizieren",
+                "description": "Wir berechnen das Produkt der Faktoren.",
+                "math": "K_L(y) = 40 \\cdot 2{,}5 \\cdot 12 = 100 \\cdot 12"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis Lagerkosten",
+                "description": "Die gesamten Lagerkosten für ein volles Jahr betragen:",
+                "math": "K_L(y) = 1{.}200 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Rückrechnung aus der optimalen Losgröße",
+        "descriptionTemplate": "Bei der Alu-Form GmbH wird die Losgröße analytisch optimiert. Für ein Bauteil ist die optimale Losgröße bereits als {y_opt} ME bekannt. Die Produktion erfolgt offen (Zerreißlager). Monatlich werden {V} ME verbraucht, während {P} ME produziert werden können. Die Lagerung kostet {C_l} GE pro ME und Monat. Die Controlling-Abteilung bittet Sie, die zugrunde liegenden Rüstkosten pro Produktionslauf zu rekonstruieren.",
+        "given": [
+          { "type": "value", "symbol": "y_opt", "value": 300, "unit": "ME", "label": "Optimale Losgröße" },
+          { "type": "value", "symbol": "V", "value": 400, "unit": "ME/Monat", "label": "Verbrauchsrate" },
+          { "type": "value", "symbol": "P", "value": 800, "unit": "ME/Monat", "label": "Produktionsrate" },
+          { "type": "value", "symbol": "C_l", "value": 4, "unit": "GE/(ME·Monat)", "label": "Lagerkostensatz" }
+        ],
+        "inputTable": null,
+        "subTasks": [
+          {
+            "label": "a",
+            "question": "Ermitteln Sie die implizierten Rüstkosten $C_r$ pro Rüstvorgang.",
+            "formulaRefs": ["andler_offen", "c_r_umgestellt"],
+            "interpretation": "Durch mathematisches Umstellen der Andler-Formel für die offene Produktion lassen sich fehlende Parameter identifizieren, wenn das Optimum bereits gegeben ist.",
+            "steps": [
+              {
+                "type": "formula",
+                "title": "Ausgangsformel",
+                "description": "Wir beginnen mit der bekannten Formel für das Zerreißlager.",
+                "math": "y^{opt} = \\sqrt{\\frac{2 \\cdot V \\cdot C_r}{C_l \\cdot (1 - \\frac{V}{P})}}"
+              },
+              {
+                "type": "formula",
+                "title": "Formel umstellen",
+                "description": "Wir quadrieren die Gleichung auf beiden Seiten und lösen nach den Rüstkosten $C_r$ auf.",
+                "math": "C_r = \\frac{(y^{opt})^2 \\cdot C_l \\cdot (1 - \\frac{V}{P})}{2 \\cdot V}"
+              },
+              {
+                "type": "substitution",
+                "title": "Werte einsetzen",
+                "description": "Nun ersetzen wir die Variablen durch die gegebenen Parameter der Alu-Form GmbH.",
+                "math": "C_r = \\frac{300^2 \\cdot 4 \\cdot (1 - \\frac{400}{800})}{2 \\cdot 400}"
+              },
+              {
+                "type": "calculation",
+                "title": "Term vereinfachen",
+                "description": "Wir quadrieren die Losgröße und vereinfachen den Klammerterm ($1 - 0{,}5 = 0{,}5$).",
+                "math": "C_r = \\frac{90{.}000 \\cdot 4 \\cdot 0{,}5}{800}"
+              },
+              {
+                "type": "calculation",
+                "title": "Zähler ausrechnen",
+                "description": "Das Produkt im Zähler wird berechnet.",
+                "math": "C_r = \\frac{180{.}000}{800}"
+              },
+              {
+                "type": "result",
+                "title": "Endergebnis",
+                "description": "Nach Kürzen der Nullen und Division erhalten wir die gesuchten Rüstkosten.",
+                "math": "C_r = 225 \\text{ GE}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

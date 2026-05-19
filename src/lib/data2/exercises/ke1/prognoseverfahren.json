@@ -1,0 +1,741 @@
+{
+	"prognoseverfahren": {
+		"title": "Prognoseverfahren",
+		"subtitle": "Berechnung künftiger Bedarfswerte durch Mittelwertbildung und exponentielle Glättung",
+		"formulas": [
+			{
+				"id": "arithmetisches-mittel",
+				"name": "Arithmetisches Mittel",
+				"math": "P_{T+1}^{am} = \\frac{1}{T} \\cdot \\sum_{t=1}^{T} V_t",
+				"result": { "symbol": "P_{T+1}^{am}", "description": "Prognosewert für Periode T+1" },
+				"params": [
+					{ "symbol": "T", "description": "Anzahl der vergangenen Perioden" },
+					{ "symbol": "V_t", "description": "Tatsächlicher Verbrauch in Periode t" }
+				]
+			},
+			{
+				"id": "arithmetisches-mittel-iterativ",
+				"name": "Arithmetisches Mittel (iterativ)",
+				"math": "P_{T+1}^{am} = P_T^{am} + \\frac{1}{T} \\cdot (V_T - P_T^{am})",
+				"result": { "symbol": "P_{T+1}^{am}", "description": "Prognosewert für Periode T+1" },
+				"params": [
+					{ "symbol": "P_T^{am}", "description": "Prognosewert der Vorperiode" },
+					{ "symbol": "V_T", "description": "Tatsächlicher Verbrauch der Vorperiode" },
+					{ "symbol": "T", "description": "Laufender Periodenindex" }
+				]
+			},
+			{
+				"id": "gleitender-mittelwert",
+				"name": "Gleitender Mittelwert",
+				"math": "P_{T+1}^{gm} = \\frac{1}{m} \\cdot \\sum_{i=1}^{m} V_{T-m+i}",
+				"result": { "symbol": "P_{T+1}^{gm}", "description": "Prognosewert für Periode T+1" },
+				"params": [
+					{
+						"symbol": "m",
+						"description": "Anzahl der Perioden für die gleitende Durchschnittsbildung"
+					},
+					{ "symbol": "V_t", "description": "Verbrauch in den letzten m Perioden" }
+				]
+			},
+			{
+				"id": "gewogener-gleitender-mittelwert",
+				"name": "Gewogener gleitender Mittelwert",
+				"math": "P_{T+1}^{ggm} = \\sum_{i=1}^{m} V_{T-m+i} \\cdot w_i",
+				"result": { "symbol": "P_{T+1}^{ggm}", "description": "Prognosewert für Periode T+1" },
+				"params": [
+					{ "symbol": "w_i", "description": "Gewichtung der jeweiligen Periode" },
+					{ "symbol": "V_t", "description": "Tatsächliche Verbrauchswerte" }
+				]
+			},
+			{
+				"id": "exponentielle-glaettung",
+				"name": "Exponentielle Glättung 1. Ordnung",
+				"math": "P_{T+1}^{eg} = \\alpha \\cdot V_T + (1 - \\alpha) \\cdot P_T^{eg}",
+				"result": { "symbol": "P_{T+1}^{eg}", "description": "Prognosewert für Periode T+1" },
+				"params": [
+					{ "symbol": "\\alpha", "description": "Glättungsfaktor (0 < alpha < 1)" },
+					{ "symbol": "V_T", "description": "Tatsächlicher Verbrauch der aktuellen Periode" },
+					{ "symbol": "P_T^{eg}", "description": "Prognosewert für die aktuelle Periode" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlagen Arithmetisches Mittel",
+				"descriptionTemplate": "Ein Handelsunternehmen möchte den Bedarf an Bürostühlen für die Periode $5$ prognostizieren. Nutzen Sie zur Prognose das arithmetische Mittel über alle vergangenen {T} Perioden. Die vergangenen Verbräuche liegen vor.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Standardaufgabe zum Einstieg",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "T",
+						"value": 4,
+						"unit": "Perioden",
+						"label": "Anzahl Perioden"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 20,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 30,
+						"unit": "ME",
+						"label": "Verbrauch Periode 2"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 25,
+						"unit": "ME",
+						"label": "Verbrauch Periode 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 45,
+						"unit": "ME",
+						"label": "Verbrauch Periode 4"
+					}
+				],
+				"inputTable": {
+					"headers": ["Periode $t$", "Verbrauch $V_t$"],
+					"rows": [
+						["1", "{V_1}"],
+						["2", "{V_2}"],
+						["3", "{V_3}"],
+						["4", "{V_4}"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Prognosewert $P_{5}^{am}$.",
+						"formulaRefs": ["arithmetisches-mittel"],
+						"interpretation": "Das arithmetische Mittel bewertet alle Vergangenheitswerte gleich stark. Ausreißer können die Prognose daher merklich verzerren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel notieren",
+								"description": "Wir stellen die Formel für das arithmetische Mittel auf.",
+								"math": "P_{5}^{am} = \\frac{1}{T} \\cdot \\sum_{t=1}^{T} V_t"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $T=4$ und die vier gegebenen Verbräuche ein.",
+								"math": "P_{5}^{am} = \\frac{1}{4} \\cdot (20 + 30 + 25 + 45)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe berechnen",
+								"description": "Zuerst wird die Summe in der Klammer gebildet.",
+								"math": "P_{5}^{am} = \\frac{1}{4} \\cdot 120"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Division durch $4$ liefert den gesuchten Prognosewert.",
+								"math": "P_{5}^{am} = 30 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gleitender Mittelwert (Klausurtyp)",
+				"descriptionTemplate": "Der Absatz eines Bauteils schwankt. Für die Periode $6$ soll eine Prognose mithilfe des gleitenden Mittelwerts über die letzten {m} Perioden (also $m=3$) erstellt werden.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Ähnlich Klausuraufgabe EBWL",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "m",
+						"value": 3,
+						"unit": "Perioden",
+						"label": "Gleitende Periodenzahl"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 100,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 120,
+						"unit": "ME",
+						"label": "Verbrauch Periode 2"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 110,
+						"unit": "ME",
+						"label": "Verbrauch Periode 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 130,
+						"unit": "ME",
+						"label": "Verbrauch Periode 4"
+					},
+					{
+						"type": "value",
+						"symbol": "V_5",
+						"value": 140,
+						"unit": "ME",
+						"label": "Verbrauch Periode 5"
+					}
+				],
+				"inputTable": {
+					"headers": ["Periode $t$", "Verbrauch $V_t$"],
+					"rows": [
+						["1", "{V_1}"],
+						["2", "{V_2}"],
+						["3", "{V_3}"],
+						["4", "{V_4}"],
+						["5", "{V_5}"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Prognosewert $P_{6}^{gm}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "Beim gleitenden Mittelwert mit $m=3$ fallen ältere Werte (hier Periode 1 und 2) aus der Berechnung heraus. So reagiert die Prognose schneller auf aktuelle Trends.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel aufstellen",
+								"description": "Wir notieren die Formel für den gleitenden Mittelwert.",
+								"math": "P_{6}^{gm} = \\frac{1}{m} \\cdot \\sum_{i=1}^{m} V_{5-m+i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Relevante Werte einsetzen",
+								"description": "Da $m=3$ ist, sind nur die letzten drei Perioden (Periode $3$, $4$ und $5$) relevant. Wir setzen deren Verbräuche ein.",
+								"math": "P_{6}^{gm} = \\frac{1}{3} \\cdot (110 + 130 + 140)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe bilden",
+								"description": "Wir addieren die drei Werte.",
+								"math": "P_{6}^{gm} = \\frac{1}{3} \\cdot 380"
+							},
+							{
+								"type": "result",
+								"title": "Prognosewert berechnen",
+								"description": "Das Ergebnis wird auf zwei Nachkommastellen gerundet.",
+								"math": "P_{6}^{gm} = 126{,}67 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Exponentielle Glättung",
+				"descriptionTemplate": "Für ein Ersatzteil wird die exponentielle Glättung erster Ordnung genutzt. Der Glättungsparameter beträgt $\\alpha = {alpha}$. Für die abgelaufene Periode $T=1$ lag ein Prognosewert von $P_1^{eg} = {P_1}$ vor. Der tatsächliche Verbrauch in Periode $1$ betrug jedoch $V_1 = {V_1}$.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kurseinheit 1, Formelsammlung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "alpha",
+						"value": 0.4,
+						"unit": "",
+						"label": "Glättungsfaktor alpha"
+					},
+					{
+						"type": "value",
+						"symbol": "alpha_komplement",
+						"value": 0.6,
+						"unit": "",
+						"label": "1 - alpha"
+					},
+					{
+						"type": "value",
+						"symbol": "P_1",
+						"value": 80,
+						"unit": "ME",
+						"label": "Prognose Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 100,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Prognosewert $P_{2}^{eg}$ für die zweite Periode.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Ein $\\alpha$-Wert von $0{,}4$ bewirkt, dass der tatsächliche jüngste Verbrauch zu $40\\%$ und die alte Prognose zu $60\\%$ ins Gewicht fallen. Der Prognosefehler wird also sanft korrigiert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Wir verwenden die Formel der exponentiellen Glättung.",
+								"math": "P_{2}^{eg} = \\alpha \\cdot V_1 + (1 - \\alpha) \\cdot P_1^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Parameter einsetzen",
+								"description": "Wir setzen $\\alpha = 0{,}4$, $V_1 = 100$ und $P_1^{eg} = 80$ ein.",
+								"math": "P_{2}^{eg} = 0{,}4 \\cdot 100 + 0{,}6 \\cdot 80"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilterme ausrechnen",
+								"description": "Wir berechnen die beiden Multiplikationen separat.",
+								"math": "P_{2}^{eg} = 40 + 48"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Summe liefert den neuen Prognosewert.",
+								"math": "P_{2}^{eg} = 88 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gewogener gleitender Mittelwert",
+				"descriptionTemplate": "Sie sollen die Prognose für Periode $4$ mittels eines gewogenen gleitenden Mittelwerts ($m={m}$) durchführen. Die Verbräuche der ersten drei Perioden betragen $V_1={V_1}$, $V_2={V_2}$ und $V_3={V_3}$. Die Gewichte sind $w_1={w_1}$, $w_2={w_2}$ und $w_3={w_3}$.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2024 adaptiert",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "m",
+						"value": 3,
+						"unit": "Perioden",
+						"label": "Anzahl Perioden"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 200,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 250,
+						"unit": "ME",
+						"label": "Verbrauch Periode 2"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 220,
+						"unit": "ME",
+						"label": "Verbrauch Periode 3"
+					},
+					{
+						"type": "value",
+						"symbol": "w_1",
+						"value": 0.2,
+						"unit": "",
+						"label": "Gewicht ältester Wert"
+					},
+					{
+						"type": "value",
+						"symbol": "w_2",
+						"value": 0.3,
+						"unit": "",
+						"label": "Gewicht mittlerer Wert"
+					},
+					{
+						"type": "value",
+						"symbol": "w_3",
+						"value": 0.5,
+						"unit": "",
+						"label": "Gewicht jüngster Wert"
+					}
+				],
+				"inputTable": {
+					"headers": ["$i$", "Periode $t$", "Verbrauch $V_t$", "Gewicht $w_i$"],
+					"rows": [
+						["1", "1", "{V_1}", "{w_1}"],
+						["2", "2", "{V_2}", "{w_2}"],
+						["3", "3", "{V_3}", "{w_3}"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Prognosewert $P_{4}^{ggm}$.",
+						"formulaRefs": ["gewogener-gleitender-mittelwert"],
+						"interpretation": "Durch die höhere Gewichtung des jüngsten Wertes ($50\\%$) passt sich die Prognose schneller an aktuelle Marktveränderungen an als bei einem ungewichteten Durchschnitt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Allgemeine Formel",
+								"description": "Wir nutzen die Formel für den gewogenen gleitenden Mittelwert.",
+								"math": "P_{4}^{ggm} = \\sum_{i=1}^{3} V_i \\cdot w_i"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir multiplizieren jede Periodenmenge mit ihrem entsprechenden Gewicht.",
+								"math": "P_{4}^{ggm} = 200 \\cdot 0{,}2 + 250 \\cdot 0{,}3 + 220 \\cdot 0{,}5"
+							},
+							{
+								"type": "calculation",
+								"title": "Produkte berechnen",
+								"description": "Wir lösen die drei Multiplikationen auf.",
+								"math": "P_{4}^{ggm} = 40 + 75 + 110"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Durch Aufsummieren erhalten wir den finalen Wert.",
+								"math": "P_{4}^{ggm} = 225 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Iteratives arithmetisches Mittel",
+				"descriptionTemplate": "Es liegt bereits ein arithmetischer Mittelwert (Prognosewert) für Periode $T={T}$ in Höhe von $P_{8}^{am} = {P_8}$ vor. Der tatsächliche Verbrauch in Periode $8$ betrug $V_8 = {V_8}$. Nutzen Sie die iterative Formel zur Bestimmung des neuen Mittelwerts.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kurseinheit 1, iterative Fortschreibung",
+				"given": [
+					{ "type": "value", "symbol": "T", "value": 8, "unit": "", "label": "Laufindex T" },
+					{
+						"type": "value",
+						"symbol": "P_8",
+						"value": 100,
+						"unit": "ME",
+						"label": "Bisherige Prognose"
+					},
+					{
+						"type": "value",
+						"symbol": "V_8",
+						"value": 140,
+						"unit": "ME",
+						"label": "Tatsächlicher Verbrauch"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den neuen Prognosewert $P_{9}^{am}$.",
+						"formulaRefs": ["arithmetisches-mittel-iterativ"],
+						"interpretation": "Die iterative Methode erspart es uns, alle historischen Einzelwerte der Vorperioden speichern zu müssen. Lediglich der alte Mittelwert und der neue Ist-Wert werden benötigt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Iterative Formel",
+								"description": "Wir nutzen die fortschreibende (iterative) Formel des arithmetischen Mittels.",
+								"math": "P_{9}^{am} = P_8^{am} + \\frac{1}{T} \\cdot (V_8 - P_8^{am})"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $T=8$, $P_8=100$ und $V_8=140$ ein.",
+								"math": "P_{9}^{am} = 100 + \\frac{1}{8} \\cdot (140 - 100)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer und Bruch auflösen",
+								"description": "Die Abweichung (Prognosefehler) beträgt $40$. Ein Achtel davon wird zum alten Wert addiert.",
+								"math": "P_{9}^{am} = 100 + \\frac{1}{8} \\cdot 40"
+							},
+							{
+								"type": "calculation",
+								"title": "Korrekturwert addieren",
+								"description": "Ein Achtel von $40$ ist $5$.",
+								"math": "P_{9}^{am} = 100 + 5"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das ist die aktualisierte Prognose für Periode 9.",
+								"math": "P_{9}^{am} = 105 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Exponentielle Glättung über mehrere Perioden",
+				"descriptionTemplate": "Gegeben sei ein anfänglicher Prognosewert von $P_1^{eg} = {P_1}$ für die Periode $1$. Die tatsächlichen Verbräuche in den Perioden $1$ und $2$ belaufen sich auf $V_1 = {V_1}$ und $V_2 = {V_2}$. Der Glättungsfaktor ist $\\alpha = {alpha}$.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische zweistufige Aufgabe, vgl. Klausur 09-2024",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "alpha",
+						"value": 0.2,
+						"unit": "",
+						"label": "Glättungsfaktor"
+					},
+					{
+						"type": "value",
+						"symbol": "P_1",
+						"value": 200,
+						"unit": "ME",
+						"label": "Startprognose P_1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 250,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 230,
+						"unit": "ME",
+						"label": "Verbrauch Periode 2"
+					}
+				],
+				"inputTable": {
+					"headers": ["Periode $t$", "Prognose $P_t$", "Ist-Verbrauch $V_t$"],
+					"rows": [
+						["1", "{P_1}", "{V_1}"],
+						["2", "zu berechnen", "{V_2}"],
+						["3", "zu berechnen", "-"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Prognose $P_2^{eg}$ für die zweite Periode.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für P_2",
+								"description": "Wir setzen die exponentielle Glättung an.",
+								"math": "P_{2}^{eg} = \\alpha \\cdot V_1 + (1-\\alpha) \\cdot P_1^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für Periode 1 einsetzen",
+								"description": "Wir nutzen $\\alpha=0{,}2$, $V_1=250$ und $P_1=200$.",
+								"math": "P_{2}^{eg} = 0{,}2 \\cdot 250 + 0{,}8 \\cdot 200"
+							},
+							{
+								"type": "calculation",
+								"title": "Produkte berechnen",
+								"description": "Wir werten die beiden Faktoren aus.",
+								"math": "P_{2}^{eg} = 50 + 160"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis P_2",
+								"description": "Dies ist die Prognose für die zweite Periode.",
+								"math": "P_{2}^{eg} = 210 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie auf Basis von $P_2^{eg}$ die Prognose $P_3^{eg}$ für die dritte Periode.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Mit jedem Schritt wird der ältere Einfluss (hier $P_1$) exponentiell schwächer, während die neueren Ist-Werte das Ruder übernehmen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für $P_3$",
+								"description": "Die Formel wandert eine Periode weiter.",
+								"math": "P_{3}^{eg} = \\alpha \\cdot V_2 + (1-\\alpha) \\cdot P_2^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Neue Werte einsetzen",
+								"description": "Wir verwenden nun $V_2=230$ und den eben berechneten Wert $P_2=210$.",
+								"math": "P_{3}^{eg} = 0{,}2 \\cdot 230 + 0{,}8 \\cdot 210"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Wir multiplizieren aus.",
+								"math": "P_{3}^{eg} = 46 + 168"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis $P_3$",
+								"description": "Wir erhalten den Prognosewert für Periode 3.",
+								"math": "P_{3}^{eg} = 214 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Erweiterter gleitender Mittelwert (m=4)",
+				"descriptionTemplate": "Gegeben ist eine Zeitreihe über 6 Perioden. Gesucht ist die Prognose für Periode $7$ unter Verwendung eines ungewichteten gleitenden Mittelwerts der Ordnung $m={m}$. Die relevanten Vergangenheitswerte betragen $V_3={V_3}$, $V_4={V_4}$, $V_5={V_5}$ und $V_6={V_6}$.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Zur Vertiefung von m>3",
+				"given": [
+					{ "type": "value", "symbol": "m", "value": 4, "unit": "Perioden", "label": "Ordnung m" },
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 50,
+						"unit": "ME",
+						"label": "Verbrauch Periode 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 60,
+						"unit": "ME",
+						"label": "Verbrauch Periode 4"
+					},
+					{
+						"type": "value",
+						"symbol": "V_5",
+						"value": 70,
+						"unit": "ME",
+						"label": "Verbrauch Periode 5"
+					},
+					{
+						"type": "value",
+						"symbol": "V_6",
+						"value": 60,
+						"unit": "ME",
+						"label": "Verbrauch Periode 6"
+					}
+				],
+				"inputTable": {
+					"headers": ["Periode $t$", "Verbrauch $V_t$"],
+					"rows": [
+						["3", "{V_3}"],
+						["4", "{V_4}"],
+						["5", "{V_5}"],
+						["6", "{V_6}"]
+					]
+				},
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie $P_7^{gm}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel notieren",
+								"description": "Da $m=4$ ist, betrachten wir exakt die letzten 4 Perioden (Periode 3 bis 6).",
+								"math": "P_{7}^{gm} = \\frac{1}{4} \\cdot \\sum_{t=3}^{6} V_t"
+							},
+							{
+								"type": "substitution",
+								"title": "Zahlen einfügen",
+								"description": "Wir setzen die vier Verbrauchswerte in die Klammer ein.",
+								"math": "P_{7}^{gm} = \\frac{1}{4} \\cdot (50 + 60 + 70 + 60)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe berechnen",
+								"description": "Die Summe der Verbräuche ergibt $240$.",
+								"math": "P_{7}^{gm} = \\frac{1}{4} \\cdot 240"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Teilen durch $4$ führt zum Zielwert.",
+								"math": "P_{7}^{gm} = 60 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gewogener gleitender Mittelwert (Vergleich der Gewichtung)",
+				"descriptionTemplate": "Um die Bedeutung aktueller Daten zu unterstreichen, berechnen Sie die Prognose $P_5^{ggm}$ mit $m={m}$. Die letzten zwei Verbräuche sind $V_3={V_3}$ und $V_4={V_4}$. Der aktuellere Wert ($V_4$) wird mit $w_2={w_2}$ gewichtet, der ältere ($V_3$) mit $w_1={w_1}$.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Selbst erstellt zur Veranschaulichung der Gewichtungsdynamik",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "m",
+						"value": 2,
+						"unit": "Perioden",
+						"label": "Anzahl Perioden"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 300,
+						"unit": "ME",
+						"label": "Verbrauch Periode 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 400,
+						"unit": "ME",
+						"label": "Verbrauch Periode 4"
+					},
+					{ "type": "value", "symbol": "w_1", "value": 0.3, "unit": "", "label": "Gewicht V_3" },
+					{ "type": "value", "symbol": "w_2", "value": 0.7, "unit": "", "label": "Gewicht V_4" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Prognosewert $P_5^{ggm}$.",
+						"formulaRefs": ["gewogener-gleitender-mittelwert"],
+						"interpretation": "Durch die starke Gewichtung von $w_2 = 0{,}7$ für den jüngsten Wert liegt die finale Prognose ($370$) deutlich näher am letzten Ist-Wert ($400$) als am älteren Wert ($300$).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Die Prognose für Periode 5 nutzt die gewichtete Summe aus Periode 3 und 4.",
+								"math": "P_{5}^{ggm} = V_3 \\cdot w_1 + V_4 \\cdot w_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir ordnen die Werte exakt ihren Gewichten zu.",
+								"math": "P_{5}^{ggm} = 300 \\cdot 0{,}3 + 400 \\cdot 0{,}7"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilsummen",
+								"description": "Wir berechnen die beiden Teilprodukte.",
+								"math": "P_{5}^{ggm} = 90 + 280"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe der Teilprodukte ergibt die finale Prognose.",
+								"math": "P_{5}^{ggm} = 370 \\text{ ME}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

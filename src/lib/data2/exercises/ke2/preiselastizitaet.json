@@ -1,0 +1,661 @@
+{
+	"preiselastizitaet": {
+		"title": "Preiselastizität der Nachfrage",
+		"subtitle": "Berechnung und ökonomische Interpretation von Elastizitäten, Amoroso-Robinson-Relation und Kreuzpreiselastizitäten.",
+		"formulas": [
+			{
+				"id": "punktelastizitaet",
+				"name": "Punktelastizität der Nachfrage",
+				"math": "\\eta_{x,p} = x'(p) \\cdot \\frac{p}{x(p)}",
+				"result": { "symbol": "\\eta_{x,p}", "description": "Preiselastizität im Punkt" },
+				"params": [
+					{ "symbol": "x'(p)", "description": "Erste Ableitung der Preis-Absatz-Funktion nach dem Preis" },
+					{ "symbol": "p", "description": "Aktueller Preis" },
+					{ "symbol": "x(p)", "description": "Aktuelle Nachfragemenge" }
+				]
+			},
+			{
+				"id": "bogenelastizitaet",
+				"name": "Bogenelastizität",
+				"math": "\\eta_{x,p} = \\frac{\\Delta x}{\\Delta p} \\cdot \\frac{p_1}{x_1}",
+				"result": { "symbol": "\\eta_{x,p}", "description": "Durchschnittliche Preiselastizität in einem Intervall" },
+				"params": [
+					{ "symbol": "\\Delta x", "description": "Mengenänderung (x_2 - x_1)" },
+					{ "symbol": "\\Delta p", "description": "Preisänderung (p_2 - p_1)" },
+					{ "symbol": "p_1", "description": "Ausgangspreis" },
+					{ "symbol": "x_1", "description": "Ausgangsmenge" }
+				]
+			},
+			{
+				"id": "amoroso-robinson",
+				"name": "Amoroso-Robinson-Relation",
+				"math": "E'(x) = p(x) \\cdot \\left(1 + \\frac{1}{\\eta_{x,p}}\\right)",
+				"result": { "symbol": "E'(x)", "description": "Grenzerlös" },
+				"params": [
+					{ "symbol": "p(x)", "description": "Preis bei Menge x" },
+					{ "symbol": "\\eta_{x,p}", "description": "Preiselastizität der Nachfrage" }
+				]
+			},
+			{
+				"id": "kreuzpreiselastizitaet",
+				"name": "Kreuzpreiselastizität",
+				"math": "\\eta_{x_1,p_2} = \\frac{\\partial x_1}{\\partial p_2} \\cdot \\frac{p_2}{x_1}",
+				"result": { "symbol": "\\eta_{x_1,p_2}", "description": "Kreuzpreiselastizität" },
+				"params": [
+					{ "symbol": "\\frac{\\partial x_1}{\\partial p_2}", "description": "Partielle Ableitung der Nachfrage x_1 nach Preis p_2" },
+					{ "symbol": "p_2", "description": "Preis des anderen Gutes" },
+					{ "symbol": "x_1", "description": "Nachfragemenge des betrachteten Gutes" }
+				]
+			},
+			{
+				"id": "punktelastizitaet-invers",
+				"name": "Punktelastizität über inverse PAF",
+				"math": "\\eta_{x,p} = \\frac{1}{p'(x)} \\cdot \\frac{p(x)}{x}",
+				"result": { "symbol": "\\eta_{x,p}", "description": "Preiselastizität der Nachfrage" },
+				"params": [
+					{ "symbol": "p'(x)", "description": "Ableitung der inversen Preis-Absatz-Funktion nach der Menge" },
+					{ "symbol": "p(x)", "description": "Aktueller Preis" },
+					{ "symbol": "x", "description": "Aktuelle Menge" }
+				]
+			},
+			{
+				"id": "erloesaenderung-preis",
+				"name": "Erlösänderung bei Preisvariation",
+				"math": "\\frac{dE}{dp} = x(p) \\cdot (1 + \\eta_{x,p})",
+				"result": { "symbol": "\\frac{dE}{dp}", "description": "Ableitung des Erlöses nach dem Preis" },
+				"params": [
+					{ "symbol": "x(p)", "description": "Nachfragemenge" },
+					{ "symbol": "\\eta_{x,p}", "description": "Preiselastizität der Nachfrage" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Standard Punktelastizität",
+				"descriptionTemplate": "Gegeben sei die Preis-Absatz-Funktion {X_func}. Der aktuelle Marktpreis liegt bei {p_val} GE/ME.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Skript Kapitel 4: Preisbildung",
+				"given": [
+					{ "type": "formula", "symbol": "X_func", "math": "x(p) = 1000 - 5 \\cdot p", "label": "Preis-Absatz-Funktion" },
+					{ "type": "value", "symbol": "p_val", "value": 100, "unit": "GE/ME", "label": "Preis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die zugehörige Absatzmenge und die Ableitung der Preis-Absatz-Funktion.",
+						"formulaRefs": [],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Menge berechnen",
+								"description": "Wir setzen den gegebenen Preis in die Funktion ein.",
+								"math": "x(100) = 1000 - 5 \\cdot 100"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir multiplizieren und subtrahieren.",
+								"math": "x(100) = 1000 - 500"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Menge",
+								"description": "Die aktuelle Absatzmenge.",
+								"math": "x(100) = 500 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung bilden",
+								"description": "Wir leiten $x(p)$ nach dem Preis $p$ ab.",
+								"math": "x'(p) = -5"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Ableitung",
+								"description": "Die konstante marginale Mengenänderung.",
+								"math": "x'(p) = -5"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Punktelastizität $\\eta_{x,p}$ bei diesem Preis.",
+						"formulaRefs": ["punktelastizitaet"],
+						"interpretation": "Da $\\eta_{x,p} = -1$ ist, ist die Nachfrage in diesem Punkt isoelastisch. Eine marginale Preisänderung führt zu einer prozentual gleich großen, aber entgegengesetzten Mengenänderung. Der Umsatz ist hier maximal.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Elastizitätsformel",
+								"description": "Wir verwenden die Formel für die Punktelastizität.",
+								"math": "\\eta_{x,p} = x'(p) \\cdot \\frac{p}{x(p)}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die berechneten Werte ein.",
+								"math": "\\eta_{x,p} = -5 \\cdot \\frac{100}{500}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch vereinfachen",
+								"description": "Wir berechnen den Wert des Bruchs.",
+								"math": "\\eta_{x,p} = -5 \\cdot 0{,}2"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Elastizität",
+								"description": "Die berechnete Preiselastizität.",
+								"math": "\\eta_{x,p} = -1"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Bogenelastizität bei einer Preiserhöhung",
+				"descriptionTemplate": "Ein Unternehmen verkauft aktuell {x_1} Einheiten zu einem Preis von {p_1} GE/ME. Aufgrund gestiegener Kosten wird der Preis auf {p_2} GE/ME angehoben. Daraufhin sinkt der Absatz auf {x_2} Einheiten.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Aufgabe zur diskreten Preisänderung",
+				"given": [
+					{ "type": "value", "symbol": "p_1", "value": 20, "unit": "GE/ME", "label": "Alter Preis" },
+					{ "type": "value", "symbol": "p_2", "value": 25, "unit": "GE/ME", "label": "Neuer Preis" },
+					{ "type": "value", "symbol": "x_1", "value": 200, "unit": "ME", "label": "Alte Menge" },
+					{ "type": "value", "symbol": "x_2", "value": 180, "unit": "ME", "label": "Neue Menge" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die absolute Mengen- und Preisänderung ($\\Delta x$ und $\\Delta p$).",
+						"formulaRefs": [],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Mengenänderung",
+								"description": "Wir berechnen die Differenz der Mengen ($x_2 - x_1$).",
+								"math": "\\Delta x = 180 - 200"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Delta x",
+								"description": "Der Absatzrückgang.",
+								"math": "\\Delta x = -20 \\text{ ME}"
+							},
+							{
+								"type": "calculation",
+								"title": "Preisänderung",
+								"description": "Wir berechnen die Differenz der Preise ($p_2 - p_1$).",
+								"math": "\\Delta p = 25 - 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Delta p",
+								"description": "Der Preisanstieg.",
+								"math": "\\Delta p = 5 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Bogenelastizität der Nachfrage.",
+						"formulaRefs": ["bogenelastizitaet"],
+						"interpretation": "Mit einer Elastizität von $-0{,}4$ reagiert die Nachfrage unelastisch auf die Preisänderung. Der prozentuale Mengenrückgang ist kleiner als die prozentuale Preiserhöhung, was den Gesamtumsatz steigen lässt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel aufstellen",
+								"description": "Wir nutzen die Bogenelastizität bezogen auf den Ausgangspunkt.",
+								"math": "\\eta_{x,p} = \\frac{\\Delta x}{\\Delta p} \\cdot \\frac{p_1}{x_1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen unserer berechneten Differenzen und der Basiswerte.",
+								"math": "\\eta_{x,p} = \\frac{-20}{5} \\cdot \\frac{20}{200}"
+							},
+							{
+								"type": "calculation",
+								"title": "Brüche ausrechnen",
+								"description": "Wir berechnen die beiden Brüche separat.",
+								"math": "\\eta_{x,p} = -4 \\cdot 0{,}1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die errechnete Bogenelastizität.",
+								"math": "\\eta_{x,p} = -0{,}4"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Grenzerlös und Amoroso-Robinson",
+				"descriptionTemplate": "Ein Monopolist sieht sich einem Preis von {p} GE/ME gegenüber. Empirische Untersuchungen haben gezeigt, dass die Preiselastizität der Nachfrage in diesem Punkt exakt $\\eta = {eta}$ beträgt.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Klausuraufgabe zum Monopol",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 50, "unit": "GE/ME", "label": "Preis" },
+					{ "type": "value", "symbol": "eta", "value": -2, "unit": "", "label": "Preiselastizität" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Grenzerlös $E'(x)$ mit Hilfe der Amoroso-Robinson-Relation.",
+						"formulaRefs": ["amoroso-robinson"],
+						"interpretation": "Ein positiver Grenzerlös zeigt an, dass eine Ausweitung der abgesetzten Menge (durch eine Preissenkung) den Gesamtumsatz noch erhöhen würde. Dies ist typisch für den elastischen Bereich ($\\eta < -1$) der Nachfrage.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel Amoroso-Robinson",
+								"description": "Die Relation verbindet Preis, Elastizität und Grenzerlös.",
+								"math": "E'(x) = p(x) \\cdot \\left(1 + \\frac{1}{\\eta_{x,p}}\\right)"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen der Werte",
+								"description": "Wir setzen den gegebenen Preis und die Elastizität ein.",
+								"math": "E'(x) = 50 \\cdot \\left(1 + \\frac{1}{-2}\\right)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer berechnen",
+								"description": "Wir werten den Term in der Klammer aus.",
+								"math": "E'(x) = 50 \\cdot (1 - 0{,}5)"
+							},
+							{
+								"type": "calculation",
+								"title": "Multiplikation",
+								"description": "Wir multiplizieren den Preis mit dem Klammerwert.",
+								"math": "E'(x) = 50 \\cdot 0{,}5"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Grenzerlös",
+								"description": "Der resultierende marginale Erlös einer zusätzlichen Einheit.",
+								"math": "E'(x) = 25 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Elastizität im Erlösmaximum",
+				"descriptionTemplate": "Es sei die inverse Preis-Absatz-Funktion {p_func} gegeben.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Übung zur Umsatzmaximierung",
+				"given": [
+					{ "type": "formula", "symbol": "p_func", "math": "p(x) = 200 - 2x", "label": "Inverse PAF" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die erlösmaximale Menge $x$ und den zugehörigen Preis $p$.",
+						"formulaRefs": [],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion aufstellen",
+								"description": "Der Erlös ergibt sich aus Preis mal Menge.",
+								"math": "E(x) = p(x) \\cdot x = (200 - 2x) \\cdot x"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausmultiplizieren",
+								"description": "Wir lösen die Klammer auf.",
+								"math": "E(x) = 200x - 2x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös bilden",
+								"description": "Für das Maximum muss die erste Ableitung null gesetzt werden.",
+								"math": "E'(x) = 200 - 4x = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x auflösen",
+								"description": "Wir bringen $4x$ auf die andere Seite und teilen durch $4$.",
+								"math": "4x = 200 \\implies x = 50"
+							},
+							{
+								"type": "result",
+								"title": "Erlösmaximale Menge",
+								"description": "Die optimale Menge.",
+								"math": "x = 50 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Wir setzen $x=50$ in die Preis-Absatz-Funktion ein.",
+								"math": "p(50) = 200 - 2 \\cdot 50"
+							},
+							{
+								"type": "result",
+								"title": "Zugehöriger Preis",
+								"description": "Der Preis im Umsatzmaximum.",
+								"math": "p = 100 \\text{ GE/ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Punktelastizität über die inverse Funktion an diesem Punkt.",
+						"formulaRefs": ["punktelastizitaet-invers"],
+						"interpretation": "Im Erlösmaximum einer linearen Preis-Absatz-Funktion liegt die Elastizität stets exakt bei $-1$. Der Erlös lässt sich weder durch Preissteigerung noch -senkung weiter erhöhen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ableitung p'(x)",
+								"description": "Wir benötigen die Ableitung der inversen PAF nach der Menge.",
+								"math": "p'(x) = -2"
+							},
+							{
+								"type": "formula",
+								"title": "Formel für inverse Elastizität",
+								"description": "Wir nutzen die modifizierte Elastizitätsformel.",
+								"math": "\\eta_{x,p} = \\frac{1}{p'(x)} \\cdot \\frac{p}{x}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von $p'(x)$, sowie $p=100$ und $x=50$.",
+								"math": "\\eta_{x,p} = \\frac{1}{-2} \\cdot \\frac{100}{50}"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnen",
+								"description": "Wir werten das Produkt aus.",
+								"math": "\\eta_{x,p} = -0{,}5 \\cdot 2"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Preiselastizität im Umsatzmaximum.",
+								"math": "\\eta_{x,p} = -1"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Isoelastische / Multiplikative Nachfrage",
+				"descriptionTemplate": "Gegeben ist die nichtlineare Preis-Absatz-Funktion {x_func}. Wir betrachten den Punkt $p = {p_val}$.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "KI-generierte Aufgabe zur Konstanz isoelastischer Funktionen",
+				"given": [
+					{ "type": "formula", "symbol": "x_func", "math": "x(p) = 5000 \\cdot p^{-2}", "label": "Preis-Absatz-Funktion" },
+					{ "type": "value", "symbol": "p_val", "value": 10, "unit": "GE/ME", "label": "Preis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Punktelastizität $\\eta_{x,p}$ für $p = 10$.",
+						"formulaRefs": ["punktelastizitaet"],
+						"interpretation": "Bei einer Funktion der Form $x(p) = a \\cdot p^{-b}$ ist die Elastizität konstant gleich $-b$, unabhängig vom gewählten Preis. Sie ist daher im gesamten Definitionsbereich isoelastisch.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Menge berechnen",
+								"description": "Zuerst setzen wir $p=10$ in die Funktion ein.",
+								"math": "x(10) = 5000 \\cdot 10^{-2}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Menge",
+								"description": "Aus $10^{-2} = 0{,}01$ folgt:",
+								"math": "x(10) = 50 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung x'(p)",
+								"description": "Wir leiten die Funktion nach Potenzregeln ab.",
+								"math": "x'(p) = 5000 \\cdot (-2) \\cdot p^{-3} = -10000 \\cdot p^{-3}"
+							},
+							{
+								"type": "substitution",
+								"title": "Ableitung auswerten",
+								"description": "Wir setzen $p=10$ in die Ableitung ein.",
+								"math": "x'(10) = -10000 \\cdot 10^{-3} = -10000 \\cdot 0{,}001"
+							},
+							{
+								"type": "result",
+								"title": "Wert der Ableitung",
+								"description": "Der marginale Effekt bei Preis 10.",
+								"math": "x'(10) = -10"
+							},
+							{
+								"type": "substitution",
+								"title": "In Elastizitätsformel einsetzen",
+								"description": "Wir fügen alle Komponenten in $\\eta_{x,p} = x'(p) \\cdot \\frac{p}{x}$ ein.",
+								"math": "\\eta_{x,p} = -10 \\cdot \\frac{10}{50}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Wir berechnen den finalen Wert.",
+								"math": "\\eta_{x,p} = -10 \\cdot 0{,}2"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die berechnete Elastizität.",
+								"math": "\\eta_{x,p} = -2"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kreuzpreiselastizität bei substitutiven Gütern",
+				"descriptionTemplate": "Die Nachfrage nach Gut 1 wird durch die Funktion {x_func} beschrieben, wobei $p_1$ der Preis von Gut 1 und $p_2$ der Preis von Gut 2 ist. Aktuell liegen die Preise bei $p_1 = {p1_val}$ und $p_2 = {p2_val}$.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Grundlagenaufgabe Kreuzpreiselastizität",
+				"given": [
+					{ "type": "formula", "symbol": "x_func", "math": "x_1(p_1, p_2) = 100 - 2p_1 + 4p_2", "label": "Nachfragefunktion" },
+					{ "type": "value", "symbol": "p1_val", "value": 10, "unit": "GE", "label": "Preis Gut 1" },
+					{ "type": "value", "symbol": "p2_val", "value": 5, "unit": "GE", "label": "Preis Gut 2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die aktuelle Nachfragemenge $x_1$ und die Kreuzpreiselastizität $\\eta_{x_1, p_2}$.",
+						"formulaRefs": ["kreuzpreiselastizitaet"],
+						"interpretation": "Ein positives Vorzeichen der Kreuzpreiselastizität ($>0$) bedeutet, dass eine Preiserhöhung von Gut 2 zu einer Mengensteigerung bei Gut 1 führt. Es handelt sich folglich um Substitutionsgüter.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Menge berechnen",
+								"description": "Wir setzen beide Preise in die Nachfragefunktion ein.",
+								"math": "x_1 = 100 - 2 \\cdot 10 + 4 \\cdot 5"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir werten die Terme aus.",
+								"math": "x_1 = 100 - 20 + 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_1",
+								"description": "Die Nachfragemenge bei den aktuellen Preisen.",
+								"math": "x_1 = 100 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Partielle Ableitung",
+								"description": "Wir leiten $x_1$ partiell nach $p_2$ ab. Die Terme mit $p_1$ und die Konstante fallen weg.",
+								"math": "\\frac{\\partial x_1}{\\partial p_2} = 4"
+							},
+							{
+								"type": "substitution",
+								"title": "Formel anwenden",
+								"description": "Wir setzen die Ableitung, $p_2$ und $x_1$ in die Kreuzpreiselastizitätsformel ein.",
+								"math": "\\eta_{x_1,p_2} = 4 \\cdot \\frac{5}{100}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch auswerten",
+								"description": "Wir multiplizieren die Werte.",
+								"math": "\\eta_{x_1,p_2} = 4 \\cdot 0{,}05"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die errechnete Kreuzpreiselastizität.",
+								"math": "\\eta_{x_1,p_2} = 0{,}2"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Indirekte Berechnung über die Umkehrfunktion",
+				"descriptionTemplate": "Auf einem Markt gilt die inverse Nachfragefunktion {p_func}. Die aktuelle Absatzmenge beträgt $x = {x_val}$.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an Klausuraufgaben zur Kettenregel/Umkehrfunktion",
+				"given": [
+					{ "type": "formula", "symbol": "p_func", "math": "p(x) = 500 - 10x", "label": "Inverse PAF" },
+					{ "type": "value", "symbol": "x_val", "value": 20, "unit": "ME", "label": "Menge" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Punktelastizität $\\eta_{x,p}$ über die Ableitungsregel für Umkehrfunktionen.",
+						"formulaRefs": ["punktelastizitaet-invers"],
+						"interpretation": "Mit $\\eta = -1{,}5$ reagiert die Nachfrage elastisch. Eine Preiserhöhung um 1% führt zu einem Mengenrückgang von 1,5%.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Preis berechnen",
+								"description": "Wir bestimmen den Preis für die gegebene Menge.",
+								"math": "p(20) = 500 - 10 \\cdot 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preis",
+								"description": "Der resultierende Preis auf dem Markt.",
+								"math": "p = 300 \\text{ GE/ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung der Inversen",
+								"description": "Wir leiten $p(x)$ nach der Menge $x$ ab.",
+								"math": "p'(x) = -10"
+							},
+							{
+								"type": "substitution",
+								"title": "In Elastizitätsformel",
+								"description": "Wir setzen $p'(x)$, $p$ und $x$ in die indirekte Formel ein.",
+								"math": "\\eta_{x,p} = \\frac{1}{-10} \\cdot \\frac{300}{20}"
+							},
+							{
+								"type": "calculation",
+								"title": "Brüche auflösen",
+								"description": "Wir werten die beiden Brüche aus.",
+								"math": "\\eta_{x,p} = -0{,}1 \\cdot 15"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Preiselastizität der Nachfrage.",
+								"math": "\\eta_{x,p} = -1{,}5"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Erlöswirkung einer Preisänderung",
+				"descriptionTemplate": "Die Nachfragefunktion lautet {x_func}. Der aktuelle Preis liegt bei $p = {p_val}$. Das Management diskutiert eine geringfügige Preisanpassung.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Anwendungsorientierte Aufgabe zur Erlösableitung nach Preis",
+				"given": [
+					{ "type": "formula", "symbol": "x_func", "math": "x(p) = 400 - 4p", "label": "Nachfragefunktion" },
+					{ "type": "value", "symbol": "p_val", "value": 80, "unit": "GE/ME", "label": "Preis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie zunächst die Elastizität $\\eta_{x,p}$ und anschließend die Grenzerlösänderung bezogen auf den Preis $\\frac{dE}{dp}$.",
+						"formulaRefs": ["punktelastizitaet", "erloesaenderung-preis"],
+						"interpretation": "Die Erlösableitung nach dem Preis ist negativ ($-240$). Da die Nachfrage elastisch ist ($\\eta = -4$), dominiert der negative Mengeneffekt den positiven Preiseffekt. Eine Preisanhebung führt hier zwingend zu einem Umsatzverlust.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Menge berechnen",
+								"description": "Wir berechnen die abgesetzte Menge beim aktuellen Preis.",
+								"math": "x(80) = 400 - 4 \\cdot 80 = 400 - 320"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Menge",
+								"description": "Die Menge beträgt:",
+								"math": "x(80) = 80 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Ableitung x'(p)",
+								"description": "Wir leiten die Funktion nach dem Preis ab.",
+								"math": "x'(p) = -4"
+							},
+							{
+								"type": "substitution",
+								"title": "Elastizität berechnen",
+								"description": "Wir setzen in die Formel der Punktelastizität ein.",
+								"math": "\\eta_{x,p} = -4 \\cdot \\frac{80}{80}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Elastizität",
+								"description": "Die Nachfrageelastizität.",
+								"math": "\\eta_{x,p} = -4"
+							},
+							{
+								"type": "formula",
+								"title": "Erlösänderung nach Preis",
+								"description": "Wir nutzen die Formel für die partielle Ableitung des Erlöses nach dem Preis.",
+								"math": "\\frac{dE}{dp} = x(p) \\cdot (1 + \\eta_{x,p})"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in Erlösformel",
+								"description": "Wir setzen $x=80$ und $\\eta_{x,p}=-4$ ein.",
+								"math": "\\frac{dE}{dp} = 80 \\cdot (1 + (-4))"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammerterm",
+								"description": "Wir verrechnen den Term in der Klammer.",
+								"math": "\\frac{dE}{dp} = 80 \\cdot (-3)"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Erlösänderung",
+								"description": "Die marginale Umsatzveränderung bei einer minimalen Preiserhöhung.",
+								"math": "\\frac{dE}{dp} = -240"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

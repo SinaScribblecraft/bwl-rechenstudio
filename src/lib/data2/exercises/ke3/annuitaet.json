@@ -1,0 +1,605 @@
+{
+	"annuitaet": {
+		"title": "Annuitätenrechnung",
+		"subtitle": "Berechnung von Annuitäten, Kapitalwerten und Wiedergewinnungsfaktoren.",
+		"formulas": [
+			{
+				"id": "aufzinsungsfaktor",
+				"name": "Aufzinsungsfaktor",
+				"math": "q = 1 + i",
+				"result": { "symbol": "q", "description": "Zinsfaktor" },
+				"params": [
+					{ "symbol": "i", "description": "Kalkulationszinssatz (als Dezimalzahl)" }
+				]
+			},
+			{
+				"id": "wiedergewinnungsfaktor",
+				"name": "Wiedergewinnungsfaktor (Annuitätenfaktor)",
+				"math": "ANF_{n,i} = \\frac{q^n \\cdot i}{q^n - 1}",
+				"result": { "symbol": "ANF_{n,i}", "description": "Annuitätenfaktor" },
+				"params": [
+					{ "symbol": "q", "description": "Aufzinsungsfaktor" },
+					{ "symbol": "n", "description": "Laufzeit in Jahren" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "annuitaet",
+				"name": "Annuität",
+				"math": "a = C_0 \\cdot ANF_{n,i}",
+				"result": { "symbol": "a", "description": "Jährliche, gleichbleibende Zahlung (Annuität)" },
+				"params": [
+					{ "symbol": "C_0", "description": "Kapitalwert (oder Kreditbetrag)" },
+					{ "symbol": "ANF_{n,i}", "description": "Wiedergewinnungsfaktor" }
+				]
+			},
+			{
+				"id": "rentenbarwertfaktor",
+				"name": "Rentenbarwertfaktor",
+				"math": "RBF_{n,i} = \\frac{q^n - 1}{q^n \\cdot i}",
+				"result": { "symbol": "RBF_{n,i}", "description": "Rentenbarwertfaktor (Kehrwert des ANF)" },
+				"params": [
+					{ "symbol": "q", "description": "Aufzinsungsfaktor" },
+					{ "symbol": "n", "description": "Laufzeit in Jahren" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "kapitalwert-aus-annuitaet",
+				"name": "Kapitalwert aus Annuität",
+				"math": "C_0 = a \\cdot RBF_{n,i}",
+				"result": { "symbol": "C_0", "description": "Barwert der Annuitäten" },
+				"params": [
+					{ "symbol": "a", "description": "Annuität" },
+					{ "symbol": "RBF_{n,i}", "description": "Rentenbarwertfaktor" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Basisaufgabe Annuitätenmethode",
+				"descriptionTemplate": "Ein Investitionsprojekt weist einen Kapitalwert von {C_0} GE auf. Die Nutzungsdauer beträgt {n} Jahre. Der Kalkulationszinssatz liegt bei {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Skript KE 3, Investition",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 10000, "unit": "GE", "label": "Kapitalwert" },
+					{ "type": "value", "symbol": "n", "value": 4, "unit": "Jahre", "label": "Nutzungsdauer" },
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Aufzinsungsfaktor $q$ und den Wiedergewinnungsfaktor $ANF_{n,i}$ (auf 4 Nachkommastellen gerundet).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor"],
+						"interpretation": "Der Wiedergewinnungsfaktor (auch Annuitätenfaktor) dient dazu, einen heutigen Einmalbetrag (Barwert) in eine gleichwertige Reihe von konstanten jährlichen Zahlungen umzurechnen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufzinsungsfaktor aufstellen",
+								"description": "Zunächst bestimmen wir den Aufzinsungsfaktor $q$, der sich aus $1$ plus dem Kalkulationszinssatz $i$ ergibt.",
+								"math": "q = 1 + i"
+							},
+							{
+								"type": "substitution",
+								"title": "Zinssatz einsetzen",
+								"description": "Wir setzen den gegebenen Zinssatz als Dezimalzahl ein.",
+								"math": "q = 1 + 0{,}05"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Aufzinsungsfaktor",
+								"description": "Daraus ergibt sich der Wert für $q$.",
+								"math": "q = 1{,}05"
+							},
+							{
+								"type": "formula",
+								"title": "Wiedergewinnungsfaktor notieren",
+								"description": "Nun stellen wir die Formel für den Wiedergewinnungsfaktor ($ANF$) auf.",
+								"math": "ANF_{n,i} = \\frac{q^n \\cdot i}{q^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in ANF einsetzen",
+								"description": "Wir setzen unsere Werte für $q$, $n$ und $i$ in die Formel ein.",
+								"math": "ANF_{4, 0{,}05} = \\frac{1{,}05^4 \\cdot 0{,}05}{1{,}05^4 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler und Nenner berechnen",
+								"description": "Wir berechnen die Potenzen und fassen Zähler und Nenner zusammen.",
+								"math": "ANF_{4, 0{,}05} = \\frac{1{,}2155 \\cdot 0{,}05}{1{,}2155 - 1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis ANF",
+								"description": "Der Bruch liefert uns den finalen Faktor.",
+								"math": "ANF_{4, 0{,}05} = 0{,}2820"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Annuität $a$.",
+						"formulaRefs": ["annuitaet"],
+						"interpretation": "Die Annuität gibt an, welcher konstante Betrag am Ende jeder Periode entnommen werden kann, ohne dass das ursprüngliche Kapital am Ende der Laufzeit einen negativen Saldo aufweist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Annuitätengleichung aufstellen",
+								"description": "Die Annuität ergibt sich aus dem Produkt von Kapitalwert und Wiedergewinnungsfaktor.",
+								"math": "a = C_0 \\cdot ANF_{n,i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Kapitalwert und den eben berechneten Faktor ein.",
+								"math": "a = 10{.}000 \\cdot 0{,}2820"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Annuität",
+								"description": "Nach der Multiplikation erhalten wir die konstante jährliche Zahlung.",
+								"math": "a = 2{.}820{,}00 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Darlehensrückzahlung (Kreditannuität)",
+				"descriptionTemplate": "Ein Unternehmen nimmt ein Darlehen in Höhe von {C_0} GE auf. Dieses soll in {n} Jahren in Form von gleichbleibenden jährlichen Annuitäten (Zins und Tilgung) zurückgezahlt werden. Der Kreditzins beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2023 (in Anlehnung)",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 50000, "unit": "GE", "label": "Kreditbetrag" },
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" },
+					{ "type": "value", "symbol": "i", "value": 0.08, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 8, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die konstante jährliche Darlehensannuität $a$ (auf zwei Nachkommastellen).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor", "annuitaet"],
+						"interpretation": "Bei einem Annuitätendarlehen bleibt die Summe aus Zins und Tilgung (die Annuität) jedes Jahr konstant. Da die Restschuld sinkt, nimmt der Zinsanteil im Zeitverlauf ab, während der Tilgungsanteil steigt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gesamtformel aufstellen",
+								"description": "Wir setzen direkt die Definitionsgleichung der Annuität inklusive der Ausformulierung des Annuitätenfaktors an.",
+								"math": "a = C_0 \\cdot \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gegebene Werte einsetzen",
+								"description": "Der Kreditbetrag entspricht unserem Barwert ($C_0$). Wir setzen $C_0$, $n$ und $i$ ein.",
+								"math": "a = 50{.}000 \\cdot \\frac{(1+0{,}08)^5 \\cdot 0{,}08}{(1+0{,}08)^5 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir berechnen zunächst den Wert der Potenz $1{,}08^5 \\approx 1{,}4693$ und werten den Bruch aus.",
+								"math": "a = 50{.}000 \\cdot \\frac{1{,}4693 \\cdot 0{,}08}{1{,}4693 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Faktor vereinfachen",
+								"description": "Das Ausrechnen des Bruchs ergibt den Wiedergewinnungsfaktor.",
+								"math": "a = 50{.}000 \\cdot 0{,}250456"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das Produkt ist unsere gesuchte Kreditannuität.",
+								"math": "a = 12{.}522{,}80 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Barwert aus konstanter Rente",
+				"descriptionTemplate": "Ein Investor erwirbt einen Anspruch auf eine feste jährliche Auszahlung (Annuität) von {a} GE für die kommenden {n} Jahre. Sein persönlicher Kalkulationszinssatz beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Abwandlung zum Rentenbarwert",
+				"given": [
+					{ "type": "value", "symbol": "a", "value": 15000, "unit": "GE", "label": "Jährliche Rente" },
+					{ "type": "value", "symbol": "n", "value": 3, "unit": "Jahre", "label": "Laufzeit" },
+					{ "type": "value", "symbol": "i", "value": 0.10, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Rentenbarwertfaktor $RBF_{n,i}$ (auf 4 Nachkommastellen).",
+						"formulaRefs": ["aufzinsungsfaktor", "rentenbarwertfaktor"],
+						"interpretation": "Der Rentenbarwertfaktor ist der Kehrwert des Wiedergewinnungsfaktors. Er gibt an, wie viel eine Folge von konstanten Einzahlungen in Höhe von $1$ GE heute wert ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Rentenbarwertfaktor aufstellen",
+								"description": "Wir nutzen die Formel für den Rentenbarwertfaktor, die auf dem Aufzinsungsfaktor $q = 1+i$ basiert.",
+								"math": "RBF_{n,i} = \\frac{q^n - 1}{q^n \\cdot i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $q = 1{,}10$ sowie $n=3$ und $i=0{,}10$ ein.",
+								"math": "RBF_{3, 0{,}10} = \\frac{1{,}10^3 - 1}{1{,}10^3 \\cdot 0{,}10}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Wir berechnen den Wert $1{,}10^3 = 1{,}331$.",
+								"math": "RBF_{3, 0{,}10} = \\frac{1{,}331 - 1}{1{,}331 \\cdot 0{,}10}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis RBF",
+								"description": "Das Ausrechnen des Bruches führt zum Rentenbarwertfaktor.",
+								"math": "RBF_{3, 0{,}10} = 2{,}4869"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den heutigen Wert (Kapitalwert) dieses Zahlungsanspruchs $C_0$.",
+						"formulaRefs": ["kapitalwert-aus-annuitaet"],
+						"interpretation": "Dies ist der maximale Preis, den der Investor heute für diesen Zahlungsanspruch bezahlen sollte, um genau seine Mindestrendite von $10 \\%$ zu erreichen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Kapitalwert",
+								"description": "Der Kapitalwert entspricht der Rente multipliziert mit dem Rentenbarwertfaktor.",
+								"math": "C_0 = a \\cdot RBF_{n,i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen die gegebene Annuität und den berechneten Faktor ein.",
+								"math": "C_0 = 15{.}000 \\cdot 2{,}4869"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kapitalwert",
+								"description": "Das Produkt ist der heutige Gesamtwert der Renten.",
+								"math": "C_0 = 37{.}303{,}50 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kostenannuität einer Maschine",
+				"descriptionTemplate": "Für eine Produktionsmaschine fallen heute einmalige Anschaffungsauszahlungen von {C_0} GE an. Die Maschine soll über {n} Jahre genutzt werden. Der unternehmensinterne Kalkulationszinssatz liegt bei {i_pct} % p.a. Laufende Betriebsausgaben werden hier zur Vereinfachung vernachlässigt.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Kostenvergleichsrechnung",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 120000, "unit": "GE", "label": "Anschaffungskosten" },
+					{ "type": "value", "symbol": "n", "value": 8, "unit": "Jahre", "label": "Nutzungsdauer" },
+					{ "type": "value", "symbol": "i", "value": 0.06, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 6, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Kostenannuität $a$ der Anschaffungsausgabe (auf ganze GE gerundet).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor", "annuitaet"],
+						"interpretation": "Die Kostenannuität verteilt die einmaligen Anschaffungskosten (unter Berücksichtigung von Zinsen) fiktiv als konstante jährliche Belastung über die Nutzungsdauer. Dies macht Investitionen mit unterschiedlichen Laufzeiten vergleichbar.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Annuitätsgleichung",
+								"description": "Wir kombinieren direkt die Formel für die Annuität mit dem eingesetzten $ANF$.",
+								"math": "a = C_0 \\cdot \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen unsere Werte für Anschaffungsausgabe, Zinssatz und Jahre ein.",
+								"math": "a = 120{.}000 \\cdot \\frac{(1+0{,}06)^8 \\cdot 0{,}06}{(1+0{,}06)^8 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zinsfaktor berechnen",
+								"description": "Wir berechnen die achte Potenz von $1{,}06$, was etwa $1{,}5938$ ergibt.",
+								"math": "a = 120{.}000 \\cdot \\frac{1{,}5938 \\cdot 0{,}06}{1{,}5938 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Faktor ausrechnen",
+								"description": "Der Bruch liefert uns den Annuitätenfaktor.",
+								"math": "a = 120{.}000 \\cdot 0{,}161036"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kostenannuität",
+								"description": "Die Multiplikation ergibt die jährliche äquivalente Kostenbelastung.",
+								"math": "a = 19{.}324 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Beurteilung eines Investitionsprojekts",
+				"descriptionTemplate": "Ein Projekt (Laufzeit {n} Jahre) liefert einen positiven Kapitalwert von {C_0} GE. Das Management fordert eine Mindestverzinsung von {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 09-2023",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 25430, "unit": "GE", "label": "Kapitalwert" },
+					{ "type": "value", "symbol": "n", "value": 6, "unit": "Jahre", "label": "Laufzeit" },
+					{ "type": "value", "symbol": "i", "value": 0.07, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 7, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Wiedergewinnungsfaktor $ANF_{n,i}$ für das Projekt (auf vier Nachkommastellen).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor"],
+						"interpretation": "Ein positiver Kapitalwert bedeutet, dass das Projekt vorteilhaft ist. Der $ANF$ hilft uns, diesen Vermögenszuwachs als gleichmäßigen jährlichen Einkommensüberschuss auszudrücken.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "ANF-Formel",
+								"description": "Die bekannte Formel für den Wiedergewinnungsfaktor wird notiert.",
+								"math": "ANF_{n,i} = \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Laufzeit $n=6$ und Zins $i=0{,}07$ einsetzen.",
+								"math": "ANF_{6, 0{,}07} = \\frac{(1{,}07)^6 \\cdot 0{,}07}{(1{,}07)^6 - 1}"
+							},
+							{
+								"type": "result",
+								"title": "ANF berechnen",
+								"description": "Nach Ausrechnen von Potenz und Bruch erhalten wir den Faktor.",
+								"math": "ANF_{6, 0{,}07} = 0{,}2098"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die zugehörige Annuität $a$.",
+						"formulaRefs": ["annuitaet"],
+						"interpretation": "Dieser Betrag stellt den konstanten jährlichen Gewinn (Überschuss über die geforderte Mindestverzinsung hinaus) dar, den das Projekt abwirft.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Annuitätsgleichung",
+								"description": "Kapitalwert und ANF werden multipliziert.",
+								"math": "a = C_0 \\cdot ANF_{n,i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Zahlenwerte einsetzen",
+								"description": "Wir setzen die berechneten bzw. gegebenen Werte ein.",
+								"math": "a = 25{.}430 \\cdot 0{,}2098"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Annuität",
+								"description": "Das Ergebnis ist der jährliche zusätzliche Entnahmebetrag.",
+								"math": "a = 5{.}335{,}21 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Immobilienrendite berechnen",
+				"descriptionTemplate": "Eine Immobilie wurde für einen Barwert (inklusive aller zukünftigen Kosten und Instandhaltungen) von {C_0} GE erworben. Sie soll {n} Jahre im Bestand gehalten werden. Der Kalkulationszinssatz für derartige Objekte beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Praxisbeispiel Immobilienbewertung",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 300000, "unit": "GE", "label": "Barwert der Immobilie" },
+					{ "type": "value", "symbol": "n", "value": 10, "unit": "Jahre", "label": "Haltedauer" },
+					{ "type": "value", "symbol": "i", "value": 0.04, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 4, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die erforderliche jährliche Annuität $a$, um die Gesamtinvestition über die Haltedauer genau zu amortisieren.",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor", "annuitaet"],
+						"interpretation": "Diese Annuität entspricht der Mindestmiete (Netto-Kaltmiete nach laufenden Kosten), die erzielt werden muss, damit sich das Objekt unter Berücksichtigung der Opportunitätskosten (4% Zins) rentiert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kombinierte Formel",
+								"description": "Wir nutzen die direkte Gleichung für die Annuität unter Verwendung von $q$.",
+								"math": "a = C_0 \\cdot \\frac{q^n \\cdot i}{q^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Mit $q = 1{,}04$ setzen wir alle Werte ein.",
+								"math": "a = 300{.}000 \\cdot \\frac{1{,}04^{10} \\cdot 0{,}04}{1{,}04^{10} - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Der Wert $1{,}04^{10}$ liegt bei ca. $1{,}4802$.",
+								"math": "a = 300{.}000 \\cdot \\frac{1{,}4802 \\cdot 0{,}04}{1{,}4802 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch zu Faktor",
+								"description": "Der Auswertung des Bruchs ergibt den Annuitätenfaktor.",
+								"math": "a = 300{.}000 \\cdot 0{,}12329"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Damit haben wir die notwendige jährliche Rückflussgröße.",
+								"math": "a = 36{.}987{,}00 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kurzfristiges Darlehen mit hohem Zins",
+				"descriptionTemplate": "Ein Händler nimmt zur Vorfinanzierung von Waren ein kurzfristiges Darlehen in Höhe von {C_0} GE auf. Er muss dieses innerhalb von nur {n} Jahren in gleichbleibenden Raten zurückzahlen. Aufgrund mangelnder Sicherheiten verlangt die Bank {i_pct} % p.a. Zinsen.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Darlehensberechnung Extremszenario",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 5000, "unit": "GE", "label": "Kreditbetrag" },
+					{ "type": "value", "symbol": "n", "value": 2, "unit": "Jahre", "label": "Laufzeit" },
+					{ "type": "value", "symbol": "i", "value": 0.15, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 15, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Wiedergewinnungsfaktor $ANF_{2, 0{,}15}$ (auf 4 Nachkommastellen).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor"],
+						"interpretation": "Da die Laufzeit sehr kurz und der Zins hoch ist, ist der ANF deutlich höher als bei normalen Immobilienfinanzierungen, da in kurzer Zeit viel Kapital getilgt werden muss.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "ANF-Formel",
+								"description": "Wir notieren die Formel.",
+								"math": "ANF_{n,i} = \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $n=2$ und $i=0{,}15$ ein.",
+								"math": "ANF_{2, 0{,}15} = \\frac{(1{,}15)^2 \\cdot 0{,}15}{(1{,}15)^2 - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "$1{,}15^2 = 1{,}3225$.",
+								"math": "ANF_{2, 0{,}15} = \\frac{1{,}3225 \\cdot 0{,}15}{1{,}3225 - 1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis ANF",
+								"description": "Wir teilen den Zähler durch den Nenner $0{,}3225$.",
+								"math": "ANF_{2, 0{,}15} = 0{,}6151"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Annuität $a$.",
+						"formulaRefs": ["annuitaet"],
+						"interpretation": "Dies ist die enorme jährliche Belastung, die der Händler aus seinem Cashflow stemmen muss.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel anwenden",
+								"description": "Die Annuität ist das Produkt aus Barwert und $ANF$.",
+								"math": "a = C_0 \\cdot ANF_{n,i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Zahlen einsetzen",
+								"description": "Wir setzen den Kreditbetrag und den Faktor ein.",
+								"math": "a = 5000 \\cdot 0{,}6151"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Rate pro Jahr ist somit festgelegt.",
+								"math": "a = 3{.}075{,}50 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rentenplanung bei Lotteriegewinn",
+				"descriptionTemplate": "Eine Privatperson gewinnt {C_0} GE in der Lotterie. Dieser Betrag soll als Basis für eine konstante jährliche Zusatzrente dienen, die über {n} Jahre am jeweiligen Jahresende ausgezahlt wird. Der Anlagezins beträgt {i_pct} % p.a. Am Ende der Laufzeit soll das Kapital vollständig aufgebraucht sein.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Skript, Anwendungsbeispiel Privatfinanzierung",
+				"given": [
+					{ "type": "value", "symbol": "C_0", "value": 1000000, "unit": "GE", "label": "Lotteriegewinn" },
+					{ "type": "value", "symbol": "n", "value": 20, "unit": "Jahre", "label": "Bezugsdauer" },
+					{ "type": "value", "symbol": "i", "value": 0.03, "unit": "", "label": "Zinssatz (Dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 3, "unit": "%", "label": "Zinssatz (Prozent)" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Wiedergewinnungsfaktor $ANF_{n,i}$ (auf 5 Nachkommastellen).",
+						"formulaRefs": ["aufzinsungsfaktor", "wiedergewinnungsfaktor"],
+						"interpretation": "Der Faktor legt fest, welcher Prozentsatz des Startkapitals jedes Jahr entnommen werden darf, damit Zinsen und Kapitalverzehr exakt für 20 Jahre reichen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "ANF notieren",
+								"description": "Wir nutzen die klassische Formel.",
+								"math": "ANF_{n,i} = \\frac{(1+i)^n \\cdot i}{(1+i)^n - 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $n=20$ und $i=0{,}03$ ein.",
+								"math": "ANF_{20, 0{,}03} = \\frac{(1{,}03)^{20} \\cdot 0{,}03}{(1{,}03)^{20} - 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Der Aufzinsungsfaktor nach 20 Jahren beträgt $1{,}03^{20} \\approx 1{,}8061$.",
+								"math": "ANF_{20, 0{,}03} = \\frac{1{,}8061 \\cdot 0{,}03}{1{,}8061 - 1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Faktor",
+								"description": "Ausrechnen des Bruchs.",
+								"math": "ANF_{20, 0{,}03} = 0{,}06722"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die konstante jährliche Zusatzrente $a$.",
+						"formulaRefs": ["annuitaet"],
+						"interpretation": "Dies ist die Rente, die sich die Person jedes Jahr ohne Sorgen auszahlen lassen kann, wobei das Kapital die gesamte Laufzeit über noch Zinsen erwirtschaftet.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Rentenformel",
+								"description": "Wir multiplizieren den Einmalbetrag mit dem Annuitätenfaktor.",
+								"math": "a = C_0 \\cdot ANF_{n,i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen eine Million und den eben berechneten Faktor ein.",
+								"math": "a = 1{.}000{.}000 \\cdot 0{,}06722"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rente",
+								"description": "Damit haben wir die maximal mögliche jährliche Entnahme berechnet.",
+								"math": "a = 67{.}220{,}00 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

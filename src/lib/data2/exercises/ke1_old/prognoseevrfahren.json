@@ -1,0 +1,490 @@
+{
+	"prognoseverfahren": {
+		"title": "Prognoseverfahren (Verbrauchsgebundene Bedarfsplanung)",
+		"subtitle": "Berechnung von Vorhersagewerten mittels Mittelwertbildung und exponentieller Glättung.",
+		"formulas": [
+			{
+				"id": "arithmetisches-mittel",
+				"name": "Arithmetisches Mittel",
+				"math": "P_{T+1}^{am} = \\frac{1}{T} \\cdot \\sum_{t=1}^{T} V_t",
+				"result": {
+					"symbol": "P_{T+1}^{am}",
+					"description": "Prognosewert für die nächste Periode"
+				},
+				"params": [
+					{ "symbol": "T", "description": "Anzahl der insgesamt erfassten Vergangenheitsperioden" },
+					{ "symbol": "V_t", "description": "Tatsächlicher Verbrauch in Periode t" }
+				]
+			},
+			{
+				"id": "gleitender-mittelwert",
+				"name": "Gleitender Mittelwert",
+				"math": "P_{T+1}^{gm} = \\frac{1}{m} \\cdot \\sum_{i=1}^{m} V_{T-m+i}",
+				"result": {
+					"symbol": "P_{T+1}^{gm}",
+					"description": "Prognosewert auf Basis von m Perioden"
+				},
+				"params": [
+					{
+						"symbol": "m",
+						"description": "Anzahl der berücksichtigten, jüngsten Vergangenheitsperioden"
+					},
+					{ "symbol": "V", "description": "Tatsächlicher Verbrauch in der jeweiligen Periode" }
+				]
+			},
+			{
+				"id": "exponentielle-glaettung",
+				"name": "Exponentielle Glättung",
+				"math": "P_{T+1}^{eg} = \\alpha \\cdot V_T + (1 - \\alpha) \\cdot P_T^{eg}",
+				"result": {
+					"symbol": "P_{T+1}^{eg}",
+					"description": "Prognosewert für die nächste Periode"
+				},
+				"params": [
+					{ "symbol": "\\alpha", "description": "Glättungsfaktor (0 < alpha < 1)" },
+					{ "symbol": "V_T", "description": "Tatsächlicher Verbrauch in der aktuellen Periode T" },
+					{ "symbol": "P_T^{eg}", "description": "Prognosewert für die aktuelle Periode T" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Fall 1: Einfaches arithmetisches Mittel",
+				"descriptionTemplate": "Ein Unternehmen möchte den Materialbedarf für das fünfte Quartal ($T+1=5$) prognostizieren. Die tatsächlichen Verbräuche der ersten vier Quartale betrugen $V_1 = {V_1}$ ME, $V_2 = {V_2}$ ME, $V_3 = {V_3}$ ME und $V_4 = {V_4}$ ME.",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 120,
+						"unit": "ME",
+						"label": "Verbrauch Quartal 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 140,
+						"unit": "ME",
+						"label": "Verbrauch Quartal 2"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 130,
+						"unit": "ME",
+						"label": "Verbrauch Quartal 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 150,
+						"unit": "ME",
+						"label": "Verbrauch Quartal 4"
+					},
+					{
+						"type": "value",
+						"symbol": "T",
+						"value": 4,
+						"unit": "Quartale",
+						"label": "Anzahl Perioden"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Prognosewert $P_5^{am}$ mit Hilfe des einfachen arithmetischen Mittels.",
+						"formulaRefs": ["arithmetisches-mittel"],
+						"interpretation": "Das arithmetische Mittel gewichtet alle Werte der Vergangenheit exakt gleich stark. Jeder Ausreißer in der Vergangenheit beeinflusst somit die Zukunftsprognose.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel aufstellen",
+								"description": "Wir nutzen die Formel für das arithmetische Mittel über alle $T=4$ Perioden.",
+								"math": "P_{5}^{am} = \\frac{1}{4} \\cdot \\sum_{t=1}^{4} V_t"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Die vier Verbräuche werden aufsummiert.",
+								"math": "P_{5}^{am} = \\frac{1}{4} \\cdot (120 + 140 + 130 + 150)"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe berechnen",
+								"description": "Wir berechnen zunächst den Klammerausdruck.",
+								"math": "P_{5}^{am} = \\frac{1}{4} \\cdot 540"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Durch die Division durch 4 erhalten wir den Prognosewert.",
+								"math": "P_{5}^{am} = 135 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 2: Gleitender Mittelwert (Moving Average)",
+				"descriptionTemplate": "Für ein Ersatzteil liegen Verbrauchsdaten der letzten 5 Monate vor. Der Disponent möchte für Monat 6 den Bedarf schätzen. Er verwendet dafür den gleitenden Mittelwert über die letzten $m = {m}$ Monate. Die Verbräuche der Monate 3 bis 5 lauten: $V_3 = {V_3}$ ME, $V_4 = {V_4}$ ME, $V_5 = {V_5}$ ME.",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "m",
+						"value": 3,
+						"unit": "Monate",
+						"label": "Periodenanzahl"
+					},
+					{
+						"type": "value",
+						"symbol": "V_3",
+						"value": 180,
+						"unit": "ME",
+						"label": "Verbrauch Monat 3"
+					},
+					{
+						"type": "value",
+						"symbol": "V_4",
+						"value": 250,
+						"unit": "ME",
+						"label": "Verbrauch Monat 4"
+					},
+					{
+						"type": "value",
+						"symbol": "V_5",
+						"value": 230,
+						"unit": "ME",
+						"label": "Verbrauch Monat 5"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den gleitenden Mittelwert $P_6^{gm}$ für den sechsten Monat.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "Der gleitende Mittelwert ignoriert sehr alte Daten. Dies ist sinnvoll, wenn man davon ausgeht, dass die ferne Vergangenheit für die aktuelle Situation irrelevant geworden ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gleitenden Mittelwert ansetzen",
+								"description": "Da $m=3$ ist, werden nur die Verbräuche der letzten drei Monate (also Monat 3, 4 und 5) berücksichtigt.",
+								"math": "P_{6}^{gm} = \\frac{1}{3} \\cdot (V_3 + V_4 + V_5)"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen die Werte der letzten drei Monate ein.",
+								"math": "P_{6}^{gm} = \\frac{1}{3} \\cdot (180 + 250 + 230)"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenrechnung",
+								"description": "Die Summe der drei Monate wird gebildet.",
+								"math": "P_{6}^{gm} = \\frac{1}{3} \\cdot 660"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Ergebnis der Division ist die Prognose.",
+								"math": "P_{6}^{gm} = 220 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 3: Vergleich von gleitenden Mittelwerten (Trendreaktion)",
+				"descriptionTemplate": "Ein Produkt befindet sich in einer Trendphase. Die Verbräuche steigen konstant: $V_1 = {V_1}$, $V_2 = {V_2}$, $V_3 = {V_3}$, $V_4 = {V_4}$. Der Bedarf für Periode 5 soll geschätzt werden.",
+				"given": [
+					{ "type": "value", "symbol": "V_1", "value": 20, "unit": "ME", "label": "Verbrauch P1" },
+					{ "type": "value", "symbol": "V_2", "value": 40, "unit": "ME", "label": "Verbrauch P2" },
+					{ "type": "value", "symbol": "V_3", "value": 60, "unit": "ME", "label": "Verbrauch P3" },
+					{ "type": "value", "symbol": "V_4", "value": 80, "unit": "ME", "label": "Verbrauch P4" },
+					{ "type": "value", "symbol": "m_a", "value": 2, "unit": "", "label": "Kurzes m" },
+					{ "type": "value", "symbol": "m_b", "value": 4, "unit": "", "label": "Langes m" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Prognose $P_5^{gm}$ für ein $m = {m_a}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für m=2",
+								"description": "Es werden nur die beiden letzten Werte $V_3$ und $V_4$ genutzt.",
+								"math": "P_{5}^{gm}(m=2) = \\frac{1}{2} \\cdot (V_3 + V_4)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $V_3=60$ und $V_4=80$ ein.",
+								"math": "P_{5}^{gm}(m=2) = \\frac{1}{2} \\cdot (60 + 80)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Prognose für m=2 lautet:",
+								"math": "P_{5}^{gm}(m=2) = 70 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Prognose $P_5^{gm}$ für ein $m = {m_b}$.",
+						"formulaRefs": ["gleitender-mittelwert"],
+						"interpretation": "Bei einem starken Trend \"hinkt\" der gleitende Durchschnitt immer hinterher. Je größer $m$ gewählt wird, desto stärker ist dieser Nachhinkeffekt (Lag). Ein kleines $m$ reagiert schneller auf Trendänderungen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für m=4",
+								"description": "Hierbei fließen alle vier zurückliegenden Perioden in die Schätzung ein.",
+								"math": "P_{5}^{gm}(m=4) = \\frac{1}{4} \\cdot (V_1 + V_2 + V_3 + V_4)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Alle Verbräuche einsetzen.",
+								"math": "P_{5}^{gm}(m=4) = \\frac{1}{4} \\cdot (20 + 40 + 60 + 80)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Prognose für m=4 liegt deutlich niedriger:",
+								"math": "P_{5}^{gm}(m=4) = 50 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 4: Einfache exponentielle Glättung",
+				"descriptionTemplate": "Für einen Artikel wurde für Periode 5 ein Bedarf von $P_5 = {P_5}$ ME prognostiziert. Der tatsächliche Verbrauch am Ende der Periode belief sich jedoch auf $V_5 = {V_5}$ ME. Das Unternehmen nutzt als Glättungsfaktor $\\alpha = {alpha}$.",
+				"given": [
+					{ "type": "value", "symbol": "P_5", "value": 380, "unit": "ME", "label": "Prognose P5" },
+					{
+						"type": "value",
+						"symbol": "V_5",
+						"value": 400,
+						"unit": "ME",
+						"label": "Tatsächlicher Verbrauch P5"
+					},
+					{
+						"type": "value",
+						"symbol": "alpha",
+						"value": 0.3,
+						"unit": "",
+						"label": "Glättungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die neue Prognose $P_6^{eg}$ mittels exponentieller Glättung 1. Ordnung.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Die exponentielle Glättung korrigiert die alte Prognose um einen Teil des Prognosefehlers der abgelaufenen Periode. Da $\\alpha = 0{,}3$ relativ klein ist, wird der neue Messwert schwächer gewichtet als die historische Schätzung.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Wir verwenden die Standardformel der exponentiellen Glättung.",
+								"math": "P_{6}^{eg} = \\alpha \\cdot V_5 + (1 - \\alpha) \\cdot P_5^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von $\\alpha = 0{,}3$, altem Verbrauch und alter Prognose.",
+								"math": "P_{6}^{eg} = 0{,}3 \\cdot 400 + (1 - 0{,}3) \\cdot 380"
+							},
+							{
+								"type": "calculation",
+								"title": "Multiplikationen ausführen",
+								"description": "Wir berechnen die beiden Summanden separat. Beachte: $(1 - 0{,}3) = 0{,}7$.",
+								"math": "P_{6}^{eg} = 120 + 0{,}7 \\cdot 380"
+							},
+							{
+								"type": "calculation",
+								"title": "Zweite Multiplikation",
+								"description": "Wir lösen die rechte Seite auf.",
+								"math": "P_{6}^{eg} = 120 + 266"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe liefert den neuen Schätzwert.",
+								"math": "P_{6}^{eg} = 386 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 5: Iterative exponentielle Glättung (mehrere Perioden)",
+				"descriptionTemplate": "Ein Start-up beginnt in Periode 1 mit einer initialen Prognose $P_1 = {P_1}$ ME. Die tatsächlichen Verbräuche in den darauffolgenden Perioden sind $V_1 = {V_1}$ ME und $V_2 = {V_2}$ ME. Als Glättungsfaktor ist $\\alpha = {alpha}$ vorgegeben.",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "P_1",
+						"value": 1000,
+						"unit": "ME",
+						"label": "Startprognose"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 1200,
+						"unit": "ME",
+						"label": "Verbrauch Periode 1"
+					},
+					{
+						"type": "value",
+						"symbol": "V_2",
+						"value": 1100,
+						"unit": "ME",
+						"label": "Verbrauch Periode 2"
+					},
+					{
+						"type": "value",
+						"symbol": "alpha",
+						"value": 0.4,
+						"unit": "",
+						"label": "Glättungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Prognose $P_2^{eg}$ für die zweite Periode.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für P2",
+								"description": "Der Prognosewert $P_2$ nutzt die Daten aus Periode 1.",
+								"math": "P_{2}^{eg} = \\alpha \\cdot V_1 + (1 - \\alpha) \\cdot P_1"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Werte für Periode 1 einsetzen.",
+								"math": "P_{2}^{eg} = 0{,}4 \\cdot 1{.}200 + 0{,}6 \\cdot 1{.}000"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilergebnisse",
+								"description": "Beide Terme ausrechnen.",
+								"math": "P_{2}^{eg} = 480 + 600"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Prognose für Periode 2 lautet:",
+								"math": "P_{2}^{eg} = 1{.}080 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie anschließend die Prognose $P_3^{eg}$ für die dritte Periode.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Die exponentielle Glättung ist ein iteratives Verfahren. Jeder neue Prognosewert basiert auf der unmittelbar vorhergehenden Prognose.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für P3",
+								"description": "Wir nutzen nun den tatsächlichen Verbrauch $V_2$ und den soeben berechneten Schätzwert $P_2$.",
+								"math": "P_{3}^{eg} = \\alpha \\cdot V_2 + (1 - \\alpha) \\cdot P_2^{eg}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $\\alpha=0{,}4$, $V_2=1{.}100$ und $P_2=1{.}080$ ein.",
+								"math": "P_{3}^{eg} = 0{,}4 \\cdot 1{.}100 + 0{,}6 \\cdot 1{.}080"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilergebnisse",
+								"description": "Die Produkte berechnen.",
+								"math": "P_{3}^{eg} = 440 + 648"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Wir addieren zur finalen Prognose für Periode 3.",
+								"math": "P_{3}^{eg} = 1{.}088 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 6: Exponentielle Glättung mit sehr hohem Alpha (Nervöses System)",
+				"descriptionTemplate": "Es liegt ein sehr volatiles Konsumgut vor. Die alte Prognose für Periode 1 betrug $P_1 = {P_1}$ ME. Der tatsächliche Verbrauch brach jedoch stark ein auf $V_1 = {V_1}$ ME. Die Disposition hat ein sehr hohes Reaktionsvermögen eingestellt: $\\alpha = {alpha}$.",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "P_1",
+						"value": 500,
+						"unit": "ME",
+						"label": "Startprognose"
+					},
+					{
+						"type": "value",
+						"symbol": "V_1",
+						"value": 100,
+						"unit": "ME",
+						"label": "Tatsächlicher Verbrauch"
+					},
+					{
+						"type": "value",
+						"symbol": "alpha",
+						"value": 0.9,
+						"unit": "",
+						"label": "Glättungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die neue Prognose $P_2^{eg}$.",
+						"formulaRefs": ["exponentielle-glaettung"],
+						"interpretation": "Ein $\\alpha$ nahe 1 führt dazu, dass das System extrem \"nervös\" reagiert. Der neueste Messwert dominiert die Prognose nahezu vollständig. Ausreißer schlagen direkt auf die Planung durch.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel",
+								"description": "Standardgleichung der Glättung 1. Ordnung.",
+								"math": "P_{2}^{eg} = \\alpha \\cdot V_1 + (1 - \\alpha) \\cdot P_1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen des extremen Alphas und der Mengendaten.",
+								"math": "P_{2}^{eg} = 0{,}9 \\cdot 100 + 0{,}1 \\cdot 500"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Multiplikation durchführen.",
+								"math": "P_{2}^{eg} = 90 + 50"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die neue Prognose lautet:",
+								"math": "P_{2}^{eg} = 140 \\text{ ME}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

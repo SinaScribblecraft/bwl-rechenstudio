@@ -25,7 +25,7 @@
 	let activeSubTaskIndex = $state(0);
 
 	// Steuert, ob der Lösungsweg rechts sichtbar ist
-	let showSolution = $state(false);
+	let showSolution = $state(true);
 
 	let activeExercise = $derived(data.topic.exercises[activeExerciseIndex]);
 	let activeSubTask = $derived(activeExercise?.subTasks[activeSubTaskIndex]);
@@ -34,7 +34,7 @@
 	$effect(() => {
 		const _ = activeExerciseIndex;
 		activeSubTaskIndex = 0;
-		showSolution = false; // Lösungsweg wieder einklappen
+		showSolution = true; // Lösungsweg wieder einklappen
 	});
 
 	// --- SPLITTER STATE ---
@@ -122,11 +122,15 @@
 				<div class="flex flex-col gap-6 h-max">
 					{#key activeExerciseIndex}
 						<ExerciseTask
+							verified={activeExercise.verified || false}
 							title={activeExercise.title}
 							descriptionTemplate={activeExercise.descriptionTemplate}
 							given={activeExercise.given}
+							sourceType={activeExercise.sourceType}
+							sourceDetails={activeExercise.sourceDetails}
 							dataTable={activeExercise.inputTable}
 							subTasks={activeExercise.subTasks}
+							formulas={data.topic.formulas}
 							onShowSolution={(index) => {
             activeSubTaskIndex = index; // Wechselt zum entsprechenden Tab
             showSolution = true;        // Blendet den Lösungsweg rechts ein

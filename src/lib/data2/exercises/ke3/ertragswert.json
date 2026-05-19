@@ -1,0 +1,860 @@
+{
+	"ertragswert": {
+		"title": "Unternehmensbewertung (Ertragswert)",
+		"subtitle": "Ermittlung von Ertragswerten, Kapitalwerten und impliziten Parametern",
+		"formulas": [
+			{
+				"id": "ertragswert-ewig",
+				"name": "Ertragswert (Ewige Rente)",
+				"math": "E = \\frac{g}{i}",
+				"result": { "symbol": "E", "description": "Ertragswert bei ewiger Rente" },
+				"params": [
+					{ "symbol": "g", "description": "Konstanter jährlicher Überschuss" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "kapitalwert-kauf",
+				"name": "Kapitalwert (Kauf)",
+				"math": "C = E - p",
+				"result": { "symbol": "C", "description": "Kapitalwert der Akquisition" },
+				"params": [
+					{ "symbol": "E", "description": "Ertragswert" },
+					{ "symbol": "p", "description": "Kaufpreis (Anschaffungsauszahlung)" }
+				]
+			},
+			{
+				"id": "ertragswert-wachstum",
+				"name": "Ertragswert (Wachstumsmodell)",
+				"math": "E = \\frac{g}{i - \\omega}",
+				"result": { "symbol": "E", "description": "Ertragswert bei konstantem Wachstum" },
+				"params": [
+					{ "symbol": "g", "description": "Überschuss im ersten Jahr" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" },
+					{ "symbol": "\\omega", "description": "Jährliche Wachstumsrate" }
+				]
+			},
+			{
+				"id": "ertragswert-ohne-wachstum",
+				"name": "Ertragswert ohne Wachstum",
+				"math": "E_{ohne} = \\frac{g}{i}",
+				"result": { "symbol": "E_{ohne}", "description": "Ertragswert ohne Wachstumsannahme" },
+				"params": [
+					{ "symbol": "g", "description": "Konstanter jährlicher Überschuss" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "ertragswert-endlich-2",
+				"name": "Ertragswert (2 Jahre)",
+				"math": "E = \\frac{g_1}{1+i} + \\frac{g_2}{(1+i)^2}",
+				"result": { "symbol": "E", "description": "Ertragswert über zwei Perioden" },
+				"params": [
+					{ "symbol": "g_1", "description": "Überschuss Jahr 1" },
+					{ "symbol": "g_2", "description": "Überschuss Jahr 2" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "ertragswert-v",
+				"name": "Ertragswert Verkäufer",
+				"math": "E_V = \\frac{g_V}{i}",
+				"result": { "symbol": "E_V", "description": "Preisuntergrenze des Verkäufers" },
+				"params": [
+					{ "symbol": "g_V", "description": "Erwarteter Überschuss Verkäufer" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "ertragswert-k",
+				"name": "Ertragswert Käufer",
+				"math": "E_K = \\frac{g_K}{i}",
+				"result": { "symbol": "E_K", "description": "Preisobergrenze des Käufers" },
+				"params": [
+					{ "symbol": "g_K", "description": "Erwarteter Überschuss Käufer" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "einigungsintervall",
+				"name": "Einigungsintervall",
+				"math": "\\Delta E = E_K - E_V",
+				"result": { "symbol": "\\Delta E", "description": "Verhandlungsspielraum" },
+				"params": [
+					{ "symbol": "E_K", "description": "Preisobergrenze Käufer" },
+					{ "symbol": "E_V", "description": "Preisuntergrenze Verkäufer" }
+				]
+			},
+			{
+				"id": "zins-ewig",
+				"name": "Impliziter Zins",
+				"math": "i = \\frac{g}{E}",
+				"result": { "symbol": "i", "description": "Impliziter Kalkulationszinssatz" },
+				"params": [
+					{ "symbol": "g", "description": "Konstanter jährlicher Überschuss" },
+					{ "symbol": "E", "description": "Ertragswert (Kaufpreis)" }
+				]
+			},
+			{
+				"id": "ertragswert-neu",
+				"name": "Ertragswert (neuer Zins)",
+				"math": "E_{neu} = \\frac{g}{i_{neu}}",
+				"result": { "symbol": "E_{neu}", "description": "Neuer Ertragswert" },
+				"params": [
+					{ "symbol": "g", "description": "Konstanter jährlicher Überschuss" },
+					{ "symbol": "i_{neu}", "description": "Neuer Kalkulationszinssatz" }
+				]
+			},
+			{
+				"id": "wachstum-ewig",
+				"name": "Implizites Wachstum",
+				"math": "\\omega = i - \\frac{g}{E}",
+				"result": { "symbol": "\\omega", "description": "Implizite Wachstumsrate" },
+				"params": [
+					{ "symbol": "i", "description": "Kalkulationszinssatz" },
+					{ "symbol": "g", "description": "Überschuss im ersten Jahr" },
+					{ "symbol": "E", "description": "Ertragswert (Kaufpreis)" }
+				]
+			},
+			{
+				"id": "ertragswert-endlich-3",
+				"name": "Ertragswert (3 Jahre)",
+				"math": "E = \\frac{g_1}{1+i} + \\frac{g_2}{(1+i)^2} + \\frac{g_3}{(1+i)^3}",
+				"result": { "symbol": "E", "description": "Ertragswert über drei Perioden" },
+				"params": [
+					{ "symbol": "g_1", "description": "Überschuss Jahr 1" },
+					{ "symbol": "g_2", "description": "Überschuss Jahr 2" },
+					{ "symbol": "g_3", "description": "Überschuss Jahr 3" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Ertragswert bei ewiger Rente",
+				"descriptionTemplate": "Ein Unternehmen erwirtschaftet künftig in jedem Jahr einen konstanten Einzahlungsüberschuss in Höhe von {g} GE. Der Kalkulationszinssatz am Markt beträgt {i_pct} % p.a. Ein potenzieller Käufer überlegt, das Unternehmen für {p} GE zu erwerben.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 3, Unternehmensbewertung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 20000,
+						"unit": "GE/Jahr",
+						"label": "Jährlicher Überschuss"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.05,
+						"unit": "",
+						"label": "Kalkulationszinssatz"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 5,
+						"unit": "%",
+						"label": "Zinssatz in Prozent"
+					},
+					{ "type": "value", "symbol": "p", "value": 350000, "unit": "GE", "label": "Kaufpreis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Ertragswert $E$ des Unternehmens.",
+						"formulaRefs": ["ertragswert-ewig"],
+						"interpretation": "Der Ertragswert bei ewiger Rente entspricht dem Barwert aller zukünftigen, als konstant angenommenen Überschüsse bis in die Unendlichkeit. Er stellt die Preisobergrenze für den Käufer dar.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ertragswertformel aufstellen",
+								"description": "Zur Berechnung des Ertragswerts einer ewigen Rente nutzen wir den Quotienten aus dem jährlichen Überschuss und dem Kalkulationszinssatz.",
+								"math": "E = \\frac{g}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den konstanten Überschuss und den Zinssatz als Dezimalzahl ein.",
+								"math": "E = \\frac{20{.}000}{0{,}05}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Ertragswert",
+								"description": "Damit erhalten wir den Ertragswert des Unternehmens.",
+								"math": "E = 400{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Kapitalwert $C$ des Unternehmenskaufs und beurteilen Sie dessen Vorteilhaftigkeit.",
+						"formulaRefs": ["kapitalwert-kauf"],
+						"interpretation": "Ein positiver Kapitalwert bedeutet, dass der Wert der künftigen Einzahlungen den heutigen Kaufpreis übersteigt. Der Kauf ist somit ökonomisch vorteilhaft.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel",
+								"description": "Der Kapitalwert entspricht dem Barwert aller Rückflüsse (also dem Ertragswert) abzüglich der Anschaffungsauszahlung (Kaufpreis).",
+								"math": "C = E - p"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den berechneten Ertragswert und den geforderten Kaufpreis ein.",
+								"math": "C = 400{.}000 - 350{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Ergebnis ist der Kapitalwert. Da dieser positiv ist, ist der Kauf vorteilhaft.",
+								"math": "C = 50{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ertragswert im Wachstumsmodell",
+				"descriptionTemplate": "Die zukünftigen Entnahmen eines Unternehmens belaufen sich im ersten Jahr auf {g} GE. Es wird erwartet, dass diese Entnahmen in den Folgejahren jeweils um {omega_pct} % wachsen. Der Kalkulationszinssatz liegt bei {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Klausuraufgabe zum Dividendenwachstumsmodell",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 15000,
+						"unit": "GE",
+						"label": "Überschuss erstes Jahr"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.08, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 8, "unit": "%", "label": "Zinssatz %" },
+					{
+						"type": "value",
+						"symbol": "\\omega",
+						"value": 0.02,
+						"unit": "",
+						"label": "Wachstumsrate"
+					},
+					{
+						"type": "value",
+						"symbol": "omega_pct",
+						"value": 2,
+						"unit": "%",
+						"label": "Wachstumsrate %"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Ertragswert $E$ unter Berücksichtigung des Dividendenwachstumsmodells.",
+						"formulaRefs": ["ertragswert-wachstum"],
+						"interpretation": "Das Wachstumsmodell (Gordon-Growth-Modell) berücksichtigt, dass Unternehmen im Zeitablauf nominal wachsen können. Dies reduziert den für die Kapitalisierung relevanten Nenner und führt zu einem höheren Unternehmenswert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Wachstumsmodell aufstellen",
+								"description": "Der Ertragswert berechnet sich hier, indem die Wachstumsrate vom Kalkulationszinssatz abgezogen wird.",
+								"math": "E = \\frac{g}{i - \\omega}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Überschuss des ersten Jahres sowie Zins und Wachstumsrate als Dezimalzahlen ein.",
+								"math": "E = \\frac{15{.}000}{0{,}08 - 0{,}02}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nenner berechnen",
+								"description": "Wir berechnen die Differenz im Nenner.",
+								"math": "E = \\frac{15{.}000}{0{,}06}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der finale Ertragswert mit berücksichtigtem Wachstum.",
+								"math": "E = 250{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Wie hoch wäre der Ertragswert $E_{ohne}$, wenn kein Wachstum ($\\omega = 0$) unterstellt wird?",
+						"formulaRefs": ["ertragswert-ohne-wachstum"],
+						"interpretation": "Der Verzicht auf die Wachstumsannahme simuliert ein stagnierendes Unternehmen. Dies führt im Vergleich zu einem wachsenden Unternehmen zu einem signifikant geringeren Ertragswert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Klassische ewige Rente",
+								"description": "Fällt das Wachstum weg, verwenden wir die Basisformel für die ewige Rente.",
+								"math": "E_{ohne} = \\frac{g}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Überschuss und Zinssatz.",
+								"math": "E_{ohne} = \\frac{15{.}000}{0{,}08}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis ohne Wachstum",
+								"description": "Ertragswert bei konstant bleibenden Überschüssen.",
+								"math": "E_{ohne} = 187{.}500 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ertragswert bei endlicher Lebensdauer",
+				"descriptionTemplate": "Für ein zeitlich befristetes Projekt werden in den nächsten zwei Jahren Einzahlungsüberschüsse von {g_1} GE in $t=1$ und {g_2} GE in $t=2$ erwartet. Danach ist das Projekt beendet. Der Kalkulationszins am Markt beträgt {i_pct} % p.a. Die Anschaffungsausgabe liegt bei {p} GE.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Auf Basis des klassischen Ertragswerts für endlich laufende Cashflows",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g_1",
+						"value": 11000,
+						"unit": "GE",
+						"label": "Überschuss Jahr 1"
+					},
+					{
+						"type": "value",
+						"symbol": "g_2",
+						"value": 12100,
+						"unit": "GE",
+						"label": "Überschuss Jahr 2"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz %" },
+					{ "type": "value", "symbol": "p", "value": 18000, "unit": "GE", "label": "Kaufpreis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Ertragswert $E$.",
+						"formulaRefs": ["ertragswert-endlich-2"],
+						"interpretation": "Bei endlich laufenden Projekten muss jeder künftige Zahlungsfluss individuell mit dem entsprechenden Abzinsungsfaktor auf den Zeitpunkt t=0 abgezinst werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Barwert der Einzelzahlungen",
+								"description": "Wir stellen die Formel zur Diskontierung der zwei Zahlungen auf.",
+								"math": "E = \\frac{g_1}{1+i} + \\frac{g_2}{(1+i)^2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Cashflows der beiden Jahre sowie den Zinssatz ein.",
+								"math": "E = \\frac{11{.}000}{1 + 0{,}1} + \\frac{12{.}100}{(1 + 0{,}1)^2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nenner ausrechnen",
+								"description": "Wir berechnen die Aufzinsungsfaktoren im Nenner.",
+								"math": "E = \\frac{11{.}000}{1{,}1} + \\frac{12{.}100}{1{,}21}"
+							},
+							{
+								"type": "calculation",
+								"title": "Brüche auflösen",
+								"description": "Wir berechnen die Barwerte der beiden einzelnen Zahlungen.",
+								"math": "E = 10{.}000 + 10{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Summe beider Barwerte ergibt den Ertragswert.",
+								"math": "E = 20{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Kapitalwert $C$.",
+						"formulaRefs": ["kapitalwert-kauf"],
+						"interpretation": "Da der Kapitalwert positiv ist, lohnt sich die Durchführung des Projekts, weil die Summe der abgezinsten Einnahmen die Anfangsinvestition übersteigt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel",
+								"description": "Der Kapitalwert ergibt sich als Differenz aus Ertragswert und Anschaffungsauszahlung.",
+								"math": "C = E - p"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Ertragswert und Anschaffungsausgabe.",
+								"math": "C = 20{.}000 - 18{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der positive Nettobarwert des Projekts.",
+								"math": "C = 2{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Subjektive Entscheidungswerte (Kauf und Verkauf)",
+				"descriptionTemplate": "Ein Unternehmen soll verkauft werden. Der aktuelle Eigentümer rechnet auf Basis seiner Kostenstruktur mit jährlichen, ewigen Überschüssen von {g_V} GE. Ein potenzieller Käufer geht dank wertvoller Synergieeffekte von höheren jährlichen, ewigen Überschüssen von {g_K} GE aus. Beide Parteien rechnen mit einem Zins von {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 3, Unternehmensbewertung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g_V",
+						"value": 40000,
+						"unit": "GE/Jahr",
+						"label": "Überschuss Verkäufer"
+					},
+					{
+						"type": "value",
+						"symbol": "g_K",
+						"value": 50000,
+						"unit": "GE/Jahr",
+						"label": "Überschuss Käufer"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz %" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Preisuntergrenze des Verkäufers $E_V$.",
+						"formulaRefs": ["ertragswert-v"],
+						"interpretation": "Der Verkäufer wird das Unternehmen nicht unter diesem Wert verkaufen, da er bei Anlage des Verkaufserlöses zum Marktzins andernfalls schlechter gestellt wäre als bei Fortführung des Unternehmens.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ertragswert Verkäufer",
+								"description": "Der subjektive Entscheidungswert des Verkäufers basiert auf seinen eigenen Erwartungen bezüglich des Überschusses.",
+								"math": "E_V = \\frac{g_V}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Verkäufer-Überschuss und Zins.",
+								"math": "E_V = \\frac{40{.}000}{0{,}1}"
+							},
+							{
+								"type": "result",
+								"title": "Preisuntergrenze",
+								"description": "Dies ist die absolute Schmerzgrenze des Verkäufers.",
+								"math": "E_V = 400{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Preisobergrenze des Käufers $E_K$.",
+						"formulaRefs": ["ertragswert-k"],
+						"interpretation": "Der Käufer profitiert von Synergieeffekten, wodurch das Unternehmen für ihn einen höheren subjektiven Wert besitzt. Dies ist sein maximales Gebot.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ertragswert Käufer",
+								"description": "Der subjektive Entscheidungswert des Käufers basiert auf den für ihn höheren Überschüssen.",
+								"math": "E_K = \\frac{g_K}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Käufer-Überschuss und Zins.",
+								"math": "E_K = \\frac{50{.}000}{0{,}1}"
+							},
+							{
+								"type": "result",
+								"title": "Preisobergrenze",
+								"description": "Dies ist der maximale Kaufpreis aus Sicht des Käufers.",
+								"math": "E_K = 500{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "c",
+						"question": "Wie groß ist das Einigungsintervall $\\Delta E$?",
+						"formulaRefs": ["einigungsintervall"],
+						"interpretation": "Das Einigungsintervall repräsentiert den Verhandlungsspielraum. Fällt der Kaufpreis in dieses Intervall, ist die Transaktion für beide Parteien vorteilhaft.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Intervallbreite",
+								"description": "Die Differenz zwischen der Preisobergrenze des Käufers und der Preisuntergrenze des Verkäufers ergibt den Verhandlungsspielraum.",
+								"math": "\\Delta E = E_K - E_V"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die berechneten Entscheidungswerte ein.",
+								"math": "\\Delta E = 500{.}000 - 400{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Verhandlungsspielraum",
+								"description": "Die Breite des Bereichs, in dem eine Einigung möglich ist.",
+								"math": "\\Delta E = 100{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Impliziter Kalkulationszinssatz",
+				"descriptionTemplate": "Ein Investor kauft ein Unternehmen, das ewige jährliche Überschüsse in Höhe von {g} GE abwirft, zu einem Preis, der genau seinem Ertragswert von {E} GE entspricht.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Abwandlung der kaufmännischen Kapitalisierungsformel",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 40000,
+						"unit": "GE/Jahr",
+						"label": "Jährlicher Überschuss"
+					},
+					{ "type": "value", "symbol": "E", "value": 500000, "unit": "GE", "label": "Ertragswert" },
+					{
+						"type": "value",
+						"symbol": "i_{neu}",
+						"value": 0.1,
+						"unit": "",
+						"label": "Neuer Zinssatz"
+					},
+					{
+						"type": "value",
+						"symbol": "i_{neu\\_pct}",
+						"value": 10,
+						"unit": "%",
+						"label": "Neuer Zinssatz %"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Welcher Kalkulationszinssatz $i$ wurde der Bewertung implizit zugrunde gelegt?",
+						"formulaRefs": ["zins-ewig"],
+						"interpretation": "Der implizite Kalkulationszinssatz gibt die Rendite an, die der Investor bei diesem Kaufpreis und diesen Überschüssen auf sein gebundenes Kapital erzielt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Zinssatz isolieren",
+								"description": "Wir stellen die Ertragswertformel der ewigen Rente nach dem Zinssatz $i$ um.",
+								"math": "i = \\frac{g}{E}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den konstanten Überschuss und den Ertragswert ein.",
+								"math": "i = \\frac{40{.}000}{500{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Zins",
+								"description": "Als Ergebnis erhalten wir den impliziten Kalkulationszinssatz als Dezimalzahl (entspricht $8 \\%$).",
+								"math": "i = 0{,}08"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Angenommen, der Marktzins steigt auf $i_{neu} = {i_{neu\\_pct}} \\%$. Wie hoch ist der neue Ertragswert $E_{neu}$?",
+						"formulaRefs": ["ertragswert-neu"],
+						"interpretation": "Steigt der landesweite Marktzins, so verliert eine festverzinsliche Rente oder ein Unternehmen mit konstanten Erträgen an Wert, da Alternativanlagen am Kapitalmarkt attraktiver werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ertragswert bei neuem Zins",
+								"description": "Wir verwenden wieder die Formel der ewigen Rente, nun jedoch mit dem gestiegenen Zinssatz.",
+								"math": "E_{neu} = \\frac{g}{i_{neu}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen des Überschusses und des neuen Zinssatzes.",
+								"math": "E_{neu} = \\frac{40{.}000}{0{,}1}"
+							},
+							{
+								"type": "result",
+								"title": "Neuer Unternehmenswert",
+								"description": "Der gesunkene Ertragswert aufgrund des höheren Marktzinses.",
+								"math": "E_{neu} = 400{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Implizite Wachstumsrate",
+				"descriptionTemplate": "Ein Unternehmen wird am Markt mit einem Ertragswert von {E} GE bewertet. Im ersten Jahr wird ein Überschuss von {g} GE erwartet. Der angesetzte Kalkulationszins beträgt {i_pct} %.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Auf Basis des Gordon-Growth-Modells",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "E",
+						"value": 1000000,
+						"unit": "GE",
+						"label": "Ertragswert"
+					},
+					{ "type": "value", "symbol": "g", "value": 60000, "unit": "GE", "label": "Überschuss" },
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz %" },
+					{
+						"type": "value",
+						"symbol": "p",
+						"value": 900000,
+						"unit": "GE",
+						"label": "Gezahlter Kaufpreis"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Welche jährliche Wachstumsrate $\\omega$ der Überschüsse ist in diesem Wert impliziert?",
+						"formulaRefs": ["wachstum-ewig"],
+						"interpretation": "Ist der Marktwert eines Unternehmens höher als der Ertragswert einer reinen ewigen Rente, preist der Markt eine konstante jährliche Wachstumsrate in die Bewertung ein.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Wachstumsrate isolieren",
+								"description": "Wir stellen das Dividendenwachstumsmodell $E = \\frac{g}{i - \\omega}$ nach $\\omega$ um.",
+								"math": "\\omega = i - \\frac{g}{E}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen Zins, Überschuss und den gegebenen Ertragswert ein.",
+								"math": "\\omega = 0{,}1 - \\frac{60{.}000}{1{.}000{.}000}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Wir berechnen den Wert des Bruchs.",
+								"math": "\\omega = 0{,}1 - 0{,}06"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Ergebnis ist die implizite Wachstumsrate (entspricht $4 \\%$).",
+								"math": "\\omega = 0{,}04"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den Kapitalwert $C$, falls das Unternehmen zu einem Preis von $p = {p}$ GE gekauft werden könnte.",
+						"formulaRefs": ["kapitalwert-kauf"],
+						"interpretation": "Ein Kaufpreis unterhalb des fairen Marktwertes führt zu einem echten Vermögenszuwachs für den Käufer, ausgedrückt durch den positiven Kapitalwert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel",
+								"description": "Differenz aus Marktwert und verlangtem Kaufpreis.",
+								"math": "C = E - p"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Ertragswert und Kaufpreis.",
+								"math": "C = 1{.}000{.}000 - 900{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Vermögenszuwachs durch den Kauf.",
+								"math": "C = 100{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Vorteilhaftigkeit einer Akquisition",
+				"descriptionTemplate": "Ein mittelständisches Unternehmen wird zum Kaufpreis von {p} GE angeboten. Der potenzielle Käufer rechnet mit konstanten jährlichen Überschüssen von {g} GE in Form einer ewigen Rente und verwendet einen Kalkulationszins von {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Basisaufgabe Kapitalwertmethode",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 200000, "unit": "GE", "label": "Kaufpreis" },
+					{
+						"type": "value",
+						"symbol": "g",
+						"value": 18000,
+						"unit": "GE/Jahr",
+						"label": "Überschuss"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.08, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 8, "unit": "%", "label": "Zinssatz %" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Ertragswert $E$ des Unternehmens aus Sicht des Käufers.",
+						"formulaRefs": ["ertragswert-ewig"],
+						"interpretation": "Der berechnete Ertragswert stellt den in der Gegenwart bewerteten Nutzen dar, den der Käufer aus den künftigen Überschüssen ziehen wird.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ertragswert Ewige Rente",
+								"description": "Quotient aus Überschuss und Zinssatz.",
+								"math": "E = \\frac{g}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Werte ein.",
+								"math": "E = \\frac{18{.}000}{0{,}08}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Ertragswert",
+								"description": "Der subjektive Wert des Unternehmens.",
+								"math": "E = 225{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Kapitalwert $C$ der Investition.",
+						"formulaRefs": ["kapitalwert-kauf"],
+						"interpretation": "Der Ertragswert übersteigt den Kaufpreis. Somit erzielt der Investor nicht nur die geforderte Mindestverzinsung von 8 %, sondern realisiert darüber hinaus einen sofortigen Vermögenszuwachs.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwert berechnen",
+								"description": "Der Kapitalwert ist die Differenz zwischen dem erzielten Wert und den zu zahlenden Kosten.",
+								"math": "C = E - p"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Werte in die Formel ein.",
+								"math": "C = 225{.}000 - 200{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kapitalwert",
+								"description": "Nettovorteil der Akquisition.",
+								"math": "C = 25{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ertragswert über drei Perioden",
+				"descriptionTemplate": "Die finanziellen Überschüsse eines Start-ups werden für die nächsten drei Jahre auf {g_1} GE, {g_2} GE und {g_3} GE geschätzt. Nach dem dritten Jahr wird das Geschäft planmäßig eingestellt und besitzt keinen Restwert. Der Zins am vollkommenen Kapitalmarkt beträgt {i_pct} % p.a. Die Erstinvestition beläuft sich auf {p} GE.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Teilaufgabe zu mehrperiodigen Investitionsprojekten",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "g_1",
+						"value": 1100,
+						"unit": "GE",
+						"label": "Überschuss Jahr 1"
+					},
+					{
+						"type": "value",
+						"symbol": "g_2",
+						"value": 1210,
+						"unit": "GE",
+						"label": "Überschuss Jahr 2"
+					},
+					{
+						"type": "value",
+						"symbol": "g_3",
+						"value": 1331,
+						"unit": "GE",
+						"label": "Überschuss Jahr 3"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz %" },
+					{ "type": "value", "symbol": "p", "value": 2500, "unit": "GE", "label": "Kaufpreis" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Ertragswert $E$.",
+						"formulaRefs": ["ertragswert-endlich-3"],
+						"interpretation": "Da der Zahlungsstrom zeitlich begrenzt und unregelmäßig ist, wird der Ertragswert als Summe der exakt abgezinsten Einzelzahlungen bestimmt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Barwert der Einzelzahlungen",
+								"description": "Wir diskontieren alle drei künftigen Überschüsse separat auf den Zeitpunkt $t=0$.",
+								"math": "E = \\frac{g_1}{1+i} + \\frac{g_2}{(1+i)^2} + \\frac{g_3}{(1+i)^3}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Cashflows der Jahre und den Marktzins ein.",
+								"math": "E = \\frac{1{.}100}{1 + 0{,}1} + \\frac{1{.}210}{(1 + 0{,}1)^2} + \\frac{1{.}331}{(1 + 0{,}1)^3}"
+							},
+							{
+								"type": "calculation",
+								"title": "Aufzinsungsfaktoren im Nenner",
+								"description": "Wir berechnen die Potenzen im Nenner.",
+								"math": "E = \\frac{1{.}100}{1{,}1} + \\frac{1{.}210}{1{,}21} + \\frac{1{.}331}{1{,}331}"
+							},
+							{
+								"type": "calculation",
+								"title": "Einzelbarwerte",
+								"description": "Die Rechnung vereinfacht sich stark, da die Zähler exakt auf den Zins abgestimmt sind.",
+								"math": "E = 1{.}000 + 1{.}000 + 1{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Ertragswert",
+								"description": "Die Aufsummierung ergibt den heutigen Gesamtwert.",
+								"math": "E = 3{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Kapitalwert $C$.",
+						"formulaRefs": ["kapitalwert-kauf"],
+						"interpretation": "Der Kapitalwert ist positiv, weshalb sich die Investition in das Start-up aus rein finanzieller Sicht empfiehlt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwert",
+								"description": "Ertragswert abzüglich der Erstinvestition.",
+								"math": "C = E - p"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Werte ein.",
+								"math": "C = 3{.}000 - 2{.}500"
+							},
+							{
+								"type": "result",
+								"title": "Nettobarwert",
+								"description": "Der resultierende Kapitalwert.",
+								"math": "C = 500 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

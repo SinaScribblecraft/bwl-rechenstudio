@@ -1,6 +1,15 @@
 <script lang="ts">
-	import { type SubTask, type DataTable, type GivenItem, interpolate, inlineMath } from '$lib/data2/types';
-	import FinalResult from '$lib/components/exercise/FinalResult.svelte';
+	import {
+		type SubTask,
+		type DataTable,
+		type GivenItem,
+		interpolate,
+		inlineMath,
+		type ExerciseSource, type Formula
+	} from '$lib/data2/types';
+	import ExerciseSubTask from '$lib/components/exercise/ExerciseSubTask.svelte';
+	import ExerciseTitle from '$lib/components/exercise/ExerciseTitle.svelte';
+	import ExerciseGIvenParameters from '$lib/components/exercise/ExerciseGIvenParameters.svelte';
 
 	interface Props {
 		title: string;
@@ -8,27 +17,31 @@
 		given: GivenItem[];
 		dataTable?: DataTable | null;
 		subTasks: SubTask[];
-		onShowSolution: (index: number) => void;
+		verified: boolean;
+		sourceType?: ExerciseSource;
+		sourceDetails?: string | null;
+		formulas: Formula[];
 	}
 
 
-	let { title, descriptionTemplate, dataTable, subTasks, onShowSolution, given }: Props = $props();
+	let {
+		title,
+		sourceType,
+		sourceDetails,
+		descriptionTemplate,
+		formulas,
+		dataTable,
+		subTasks,
+		verified,
+		given
+	}: Props = $props();
 	const description = $derived(interpolate(descriptionTemplate, given));
+
 </script>
 
 <div class="bg-white rounded-3xl border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] p-6 lg:p-10 mb-8">
 
-	<div class="flex justify-between items-start mb-8">
-		<div>
-			<span class="text-xs font-bold text-indigo-500 uppercase tracking-wider">Übungsaufgabe</span>
-			<h2 class="text-2xl lg:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">{title}</h2>
-		</div>
-
-		<div class="hidden sm:flex text-[40px] gap-1 -mt-2 -mr-2 select-none pointer-events-none drop-shadow-md">
-			<span class="transform -rotate-12 translate-y-3 z-10">🧮</span>
-			<span class="transform rotate-12">📝</span>
-		</div>
-	</div>
+		<ExerciseTitle {title} {sourceType} {sourceDetails} {verified} />
 
 	<div class="mb-10 bg-slate-50 rounded-2xl p-6 lg:p-8 border border-slate-100/60 shadow-inner">
 		<h3 class="font-bold text-slate-800 mb-2 text-[15px] flex items-center gap-2">
@@ -41,17 +54,17 @@
 				<table class="w-full text-left text-sm whitespace-nowrap">
 					<thead class="bg-white border-b border-slate-200 text-slate-700">
 					<tr>
-						{#each dataTable.headers as header}
-							<th class="px-4 py-3 font-bold">{header}</th>
+						{#each dataTable.headers as header (header)}
+							<th class="px-4 py-3 font-bold">{@html inlineMath(header)}</th>
 						{/each}
 					</tr>
 					</thead>
 					<tbody class="divide-y divide-slate-100 bg-white/50">
-					{#each dataTable.rows as row}
+					{#each dataTable.rows as row, rowIndex (rowIndex)}
 						<tr class="hover:bg-white transition-colors">
-							{#each row as cell, colIndex}
+							{#each row as cell, colIndex (colIndex)}
 								<td class="px-4 py-3 text-slate-600 {colIndex === 0 ? 'font-semibold text-slate-800' : ''}">
-									{cell}
+									{interpolate(cell.toString(), given)}
 								</td>
 							{/each}
 						</tr>
@@ -60,51 +73,52 @@
 				</table>
 			</div>
 		{/if}
+
+		<ExerciseGIvenParameters {given} />
+
+<!--		<details class="group mt-6 bg-blue-50/50 rounded-xl border border-blue-100 open:bg-white open:shadow-sm transition-all duration-200">-->
+<!--			<summary class="cursor-pointer list-none flex items-center gap-3 p-4 text-blue-800 font-medium select-none">-->
+<!--				<span class="text-xl group-open:rotate-90 transition-transform text-blue-500">▶</span>-->
+<!--				💡 Lösungshinweis: Gegebene Parameter anzeigen-->
+<!--			</summary>-->
+<!--			<div class="p-4 pt-1 border-t border-blue-100/50">-->
+<!--				<div class="overflow-x-auto rounded-lg border border-slate-200">-->
+<!--					<table class="w-full text-left text-sm whitespace-nowrap">-->
+<!--						<thead class="bg-slate-50 border-b border-slate-200 text-slate-700">-->
+<!--							<tr>-->
+<!--								<th class="px-4 py-2 font-bold">Symbol</th>-->
+<!--								<th class="px-4 py-2 font-bold">Wert</th>-->
+<!--								<th class="px-4 py-2 font-bold">Einheit</th>-->
+<!--								<th class="px-4 py-2 font-bold">Bezeichnung</th>-->
+<!--							</tr>-->
+<!--						</thead>-->
+<!--						<tbody class="divide-y divide-slate-100 bg-white">-->
+<!--							{#each given as item (item.symbol)}-->
+<!--								<tr class="hover:bg-slate-50 transition-colors">-->
+<!--									<td class="px-4 py-2 font-semibold font-mono text-slate-700">{@html inlineMath(item.symbol)}</td>-->
+<!--									{#if isGivenValue(item)}-->
+<!--										<td class="px-4 py-2 text-slate-600">{item.value}</td>-->
+<!--										<td class="px-4 py-2 text-slate-500">{item.unit || '-'}</td>-->
+<!--									{:else if isGivenFormula(item)}-->
+<!--										<td class="px-4 py-2 text-slate-600 col-span-2" colspan="2">{@html inlineMath(item.math)}</td>-->
+<!--									{/if}-->
+<!--									<td class="px-4 py-2 text-slate-500">{item.label}</td>-->
+<!--								</tr>-->
+<!--							{/each}-->
+<!--						</tbody>-->
+<!--					</table>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</details>-->
 	</div>
 
 	<div class="flex flex-col gap-6">
-		{#each subTasks as task, index (task.label)}
-			{@const result = task.steps.find(x => x.type == 'result')}
-
-			<div class="bg-white border border-slate-200 rounded-2xl p-6 lg:p-8 shadow-s   ">
-
-				<div class="flex items-start gap-4 mb-2">
-        <span
-	        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-indigo-50 border border-indigo-100/60 text-indigo-700 font-extrabold text-sm shrink-0 shadow-sm">
-          {task.label}
-        </span>
-					<span class="font-semibold text-slate-700 leading-relaxed pt-2 text-[15px]">
-						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          {@html inlineMath(task.question)}
-        </span>
-				</div>
-
-				<div class="pl-14 flex flex-col xl:flex-row items-center gap-4 mt-4 w-full">
-
-					{#if result != null}
-						<div class="flex-1 w-full min-w-[250px]">
-							<FinalResult
-								finalResultText={result.description}
-								finalResultMath={result.math}
-							/>
-						</div>
-					{/if}
-
-					<button
-						onclick={() => onShowSolution(index)}
-						class="shrink-0 flex items-center justify-center gap-2 px-6 py-2.5 bg-white hover:bg-indigo-50/50 text-indigo-600 text-sm font-bold rounded-xl border-2 border-indigo-100 hover:border-indigo-300 transition-all w-full xl:w-auto mt-2 xl:mt-0"
-					>
-						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
-						     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M5 12h14M12 5l7 7-7 7" />
-						</svg>
-						Lösung Schritt für Schritt
-					</button>
-
-				</div>
-
-			</div>
-
+		{#each subTasks as task (task.label)}
+			{@const results = task.steps.filter(x => x.type == 'result')}
+			{@const subFormulas = formulas.filter(f => task.formulaRefs?.includes(f.id))}
+			{#if subFormulas.length > 0 }
+				<ExerciseSubTask {task} {results} formulas={subFormulas} />
+			{/if}
 		{/each}
 	</div>
 

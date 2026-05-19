@@ -41,7 +41,7 @@
                 Schritt {stepNumber}
             </span>
 				<span class="font-bold text-sm {isOpen ? 'text-slate-900' : 'text-slate-600'}">
-                {step.title}
+                {@html inlineMath(step.title)}
             </span>
 			</div>
 			<span class="text-slate-300 transition-transform duration-300 {isOpen ? 'rotate-180 text-indigo-400' : ''}">

@@ -1,0 +1,618 @@
+{
+	"dean-modell": {
+		"title": "Dean-Modell",
+		"subtitle": "Ermittlung des optimalen Investitions- und Finanzierungsprogramms",
+		"formulas": [
+			{
+				"id": "dean-sortierung",
+				"name": "Sortierregel Dean-Modell",
+				"math": "r_1 \\ge r_2 \\ge \\dots \\ge r_n \\quad \\text{und} \\quad i_1 \\le i_2 \\le \\dots \\le i_m",
+				"result": {
+					"symbol": "Rangfolge",
+					"description": "Absteigende Renditen, aufsteigende Kosten"
+				},
+				"params": [
+					{
+						"symbol": "r",
+						"description": "Rendite der Investition"
+					},
+					{
+						"symbol": "i",
+						"description": "Kosten der Finanzierung"
+					}
+				]
+			},
+			{
+				"id": "dean-gewinn",
+				"name": "Kapitalwert / Gesamtgewinn",
+				"math": "G = \\sum (I_j \\cdot r_j) - \\sum (F_k \\cdot i_k)",
+				"result": {
+					"symbol": "G",
+					"description": "Gesamtgewinn des optimalen Programms am Periodenende"
+				},
+				"params": [
+					{
+						"symbol": "I_j",
+						"description": "Volumen der realisierten Investition j"
+					},
+					{
+						"symbol": "r_j",
+						"description": "Rendite der Investition j"
+					},
+					{
+						"symbol": "F_k",
+						"description": "Volumen der genutzten Finanzierung k"
+					},
+					{
+						"symbol": "i_k",
+						"description": "Zinssatz der Finanzierung k"
+					}
+				]
+			},
+			{
+				"id": "dean-rendite",
+				"name": "Rendite aus Rückfluss",
+				"math": "r = \\frac{R_1 - A_0}{A_0}",
+				"result": {
+					"symbol": "r",
+					"description": "Rendite der Investition"
+				},
+				"params": [
+					{
+						"symbol": "R_1",
+						"description": "Rückfluss in t=1"
+					},
+					{
+						"symbol": "A_0",
+						"description": "Anschaffungsauszahlung in t=0"
+					}
+				]
+			},
+			{
+				"id": "opt-volumen",
+				"name": "Optimales Investitionsvolumen",
+				"math": "V^{opt} = \\sum I_j^{realisiert}",
+				"result": {
+					"symbol": "V^{opt}",
+					"description": "Summe der realisierten Investitionsvolumina"
+				},
+				"params": [
+					{
+						"symbol": "I_j^{realisiert}",
+						"description": "Teilvolumen der Investition j, für das r_j >= i_k gilt"
+					}
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassisches Dean-Modell mit teilweiser Realisierung",
+				"descriptionTemplate": "Gegeben sind folgende Investitionen und Finanzierungsmöglichkeiten (Projekte sind beliebig teilbar):\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n| $I_3$ | {I3_V} GE | {I3_r} % |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |\n| $F_3$ | {F3_V} GE | {F3_i} % |",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Klausuraufgabe EBWL",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 200, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 12, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 150, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 16, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "I3_V", "value": 100, "unit": "GE", "label": "Volumen I3" },
+					{ "type": "value", "symbol": "I3_r", "value": 8, "unit": "%", "label": "Rendite I3" },
+					{ "type": "value", "symbol": "F1_V", "value": 150, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 6, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 150, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 10, "unit": "%", "label": "Zinssatz F2" },
+					{ "type": "value", "symbol": "F3_V", "value": 100, "unit": "GE", "label": "Volumen F3" },
+					{ "type": "value", "symbol": "F3_i", "value": 14, "unit": "%", "label": "Zinssatz F3" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das optimale Investitionsvolumen $V^{opt}$.",
+						"formulaRefs": ["dean-sortierung", "opt-volumen"],
+						"interpretation": "Das optimale Investitionsvolumen markiert den Punkt, an dem die Kosten der nächsten nötigen Finanzierung die Rendite der nächsten Investition übersteigen.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Rangfolgen bilden",
+								"description": "Wir ordnen die Investitionen absteigend nach ihrer Rendite und die Finanzierungen aufsteigend nach ihrem Zinssatz.",
+								"math": "I_{sort} = \\{ I_2 (16\\%), I_1 (12\\%), I_3 (8\\%) \\} \\quad \\text{und} \\quad F_{sort} = \\{ F_1 (6\\%), F_2 (10\\%), F_3 (14\\%) \\}"
+							},
+							{
+								"type": "calculation",
+								"title": "1. Finanzierungsstufe",
+								"description": "Das beste Projekt $I_2$ ($150$ GE) wird vollständig mit der günstigsten Finanzierung $F_1$ ($150$ GE) finanziert, da $16\\% > 6\\%$.",
+								"math": "V_1 = 150"
+							},
+							{
+								"type": "calculation",
+								"title": "2. Finanzierungsstufe",
+								"description": "Für das Projekt $I_1$ ($200$ GE) nutzen wir zunächst $F_2$ ($150$ GE, da $12\\% > 10\\%$). Der Restbedarf von $50$ GE scheitert an $F_3$, da die Rendite geringer als die Kosten ist ($12\\% < 14\\%$).",
+								"math": "V_2 = 150"
+							},
+							{
+								"type": "substitution",
+								"title": "Gesamtes Investitionsvolumen",
+								"description": "Das optimale Gesamtvolumen ist die Summe der realisierten Volumina $V_1$ und $V_2$.",
+								"math": "V^{opt} = 150 + 150"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Wir erhalten das gewinnmaximale Volumen.",
+								"math": "V^{opt} = 300 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ermittlung des endogenen Kalkulationszinsfußes",
+				"descriptionTemplate": "Ein Unternehmen ermittelt folgende Optionen:\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n| $I_3$ | {I3_V} GE | {I3_r} % |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |\n| $F_3$ | {F3_V} GE | {F3_i} % |",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Angelehnt an Skript Kurseinheit 3",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 100, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 20, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 100, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 15, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "I3_V", "value": 100, "unit": "GE", "label": "Volumen I3" },
+					{ "type": "value", "symbol": "I3_r", "value": 8, "unit": "%", "label": "Rendite I3" },
+					{ "type": "value", "symbol": "F1_V", "value": 100, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 5, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 100, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 10, "unit": "%", "label": "Zinssatz F2" },
+					{ "type": "value", "symbol": "F3_V", "value": 100, "unit": "GE", "label": "Volumen F3" },
+					{ "type": "value", "symbol": "F3_i", "value": 12, "unit": "%", "label": "Zinssatz F3" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das Intervall des endogenen Kalkulationszinsfußes $i^*$.",
+						"formulaRefs": ["dean-sortierung"],
+						"interpretation": "Da sich die kumulierten Kapitalangebots- und -nachfragekurven in einem senkrechten Abschnitt schneiden, ist der endogene Zins nicht eindeutig, sondern durch ein Intervall bestimmt. Er liegt zwischen den Kosten der letzten genutzten Finanzierung und der Rendite der letzten realisierten Investition.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Matching",
+								"description": "Die Projekte sind bereits sortiert. $I_1$ ($20\\%$) wird durch $F_1$ ($5\\%$) finanziert. $I_2$ ($15\\%$) wird durch $F_2$ ($10\\%$) finanziert. Das nächste Projekt $I_3$ ($8\\%$) kann nicht mehr durch $F_3$ ($12\\%$) finanziert werden.",
+								"math": "I_{realisiert} = \\{I_1, I_2\\} \\quad \\text{und} \\quad F_{genutzt} = \\{F_1, F_2\\}"
+							},
+							{
+								"type": "formula",
+								"title": "Intervallgrenzen identifizieren",
+								"description": "Die Untergrenze bildet die teuerste genutzte Finanzierung ($F_2$), die Obergrenze die renditeschwächste realisierte Investition ($I_2$).",
+								"math": "i_{F2} \\le i^* \\le r_{I2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die entsprechenden Zinssätze und Renditen ein.",
+								"math": "10\\% \\le i^* \\le 15\\%"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das Intervall für den endogenen Kalkulationszinsfuß lautet:",
+								"math": "i^* \\in [10\\%; 15\\%]"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Renditeberechnung vor Programmplanung",
+				"descriptionTemplate": "Es liegen Zahlungsreihen für zwei Investitionen und Daten für zwei Kredite vor:\n\n| Investition | Anschaffung $A_0$ | Rückfluss $R_1$ |\n|---|---|---|\n| $I_1$ | {I1_A0} GE | {I1_R1} GE |\n| $I_2$ | {I2_A0} GE | {I2_R1} GE |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Variation in Klausuren",
+				"given": [
+					{ "type": "value", "symbol": "I1_A0", "value": 200, "unit": "GE", "label": "A0 I1" },
+					{ "type": "value", "symbol": "I1_R1", "value": 230, "unit": "GE", "label": "R1 I1" },
+					{ "type": "value", "symbol": "I2_A0", "value": 150, "unit": "GE", "label": "A0 I2" },
+					{ "type": "value", "symbol": "I2_R1", "value": 162, "unit": "GE", "label": "R1 I2" },
+					{ "type": "value", "symbol": "F1_V", "value": 200, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 6, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 200, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 10, "unit": "%", "label": "Zinssatz F2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Renditen $r_1$ und $r_2$.",
+						"formulaRefs": ["dean-rendite"],
+						"interpretation": "Die Renditen machen die Investitionsprojekte mit den Zinssätzen der Finanzierungsangebote vergleichbar.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Renditeformel",
+								"description": "Die Rendite berechnet sich aus dem Überschuss des Rückflusses über die Anfangsauszahlung im Verhältnis zur Anfangsauszahlung.",
+								"math": "r = \\frac{R_1 - A_0}{A_0}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen für I1",
+								"description": "Wir setzen die Werte für das erste Projekt ein.",
+								"math": "r_1 = \\frac{230 - 200}{200}"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnung I1",
+								"description": "Wir werten den Bruch aus.",
+								"math": "r_1 = \\frac{30}{200} = 0{,}15"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis r1",
+								"description": "Dies entspricht $15\\%$.",
+								"math": "r_1 = 15\\%"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen für I2",
+								"description": "Nun setzen wir die Werte für das zweite Projekt ein.",
+								"math": "r_2 = \\frac{162 - 150}{150}"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnung I2",
+								"description": "Wir werten auch diesen Bruch aus.",
+								"math": "r_2 = \\frac{12}{150} = 0{,}08"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis r2",
+								"description": "Dies entspricht $8\\%$.",
+								"math": "r_2 = 8\\%"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie das optimale Investitionsvolumen $V^{opt}$.",
+						"formulaRefs": ["dean-sortierung", "opt-volumen"],
+						"interpretation": "Durch das Matching der nun bekannten Renditen mit den Finanzierungskosten wird der optimale Investitionsplan aufgestellt.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Matching I1",
+								"description": "Das Projekt $I_1$ ($15\\%$) wird vollständig mit der günstigeren Finanzierung $F_1$ ($200$ GE, $6\\%$) finanziert.",
+								"math": "V_1 = 200"
+							},
+							{
+								"type": "calculation",
+								"title": "Matching I2",
+								"description": "Für $I_2$ ($8\\%$) stünde nun $F_2$ ($10\\%$) zur Verfügung. Da die Rendite geringer als die Kosten ist ($8\\% < 10\\%$), wird $I_2$ nicht realisiert.",
+								"math": "V_2 = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Volumen summieren",
+								"description": "Wir addieren die Volumina der realisierten Projekte.",
+								"math": "V^{opt} = 200 + 0"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das optimale Investitionsvolumen entspricht exakt der Anschaffungsauszahlung von $I_1$.",
+								"math": "V^{opt} = 200 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gewinnberechnung im Dean-Modell",
+				"descriptionTemplate": "Gegeben sind folgende bereits sortierte Projekte und Kredite:\n\n| Objekt | Volumen | Rendite/Zinssatz |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "AI-generiert zur Übung der Kapitalwertberechnung",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 100, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 18, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 100, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 12, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "F1_V", "value": 100, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 4, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 100, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 8, "unit": "%", "label": "Zinssatz F2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie den Gesamtgewinn $G$ (Kapitalwert am Ende der Periode) des optimalen Programms.",
+						"formulaRefs": ["dean-gewinn"],
+						"interpretation": "Der Gewinn ist die Differenz aus allen generierten Rückflüssen und den zu zahlenden Kapitaldienstkosten.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Realisierte Objekte",
+								"description": "Da $18\\% > 4\\%$ und $12\\% > 8\\%$, werden beide Investitionen vollständig über beide Finanzierungen gedeckt.",
+								"math": "I_{realisiert} = \\{I_1, I_2\\} \\quad F_{genutzt} = \\{F_1, F_2\\}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion aufstellen",
+								"description": "Der Gewinn summiert die Renditen (in Geldeinheiten) abzüglich der Zinskosten.",
+								"math": "G = (I_1 \\cdot r_1 + I_2 \\cdot r_2) - (F_1 \\cdot i_1 + F_2 \\cdot i_2)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Volumina und Prozentsätze als Dezimalzahlen ein.",
+								"math": "G = (100 \\cdot 0{,}18 + 100 \\cdot 0{,}12) - (100 \\cdot 0{,}04 + 100 \\cdot 0{,}08)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammern auswerten",
+								"description": "Wir berechnen die absoluten Rückflüsse und Zinszahlungen.",
+								"math": "G = (18 + 12) - (4 + 8)"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir ziehen die Gesamtkosten von den Gesamterlösen ab.",
+								"math": "G = 30 - 12"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Gesamtgewinn beträgt:",
+								"math": "G = 18 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Teilweise Realisierung eines Projekts",
+				"descriptionTemplate": "Folgende Optionen stehen zur Wahl:\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Fokussiert auf Überlappungen von Volumina",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 100, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 15, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 100, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 10, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "F1_V", "value": 150, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 5, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 100, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 12, "unit": "%", "label": "Zinssatz F2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie, mit welchem Volumen das Projekt $I_2$ im optimalen Programm realisiert wird ($V_{I2}^{realisiert}$).",
+						"formulaRefs": ["dean-sortierung"],
+						"interpretation": "Aufgrund der perfekten Teilbarkeit von Projekten im Dean-Modell werden Projekte am Rand der Rentabilität oft nur partiell umgesetzt.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Ressourcenallokation $I_1$",
+								"description": "Projekt $I_1$ ($100$ GE) beansprucht $100$ GE der günstigen Finanzierung $F_1$ ($150$ GE). Übrig bleiben bei $F_1$ somit noch $50$ GE zu $5\\%$.",
+								"math": "F_{1,rest} = 150 - 100 = 50"
+							},
+							{
+								"type": "calculation",
+								"title": "Teilfinanzierung von $I_2$",
+								"description": "Projekt $I_2$ ($100$ GE, $10\\%$) nutzt die verbleibenden $50$ GE von $F_1$, da $10\\% > 5\\%$.",
+								"math": "V_{I2,Teil 1} = 50"
+							},
+							{
+								"type": "calculation",
+								"title": "Prüfung des Restbedarfs von $I_2$",
+								"description": "Für die verbleibenden $50$ GE von $I_2$ stünde nur noch $F_2$ ($12\\%$) zur Verfügung. Da $10\\% < 12\\%$, wird dieser Teil nicht realisiert.",
+								"math": "V_{I2,Teil 2} = 0"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das realisierte Volumen für das zweite Projekt beträgt somit:",
+								"math": "V_{I2}^{realisiert} = 50 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Dean-Modell mit Millionenbeträgen",
+				"descriptionTemplate": "Ein Konzern plant Investitionen (Angaben in {I1_V_unit}):\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} | {I1_r} % |\n| $I_2$ | {I2_V} | {I2_r} % |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} | {F1_i} % |\n| $F_2$ | {F2_V} | {F2_i} % |",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Große Volumina analog Skript",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "I1_V_unit",
+						"value": 0,
+						"unit": "Mio. GE",
+						"label": "Einheit"
+					},
+					{
+						"type": "value",
+						"symbol": "I1_V",
+						"value": 10,
+						"unit": "Mio. GE",
+						"label": "Volumen I1"
+					},
+					{ "type": "value", "symbol": "I1_r", "value": 20, "unit": "%", "label": "Rendite I1" },
+					{
+						"type": "value",
+						"symbol": "I2_V",
+						"value": 10,
+						"unit": "Mio. GE",
+						"label": "Volumen I2"
+					},
+					{ "type": "value", "symbol": "I2_r", "value": 15, "unit": "%", "label": "Rendite I2" },
+					{
+						"type": "value",
+						"symbol": "F1_V",
+						"value": 10,
+						"unit": "Mio. GE",
+						"label": "Volumen F1"
+					},
+					{ "type": "value", "symbol": "F1_i", "value": 5, "unit": "%", "label": "Zinssatz F1" },
+					{
+						"type": "value",
+						"symbol": "F2_V",
+						"value": 10,
+						"unit": "Mio. GE",
+						"label": "Volumen F2"
+					},
+					{ "type": "value", "symbol": "F2_i", "value": 18, "unit": "%", "label": "Zinssatz F2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das optimale Investitionsvolumen $V^{opt}$.",
+						"formulaRefs": ["opt-volumen"],
+						"interpretation": "Selbst bei sehr großen Beträgen bleibt die logische Vorgehensweise des marginalen Abgleichs identisch.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Bewertung erstes Projekt",
+								"description": "$I_1$ ($20\\%$) und $F_1$ ($5\\%$) weisen exakt das gleiche Volumen auf. Da $20\\% > 5\\%$, wird $I_1$ vollständig realisiert.",
+								"math": "V_1 = 10"
+							},
+							{
+								"type": "calculation",
+								"title": "Bewertung zweites Projekt",
+								"description": "Für $I_2$ ($15\\%$) ist nur noch $F_2$ ($18\\%$) verfügbar. Da die Kosten die Rendite übersteigen ($15\\% < 18\\%$), wird $I_2$ verworfen.",
+								"math": "V_2 = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Gesamtvolumen berechnen",
+								"description": "Wir addieren die umgesetzten Projektgrößen.",
+								"math": "V^{opt} = 10 + 0"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das Volumen liegt bei:",
+								"math": "V^{opt} = 10 \\text{ Mio. GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Vollständige Markträumung",
+				"descriptionTemplate": "Es sind zwei Projekte und zwei Kredite gegeben:\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n\n| Finanzierung | Volumen | Zinssatz |\n|---|---|---|\n| $F_1$ | {F1_V} GE | {F1_i} % |\n| $F_2$ | {F2_V} GE | {F2_i} % |",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Struktur entspricht Klausurniveau",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 40, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 20, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 60, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 15, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "F1_V", "value": 50, "unit": "GE", "label": "Volumen F1" },
+					{ "type": "value", "symbol": "F1_i", "value": 5, "unit": "%", "label": "Zinssatz F1" },
+					{ "type": "value", "symbol": "F2_V", "value": 50, "unit": "GE", "label": "Volumen F2" },
+					{ "type": "value", "symbol": "F2_i", "value": 10, "unit": "%", "label": "Zinssatz F2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das optimale Investitionsvolumen $V^{opt}$.",
+						"formulaRefs": ["opt-volumen"],
+						"interpretation": "Ein Sonderfall tritt ein, wenn das kumulierte Volumen aller profitablen Projekte exakt dem kumulierten Volumen der benötigten Finanzierungen entspricht.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Allokation $I_1$",
+								"description": "$I_1$ ($40$ GE) nutzt einen Teil von $F_1$ ($50$ GE). Es verbleiben $10$ GE bei $F_1$.",
+								"math": "V_1 = 40"
+							},
+							{
+								"type": "other",
+								"title": "Allokation $I_2$",
+								"description": "$I_2$ ($60$ GE) nutzt die restlichen $10$ GE von $F_1$ ($15\\% > 5\\%$) und beansprucht zudem exakt die gesamten $50$ GE von $F_2$ ($15\\% > 10\\%$).",
+								"math": "V_2 = 10 + 50 = 60"
+							},
+							{
+								"type": "substitution",
+								"title": "Gesamtvolumen berechnen",
+								"description": "Da beide Investitionen profitabler sind als die zur Verfügung stehenden Kredite, werden beide vollständig realisiert.",
+								"math": "V^{opt} = 40 + 60"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das gewinnmaximale Volumen ist:",
+								"math": "V^{opt} = 100 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Unbegrenzte Kreditlinie",
+				"descriptionTemplate": "Ein Startup evaluiert drei Projekte. Zur Finanzierung steht eine unbegrenzte Kreditlinie zur Verfügung:\n\n| Investition | Volumen | Rendite |\n|---|---|---|\n| $I_1$ | {I1_V} GE | {I1_r} % |\n| $I_2$ | {I2_V} GE | {I2_r} % |\n| $I_3$ | {I3_V} GE | {I3_r} % |\n\nDie Hausbank gewährt Kredite in beliebiger Höhe zu einem festen Zinssatz von {F1_i} %.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Konzeptionelle Überprüfung des Dean-Prinzips",
+				"given": [
+					{ "type": "value", "symbol": "I1_V", "value": 100, "unit": "GE", "label": "Volumen I1" },
+					{ "type": "value", "symbol": "I1_r", "value": 10, "unit": "%", "label": "Rendite I1" },
+					{ "type": "value", "symbol": "I2_V", "value": 200, "unit": "GE", "label": "Volumen I2" },
+					{ "type": "value", "symbol": "I2_r", "value": 8, "unit": "%", "label": "Rendite I2" },
+					{ "type": "value", "symbol": "I3_V", "value": 150, "unit": "GE", "label": "Volumen I3" },
+					{ "type": "value", "symbol": "I3_r", "value": 5, "unit": "%", "label": "Rendite I3" },
+					{
+						"type": "value",
+						"symbol": "F1_i",
+						"value": 7,
+						"unit": "%",
+						"label": "Zinssatz Kreditlinie"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das optimale Investitionsvolumen $V^{opt}$.",
+						"formulaRefs": ["opt-volumen"],
+						"interpretation": "Bei unbegrenzten Finanzmitteln zu konstanten Kosten entscheidet lediglich der Vergleich der individuellen Projektrendite mit dem einheitlichen Kreditzins.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Bedingung prüfen",
+								"description": "Da es nur einen konstanten Zinssatz gibt, werden exakt jene Projekte realisiert, deren Rendite den Zinssatz von $7\\%$ übersteigt.",
+								"math": "r_j \\ge 7\\%"
+							},
+							{
+								"type": "calculation",
+								"title": "Projekte selektieren",
+								"description": "$I_1$ ($10\\%$) und $I_2$ ($8\\%$) erfüllen die Bedingung. $I_3$ ($5\\%$) liegt darunter und wird nicht umgesetzt.",
+								"math": "I_{realisiert} = \\{I_1, I_2\\}"
+							},
+							{
+								"type": "substitution",
+								"title": "Volumen summieren",
+								"description": "Wir addieren die Volumina der lohnenden Investitionen.",
+								"math": "V^{opt} = 100 + 200"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Das optimale Budget beträgt somit:",
+								"math": "V^{opt} = 300 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

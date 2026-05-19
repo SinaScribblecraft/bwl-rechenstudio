@@ -1,0 +1,738 @@
+{
+	"optimale-bestellmenge": {
+		"title": "Optimale Bestellmenge 2",
+		"subtitle": "Berechnung von Bestellmenge, Bestellhäufigkeit und Kosten.",
+		"formulas": [
+			{
+				"id": "lagerkostensatz",
+				"name": "Lagerkostensatz",
+				"math": "C_l = b \\cdot i + C_{lm}",
+				"result": { "symbol": "C_l", "description": "Lagerkosten pro ME und Periode" },
+				"params": [
+					{ "symbol": "b", "description": "Einstandspreis pro ME" },
+					{ "symbol": "i", "description": "Kapitalbindungskostensatz" },
+					{ "symbol": "C_{lm}", "description": "Bestandsabhängige Lagerkosten" }
+				]
+			},
+			{
+				"id": "andler",
+				"name": "Andler-Formel",
+				"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}",
+				"result": { "symbol": "y^{opt}", "description": "Kostenminimale Bestellmenge" },
+				"params": [
+					{ "symbol": "R", "description": "Gesamtbedarf" },
+					{ "symbol": "C_r", "description": "Bestellfixe Kosten" },
+					{ "symbol": "C_l", "description": "Lagerkostensatz" }
+				]
+			},
+			{
+				"id": "bestellhaeufigkeit",
+				"name": "Bestellhäufigkeit",
+				"math": "n^{opt} = \\frac{R}{y^{opt}}",
+				"result": { "symbol": "n^{opt}", "description": "Anzahl der Bestellungen" },
+				"params": [
+					{ "symbol": "R", "description": "Gesamtbedarf" },
+					{ "symbol": "y^{opt}", "description": "Optimale Bestellmenge" }
+				]
+			},
+			{
+				"id": "bestellzykluszeit",
+				"name": "Bestellzykluszeit",
+				"math": "t^{opt} = \\frac{T}{n^{opt}}",
+				"result": { "symbol": "t^{opt}", "description": "Zeitraum zwischen zwei Bestellungen" },
+				"params": [
+					{ "symbol": "T", "description": "Länge der Planungsperiode" },
+					{ "symbol": "n^{opt}", "description": "Bestellhäufigkeit" }
+				]
+			},
+			{
+				"id": "lagerkosten",
+				"name": "Lagerhaltungskosten",
+				"math": "K_l = \\frac{y^{opt}}{2} \\cdot C_l",
+				"result": { "symbol": "K_l", "description": "Lagerkosten der Periode" },
+				"params": [
+					{ "symbol": "y^{opt}", "description": "Bestellmenge" },
+					{ "symbol": "C_l", "description": "Lagerkostensatz" }
+				]
+			},
+			{
+				"id": "bestellkosten",
+				"name": "Bestellkosten",
+				"math": "K_r = \\frac{R}{y^{opt}} \\cdot C_r",
+				"result": { "symbol": "K_r", "description": "Gesamte bestellfixe Kosten der Periode" },
+				"params": [
+					{ "symbol": "R", "description": "Gesamtbedarf" },
+					{ "symbol": "y^{opt}", "description": "Bestellmenge" },
+					{ "symbol": "C_r", "description": "Bestellfixe Kosten pro Bestellung" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassische Andler-Aufgabe",
+				"verified": true,
+				"sourceType": "Klausur",
+				"sourceDetails": "HS 2022, Aufgabe 3",
+				"descriptionTemplate": "Ein Handelsunternehmen plant für das kommende Jahr mit einem Bedarf von {R} ME. Der Einstandspreis der Ware liegt bei {b} GE/ME. Für jede Bestellung fallen fixe Kosten in Höhe von {C_r} GE an. Der Kalkulationszinssatz für die Kapitalbindung beträgt {i_pct} % p.a. Weitere bestandsabhängige Lagerkosten existieren nicht.",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 2400, "unit": "ME", "label": "Jahresbedarf" },
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 25,
+						"unit": "GE/ME",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (%)" },
+					{
+						"type": "value",
+						"symbol": "C_r",
+						"value": 30,
+						"unit": "GE",
+						"label": "Bestellfixe Kosten"
+					},
+					{
+						"type": "value",
+						"symbol": "C_lm",
+						"value": 0,
+						"unit": "GE",
+						"label": "Sonstige Lagerkosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die optimale Bestellmenge $y^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler"],
+						"interpretation": "Was bedeutet das nun konkret für die Planung des Unternehmens? \n Das Handelsunternehmen sollte jedes Mal genau 240 Mengeneinheiten bestellen. Bei einem Gesamtjahresbedarf von 2400 ME bedeutet dies, dass das Unternehmen genau 10-mal im Jahr (2400 / 240) bestellt. Bei dieser Menge und Frequenz sind die Gesamtkosten für Beschaffung und Lagerung mathematisch auf das absolute Minimum reduziert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz",
+								"description": "Da $C_{lm} = 0$, ergibt sich der Lagerkostensatz aus Einstandspreis und Zinssatz.",
+								"math": "C_l = b \\cdot i"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Werte ein.",
+								"math": "C_l = 25 \\cdot 0{,}1"
+							},
+							{
+								"type": "calculation",
+								"title": "Zwischenergebnis $C_l$",
+								"description": "Der Lagerkostensatz beträgt:",
+								"math": "C_l = 2{,}50 \\text{ GE/ME pro Jahr}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler-Formel",
+								"description": "Nun verwenden wir die Andler-Formel zur Bestimmung der optimalen Menge.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Jahresbedarf, die Bestellkosten und den ermittelten Lagerkostensatz ein.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 2{.}400 \\cdot 30}{2{,}50}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir berechnen den Term unter der Wurzel.",
+								"math": "y^{opt} = \\sqrt{57{.}600}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Durch Ziehen der Wurzel erhalten wir das Resultat.",
+								"math": "y^{opt} = 240 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zusätzliche Lagerkosten und Bestellhäufigkeit",
+				"descriptionTemplate": "Die Materialwirtschaft rechnet mit einem Gesamtbedarf von {R} ME für das Planungsjahr. Ein Lieferant bietet das Material zu {b} GE/ME an, pro Bestellvorgang fallen {C_r} GE an. Neben dem kalkulatorischen Zinssatz von {i_pct} % fallen für Versicherung und Schwund zusätzlich {C_lm} GE pro ME und Jahr an.",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 1000, "unit": "ME", "label": "Jahresbedarf" },
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 40,
+						"unit": "GE/ME",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (%)" },
+					{
+						"type": "value",
+						"symbol": "C_r",
+						"value": 25,
+						"unit": "GE",
+						"label": "Bestellfixe Kosten"
+					},
+					{
+						"type": "value",
+						"symbol": "C_lm",
+						"value": 1,
+						"unit": "GE/(ME·Jahr)",
+						"label": "Bestandsabh. Lagerkosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die optimale Bestellmenge $y^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler"],
+						"interpretation": "Die zusätzlichen Lagerkosten erhöhen den Lagerkostensatz und führen ceteris paribus zu einer geringeren optimalen Bestellmenge.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz aufstellen",
+								"description": "Wir müssen hier die bestandsabhängigen Lagerkosten $C_{lm}$ addieren.",
+								"math": "C_l = b \\cdot i + C_{lm}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen alle Vorgaben in die Formel ein.",
+								"math": "C_l = 40 \\cdot 0{,}1 + 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Multiplikation und Addition ausführen.",
+								"math": "C_l = 4 + 1"
+							},
+							{
+								"type": "result",
+								"title": "Lagerkostensatz",
+								"description": "Damit haben wir unseren Lagerkostensatz.",
+								"math": "C_l = 5 \\text{ GE/(ME\\cdot Jahr)}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler-Formel",
+								"description": "Die Formel für die Bestellmenge lautet:",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir nutzen den soeben berechneten Lagerkostensatz $C_l = 5$.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 1{.}000 \\cdot 25}{5}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Radikand berechnen",
+								"description": "Term vereinfachen.",
+								"math": "y^{opt} = \\sqrt{10{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Wurzel ziehen liefert die Menge.",
+								"math": "y^{opt} = 100 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die zugehörige optimale Bestellhäufigkeit $n^{opt}$.",
+						"formulaRefs": ["bestellhaeufigkeit"],
+						"interpretation": "Dieser Wert gibt an, wie oft pro Jahr das Lager wieder aufgefüllt werden muss, um den Bedarf zu decken.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bestellhäufigkeit",
+								"description": "Die Häufigkeit ergibt sich aus dem Gesamtbedarf geteilt durch die Bestellmenge.",
+								"math": "n^{opt} = \\frac{R}{y^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $R$ und unser $y^{opt}$ aus Aufgabenteil a) ein.",
+								"math": "n^{opt} = \\frac{1{.}000}{100}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Es muss also {n^{opt}}-mal im Jahr bestellt werden.",
+								"math": "n^{opt} = 10"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Bestellzykluszeit in Tagen",
+				"descriptionTemplate": "Ein Industriebetrieb kalkuliert mit {T} Arbeitstagen pro Jahr. Der Jahresbedarf eines Bauteils liegt bei {R} Stück. Der Einstandspreis beläuft sich auf {b} GE/Stück. Der Zinsfuß liegt bei {i_pct} % p.a. Zusätzlich rechnet man mit {C_lm} GE/Stück an fixen Lagerkosten. Ein Bestellvorgang kostet {C_r} GE.",
+				"given": [
+					{ "type": "value", "symbol": "T", "value": 360, "unit": "Tage", "label": "Arbeitstage" },
+					{
+						"type": "value",
+						"symbol": "R",
+						"value": 720,
+						"unit": "Stück",
+						"label": "Jahresbedarf"
+					},
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 15,
+						"unit": "GE/Stück",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (%)" },
+					{
+						"type": "value",
+						"symbol": "C_lm",
+						"value": 0.5,
+						"unit": "GE",
+						"label": "Fixe Lagerkosten"
+					},
+					{ "type": "value", "symbol": "C_r", "value": 20, "unit": "GE", "label": "Bestellkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie zunächst die optimale Bestellmenge $y^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz",
+								"description": "Zuerst wird der Lagerkostensatz ermittelt.",
+								"math": "C_l = b \\cdot i + C_{lm}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen die Werte ein.",
+								"math": "C_l = 15 \\cdot 0{,}1 + 0{,}5"
+							},
+							{
+								"type": "result",
+								"title": "Lagerkostensatz Ergebnis",
+								"description": "Der Lagerkostensatz beträgt:",
+								"math": "C_l = 2 \\text{ GE/(Stück\\cdot Jahr)}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler",
+								"description": "Andler-Formel anwenden.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen in Andler",
+								"description": "Werte einsetzen.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 720 \\cdot 20}{2}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Term vereinfachen",
+								"description": "Den Bruch ausrechnen.",
+								"math": "y^{opt} = \\sqrt{14{.}400}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Optimale Menge:",
+								"math": "y^{opt} = 120 \\text{ Stück}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die optimale Bestellzykluszeit $t^{opt}$ in Tagen.",
+						"formulaRefs": ["bestellhaeufigkeit", "bestellzykluszeit"],
+						"interpretation": "Die Bestellzykluszeit drückt aus, nach wie vielen Arbeitstagen im Optimalfall eine neue Lieferung eintreffen sollte.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bestellhäufigkeit berechnen",
+								"description": "Um die Zykluszeit zu bestimmen, benötigen wir zunächst die Häufigkeit $n^{opt}$.",
+								"math": "n^{opt} = \\frac{R}{y^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir verwenden die Menge aus a).",
+								"math": "n^{opt} = \\frac{720}{120}"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis $n^{opt}$",
+								"description": "Es erfolgen 6 Bestellungen pro Jahr.",
+								"math": "n^{opt} = 6"
+							},
+							{
+								"type": "formula",
+								"title": "Zykluszeit Formel",
+								"description": "Die Zykluszeit ergibt sich aus der Anzahl der Arbeitstage geteilt durch die Häufigkeit.",
+								"math": "t^{opt} = \\frac{T}{n^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Tage einsetzen",
+								"description": "Wir setzen die gegebenen Arbeitstage ein.",
+								"math": "t^{opt} = \\frac{360}{6}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Damit beträgt der Abstand zwischen zwei Bestellungen:",
+								"math": "t^{opt} = 60 \\text{ Tage}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Minimale variable Gesamtkosten",
+				"descriptionTemplate": "Gegeben ist ein Material mit einem Bedarf von {R} ME in der Periode. Der Einstandspreis ist {b} GE/ME und der kalkulatorische Zinsfuß liegt bei {i_pct} %. Es gibt keine zusätzlichen Lagerkosten. Die Kosten pro Bestellvorgang sind mit {C_r} GE veranschlagt.",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 4000, "unit": "ME", "label": "Bedarf" },
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 50,
+						"unit": "GE/ME",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.16, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 16, "unit": "%", "label": "Zinssatz (%)" },
+					{
+						"type": "value",
+						"symbol": "C_r",
+						"value": 40,
+						"unit": "GE",
+						"label": "Bestellfixe Kosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die optimale Bestellmenge $y^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz",
+								"description": "Die Berechnung erfolgt ohne $C_{lm}$.",
+								"math": "C_l = b \\cdot i"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Einstandspreis und Zinssatz.",
+								"math": "C_l = 50 \\cdot 0{,}16"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis $C_l$",
+								"description": "Der Lagerkostensatz beträgt:",
+								"math": "C_l = 8 \\text{ GE/(ME\\cdot Periode)}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler",
+								"description": "Optimale Menge berechnen.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Werte in die Wurzel einsetzen.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 4{.}000 \\cdot 40}{8}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Bruch vereinfachen.",
+								"math": "y^{opt} = \\sqrt{40{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die optimale Menge ist:",
+								"math": "y^{opt} = 200 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die gesamten Lagerhaltungskosten $K_l$ und die gesamten Bestellkosten $K_r$ der Periode beim Einsatz der optimalen Bestellmenge.",
+						"formulaRefs": ["lagerkosten", "bestellkosten"],
+						"interpretation": "Im Kostenminimum der Andler-Formel müssen die gesamten bestellfixen Kosten exakt den gesamten Lagerhaltungskosten entsprechen ($K_l = K_r$). Dies dient oft als Probe für die Korrektheit des Ergebnisses.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerhaltungskosten",
+								"description": "Die gesamten Lagerkosten der Periode berechnen sich über den durchschnittlichen Lagerbestand.",
+								"math": "K_l = \\frac{y^{opt}}{2} \\cdot C_l"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $y^{opt} = 200$ und $C_l = 8$ ein.",
+								"math": "K_l = \\frac{200}{2} \\cdot 8"
+							},
+							{
+								"type": "result",
+								"title": "Lagerkosten",
+								"description": "Die Lagerkosten betragen:",
+								"math": "K_l = 800 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Bestellkosten",
+								"description": "Die gesamten Bestellkosten ergeben sich aus Häufigkeit mal Einzelkosten.",
+								"math": "K_r = \\frac{R}{y^{opt}} \\cdot C_r"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen $R = 4{.}000$, $y^{opt} = 200$ und $C_r = 40$ ein.",
+								"math": "K_r = \\frac{4{.}000}{200} \\cdot 40"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Bestellhäufigkeit (20) mal 40 GE.",
+								"math": "K_r = 20 \\cdot 40"
+							},
+							{
+								"type": "result",
+								"title": "Bestellkosten",
+								"description": "Die Bestellkosten betragen:",
+								"math": "K_r = 800 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Variante mit hohen Stückzahlen",
+				"descriptionTemplate": "Ein Zulieferer produziert Schrauben mit einem Jahresbedarf von {R} Stück. Der Einstandspreis beläuft sich auf {b} GE/Stück, die Bestellkosten pro Abruf liegen bei {C_r} GE. Der Zinssatz beträgt {i_pct} % und der sonstige wertunabhängige Lagerkostensatz liegt bei {C_lm} GE/Stück. Bestimmen Sie die optimalen Bestellparameter.",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 12500, "unit": "Stück", "label": "Bedarf" },
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 20,
+						"unit": "GE/Stück",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (%)" },
+					{
+						"type": "value",
+						"symbol": "C_lm",
+						"value": 2,
+						"unit": "GE",
+						"label": "Fixe Lagerkosten"
+					},
+					{ "type": "value", "symbol": "C_r", "value": 40, "unit": "GE", "label": "Bestellkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die optimale Bestellmenge $y^{opt}$ und die Bestellhäufigkeit $n^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler", "bestellhaeufigkeit"],
+						"interpretation": "Aufgrund des geringen Einstandspreises und der hohen Nachfrage lohnt sich eine relativ große Bestellmenge pro Abruf.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz berechnen",
+								"description": "Wir berechnen zunächst wieder den Lagerkostensatz.",
+								"math": "C_l = b \\cdot i + C_{lm}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in C_l",
+								"description": "Die Vorgaben werden eingesetzt.",
+								"math": "C_l = 20 \\cdot 0{,}1 + 2"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis C_l",
+								"description": "Dies führt zu einem Lagerkostensatz von:",
+								"math": "C_l = 4 \\text{ GE/(Stück\\cdot Jahr)}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler-Formel anwenden",
+								"description": "Jetzt können wir $y^{opt}$ bestimmen.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von Bedarf und Kosten.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 12{.}500 \\cdot 40}{4}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir fassen den Term zusammen.",
+								"math": "y^{opt} = \\sqrt{250{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Bestellmenge",
+								"description": "Die Bestellmenge ist:",
+								"math": "y^{opt} = 500 \\text{ Stück}"
+							},
+							{
+								"type": "formula",
+								"title": "Bestellhäufigkeit ansetzen",
+								"description": "Die Häufigkeit ist der Quotient aus Bedarf und Bestellmenge.",
+								"math": "n^{opt} = \\frac{R}{y^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Bedarf und optimale Menge einsetzen.",
+								"math": "n^{opt} = \\frac{12{.}500}{500}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Bestellungen pro Jahr betragen:",
+								"math": "n^{opt} = 25"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Massengut mit hoher Umschlagshäufigkeit",
+				"descriptionTemplate": "Für ein Massengut rechnet der Betrieb mit {R} ME pro Jahr, was auf {T} Arbeitstage verteilt wird. Der Einstandspreis beträgt {b} GE/ME und die fixen Kosten einer Bestellung belaufen sich auf {C_r} GE. Der Zinssatz wird auf {i_pct} % geschätzt, weitere Lagerkosten sind vernachlässigbar.",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 50000, "unit": "ME", "label": "Bedarf" },
+					{ "type": "value", "symbol": "T", "value": 250, "unit": "Tage", "label": "Arbeitstage" },
+					{
+						"type": "value",
+						"symbol": "b",
+						"value": 100,
+						"unit": "GE/ME",
+						"label": "Einstandspreis"
+					},
+					{ "type": "value", "symbol": "i", "value": 0.1, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz (%)" },
+					{ "type": "value", "symbol": "C_r", "value": 100, "unit": "GE", "label": "Bestellkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die optimale Bestellmenge $y^{opt}$.",
+						"formulaRefs": ["lagerkostensatz", "andler"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lagerkostensatz berechnen",
+								"description": "Zuerst den Lagerkostensatz aufstellen.",
+								"math": "C_l = b \\cdot i"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Werte übernehmen.",
+								"math": "C_l = 100 \\cdot 0{,}1"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis C_l",
+								"description": "Lagerkostensatz:",
+								"math": "C_l = 10 \\text{ GE/(ME\\cdot Jahr)}"
+							},
+							{
+								"type": "formula",
+								"title": "Andler-Formel",
+								"description": "Wir stellen die Wurzelformel auf.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot R \\cdot C_r}{C_l}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Bedarf, Kosten und Lagerkostensatz einsetzen.",
+								"math": "y^{opt} = \\sqrt{\\frac{2 \\cdot 50{.}000 \\cdot 100}{10}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Radikand vereinfachen",
+								"description": "Den Ausdruck unter der Wurzel ausrechnen.",
+								"math": "y^{opt} = \\sqrt{1{.}000{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Optimale Menge ziehen:",
+								"math": "y^{opt} = 1{.}000 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Bestellzykluszeit $t^{opt}$ in Tagen.",
+						"formulaRefs": ["bestellhaeufigkeit", "bestellzykluszeit"],
+						"interpretation": "Ein sehr kurzer Bestellzyklus deutet auf eine Just-in-Time artige Anlieferung aufgrund hoher Lagerkosten oder hohen Bedarfs hin.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bestellhäufigkeit aufstellen",
+								"description": "Wir berechnen zuerst $n^{opt}$.",
+								"math": "n^{opt} = \\frac{R}{y^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Bedarf und optimale Menge einfügen.",
+								"math": "n^{opt} = \\frac{50{.}000}{1{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis Häufigkeit",
+								"description": "Es finden sehr viele Bestellvorgänge statt:",
+								"math": "n^{opt} = 50"
+							},
+							{
+								"type": "formula",
+								"title": "Bestellzykluszeit berechnen",
+								"description": "Die Arbeitstage werden durch die Bestellhäufigkeit geteilt.",
+								"math": "t^{opt} = \\frac{T}{n^{opt}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $T=250$ und $n^{opt}=50$ ein.",
+								"math": "t^{opt} = \\frac{250}{50}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Intervall zwischen zwei Lieferungen beträgt also:",
+								"math": "t^{opt} = 5 \\text{ Tage}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

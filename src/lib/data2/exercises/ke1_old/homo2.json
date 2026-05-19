@@ -1,0 +1,562 @@
+{
+	"produktionstheorie-homogenitaet": {
+		"title": "Produktionstheorie: Homogenität und Skalenerträge",
+		"subtitle": "Bestimmung des Homogenitätsgrades und Analyse von Skalenerträgen bei verschiedenen Produktionsfunktionen.",
+		"formulas": [
+			{
+				"id": "homogenitaet",
+				"name": "Bedingung für Homogenität",
+				"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^t \\cdot M(r_1, r_2)",
+				"result": { "symbol": "t", "description": "Homogenitätsgrad der Produktionsfunktion" },
+				"params": [
+					{
+						"symbol": "\\lambda",
+						"description": "Vervielfachungsfaktor der Einsatzmengen (Skalar)"
+					},
+					{ "symbol": "M", "description": "Ausbringungsmenge (Output)" },
+					{ "symbol": "r_1, r_2", "description": "Einsatzmengen der Produktionsfaktoren" }
+				]
+			},
+			{
+				"id": "skalenertrag",
+				"name": "Faktor der Ausbringungsmenge",
+				"math": "c = \\lambda^t",
+				"result": { "symbol": "c", "description": "Faktor, um den sich der Output ändert" },
+				"params": [
+					{ "symbol": "\\lambda", "description": "Vervielfachungsfaktor der Einsatzmengen" },
+					{ "symbol": "t", "description": "Homogenitätsgrad" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Fall 1a: Linear homogene Cobb-Douglas-Funktion",
+				"descriptionTemplate": "Gegeben sei die Produktionsfunktion {M}. Die Einsatzmengen der Faktoren $r_1$ und $r_2$ werden um den Faktor {lambda} vervielfacht.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 4 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}4}",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 2,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$ der Produktionsfunktion.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "Der Homogenitätsgrad gibt an, wie die Ausbringungsmenge auf eine proportionale Änderung aller Faktoreinsatzmengen reagiert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Homogenitätsbedingung ansetzen",
+								"description": "Wir ersetzen in der Funktion jeden Faktor $r_i$ durch $\\lambda r_i$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 4 \\cdot (\\lambda r_1)^{0{,}6} \\cdot (\\lambda r_2)^{0{,}4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenzgesetze anwenden",
+								"description": "Die Klammern werden aufgelöst, indem die Exponenten auf beide Faktoren angewendet werden.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 4 \\cdot \\lambda^{0{,}6} r_1^{0{,}6} \\cdot \\lambda^{0{,}4} r_2^{0{,}4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"description": "Wir fassen die Potenzen von $\\lambda$ zusammen, indem wir die Exponenten addieren.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}6 + 0{,}4} \\cdot (4 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}4})"
+							},
+							{
+								"type": "calculation",
+								"title": "Rücksubstitution",
+								"description": "Der Ausdruck in der Klammer entspricht genau der ursprünglichen Produktionsfunktion $M(r_1, r_2)$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^1 \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Homogenitätsgrad",
+								"description": "Wir können nun den Exponenten von $\\lambda$ ablesen.",
+								"math": "t = 1"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Faktor $c$, um den sich die Ausbringungsmenge verändert, wenn die Einsatzmengen verdoppelt werden.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Da $t=1$ gilt, liegen konstante Skalenerträge vor. Eine Verdopplung des Inputs führt exakt zu einer Verdopplung des Outputs (Constant Returns to Scale).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Outputfaktor bestimmen",
+								"description": "Wir nutzen den berechneten Homogenitätsgrad $t=1$ und den gegebenen Faktor $\\lambda=2$.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen von $\\lambda=2$ und $t=1$.",
+								"math": "c = 2^1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Outputfaktor beträgt somit:",
+								"math": "c = 2"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 1b: Linear homogene substitutionale Funktion",
+				"descriptionTemplate": "Ein Betrieb produziert nach der Funktion {M}. Die Einsatzmengen werden um den Faktor {lambda} erhöht.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 5 \\cdot r_1 + 3 \\cdot r_2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 3,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Wir setzen $\\lambda r_1$ und $\\lambda r_2$ in die Funktion ein.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 5 \\cdot (\\lambda r_1) + 3 \\cdot (\\lambda r_2)"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausklammern",
+								"description": "Da $\\lambda$ in beiden Summanden vorkommt, können wir es ausklammern.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda \\cdot (5 \\cdot r_1 + 3 \\cdot r_2)"
+							},
+							{
+								"type": "calculation",
+								"title": "Rücksubstitution",
+								"description": "Wir ersetzen den eingeklammerten Term wieder durch $M(r_1, r_2)$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^1 \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Homogenitätsgrad lässt sich ablesen.",
+								"math": "t = 1"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Faktor $c$, um den sich der Output ändert.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Auch bei additiven Zusammenhängen der Faktoren führt $t=1$ zu konstanten Skalenerträgen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel",
+								"description": "Wir verwenden die Regel für den Outputfaktor.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $\\lambda=3$ und $t=1$ ein.",
+								"math": "c = 3^1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Output verdreifacht sich.",
+								"math": "c = 3"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 2a: Überlinear homogene Cobb-Douglas-Funktion",
+				"descriptionTemplate": "Für ein neues Produkt wird die Produktionsfunktion {M} ermittelt. Die Direktion plant, die Inputfaktoren um den Faktor {lambda} zu vervielfachen.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 2 \\cdot r_1^{0{,}8} \\cdot r_2^{0{,}7}",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 4,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Einsetzen der mit $\\lambda$ vervielfachten Faktoren.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 2 \\cdot (\\lambda r_1)^{0{,}8} \\cdot (\\lambda r_2)^{0{,}7}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenzen auflösen",
+								"description": "Wir ziehen die Exponenten an die einzelnen Bestandteile.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 2 \\cdot \\lambda^{0{,}8} r_1^{0{,}8} \\cdot \\lambda^{0{,}7} r_2^{0{,}7}"
+							},
+							{
+								"type": "calculation",
+								"title": "Lambda zusammenfassen",
+								"description": "Addition der Exponenten von $\\lambda$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}8 + 0{,}7} \\cdot (2 \\cdot r_1^{0{,}8} \\cdot r_2^{0{,}7})"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachen",
+								"description": "Wir setzen die ursprüngliche Funktion wieder ein.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{1{,}5} \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Homogenitätsgrad ist größer als 1.",
+								"math": "t = 1{,}5"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Skalenertragsfaktor $c$.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Ein Homogenitätsgrad von $t > 1$ bedeutet zunehmende Skalenerträge (Increasing Returns to Scale). Der Output wächst überproportional zum Input. Dies ist typisch für Massenproduktionseffekte (Economies of Scale).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Outputfaktor",
+								"description": "Anwendung der Faktorformel.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Werte ein. Beachten Sie, dass $1{,}5 = \\frac{3}{2}$ ist.",
+								"math": "c = 4^{1{,}5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnung",
+								"description": "Wir ziehen die Wurzel und potenzieren mit 3.",
+								"math": "c = (\\sqrt{4})^3 = 2^3"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Eine Vervierfachung des Inputs führt zu einer Verachtfachung des Outputs.",
+								"math": "c = 8"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 2b: Überlinear homogene Polynomfunktion",
+				"descriptionTemplate": "Gegeben ist die Produktionsfunktion {M}. Die Einsatzmengen werden verdoppelt ($\\lambda = {lambda}$).",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 3 \\cdot r_1^2 \\cdot r_2 + 2 \\cdot r_1 \\cdot r_2^2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 2,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Die mit $\\lambda$ multiplizierten Variablen werden in die Funktion eingesetzt.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 3 \\cdot (\\lambda r_1)^2 \\cdot (\\lambda r_2) + 2 \\cdot (\\lambda r_1) \\cdot (\\lambda r_2)^2"
+							},
+							{
+								"type": "calculation",
+								"title": "Quadrate auflösen",
+								"description": "Wir quadrieren die jeweiligen Klammern.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 3 \\cdot \\lambda^2 r_1^2 \\cdot \\lambda r_2 + 2 \\cdot \\lambda r_1 \\cdot \\lambda^2 r_2^2"
+							},
+							{
+								"type": "calculation",
+								"title": "Lambda faktorisieren",
+								"description": "Wir fassen die $\\lambda$-Terme in den beiden Summanden zusammen.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^3 \\cdot 3 r_1^2 r_2 + \\lambda^3 \\cdot 2 r_1 r_2^2"
+							},
+							{
+								"type": "calculation",
+								"title": "Lambda ausklammern",
+								"description": "Wir klammern $\\lambda^3$ aus dem gesamten Ausdruck aus.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^3 \\cdot (3 \\cdot r_1^2 \\cdot r_2 + 2 \\cdot r_1 \\cdot r_2^2)"
+							},
+							{
+								"type": "calculation",
+								"title": "Rücksubstitution",
+								"description": "Wir erhalten die Ursprungsfunktion zurück.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^3 \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Homogenitätsgrad ist ablesbar.",
+								"math": "t = 3"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Faktor $c$ der Ausbringungsmengenänderung.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Ein Wert von $t=3$ impliziert sehr starke überlineare Skalenerträge.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel",
+								"description": "Anwenden der Beziehung zwischen Input- und Outputfaktor.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $\\lambda=2$ und $t=3$ ein.",
+								"math": "c = 2^3"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Ausbringungsmenge steigt um den Faktor 8.",
+								"math": "c = 8"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 3a: Unterlinear homogene Cobb-Douglas-Funktion",
+				"descriptionTemplate": "Gegeben ist die Produktionsfunktion {M}. Die Unternehmensführung prüft eine Erhöhung der Einsatzmengen um den Faktor {lambda}.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 10 \\cdot r_1^{0{,}4} \\cdot r_2^{0{,}4}",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 32,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Wir setzen $\\lambda r_i$ in die Funktion ein.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 10 \\cdot (\\lambda r_1)^{0{,}4} \\cdot (\\lambda r_2)^{0{,}4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammern auflösen",
+								"description": "Die Exponenten werden verteilt.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 10 \\cdot \\lambda^{0{,}4} r_1^{0{,}4} \\cdot \\lambda^{0{,}4} r_2^{0{,}4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Exponenten addieren",
+								"description": "Wir fassen die Potenzen von $\\lambda$ zusammen.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}4 + 0{,}4} \\cdot (10 \\cdot r_1^{0{,}4} \\cdot r_2^{0{,}4})"
+							},
+							{
+								"type": "calculation",
+								"title": "Substitution",
+								"description": "Die Klammer ist gleich der ursprünglichen Funktion.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}8} \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Homogenitätsgrad ist kleiner als 1.",
+								"math": "t = 0{,}8"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Outputfaktor $c$.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Da $t < 1$, liegen abnehmende Skalenerträge (Decreasing Returns to Scale) vor. Die Ausbringungsmenge wächst unterproportional zum Input. Dies tritt häufig auf, wenn Kapazitätsgrenzen erreicht werden oder Koordinationsprobleme entstehen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Faktor berechnen",
+								"description": "Wir verwenden die Standardformel für den Skalenertrag.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $\\lambda=32$ und $t=0{,}8$ ein. Hinweis: $0{,}8 = \\frac{4}{5}$.",
+								"math": "c = 32^{0{,}8}"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachung über Brüche",
+								"description": "Da $32 = 2^5$, können wir den Term gut auflösen.",
+								"math": "c = (2^5)^{\\frac{4}{5}} = 2^4"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Obwohl der Input ver-32-facht wird, steigt der Output nur um das 16-fache.",
+								"math": "c = 16"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Fall 3b: Unterlinear homogene Wurzelfunktion",
+				"descriptionTemplate": "Die Produktionstechnik eines Unternehmens lässt sich durch die Funktion {M} beschreiben. Die Faktoren werden um den Faktor {lambda} ausgeweitet.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 6 \\cdot \\sqrt{r_1} + 6 \\cdot \\sqrt{r_2}",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "lambda",
+						"value": 9,
+						"unit": "",
+						"label": "Vervielfachungsfaktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Ansatz",
+								"description": "Einsetzen von $\\lambda r_i$ in die Funktion.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 6 \\cdot \\sqrt{\\lambda r_1} + 6 \\cdot \\sqrt{\\lambda r_2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzelgesetze",
+								"description": "Wir zerlegen die Wurzel aus dem Produkt in ein Produkt aus Wurzeln.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 6 \\cdot \\sqrt{\\lambda} \\cdot \\sqrt{r_1} + 6 \\cdot \\sqrt{\\lambda} \\cdot \\sqrt{r_2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausklammern",
+								"description": "Der Term $\\sqrt{\\lambda}$ kann ausgeklammert werden.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\sqrt{\\lambda} \\cdot (6 \\cdot \\sqrt{r_1} + 6 \\cdot \\sqrt{r_2})"
+							},
+							{
+								"type": "calculation",
+								"title": "Schreibweise anpassen",
+								"description": "Die Wurzel lässt sich als Potenz mit Exponent $0{,}5$ schreiben und wir substituieren $M(r_1, r_2)$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}5} \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der Homogenitätsgrad ist:",
+								"math": "t = 0{,}5"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Outputfaktor $c$.",
+						"formulaRefs": ["skalenertrag"],
+						"interpretation": "Auch hier führen die unterlinearen Skalenerträge zu einem drastischen Effizienzverlust bei reiner Mengenausweitung.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Berechnung des Faktors",
+								"description": "Einsetzen in die Formel.",
+								"math": "c = \\lambda^t"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir nutzen $\\lambda=9$ und $t=0{,}5$.",
+								"math": "c = 9^{0{,}5}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Potenz $0{,}5$ entspricht der Quadratwurzel. Der Output verdreifacht sich also lediglich, während sich der Input verneunfacht.",
+								"math": "c = 3"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

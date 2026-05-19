@@ -1,0 +1,577 @@
+{
+	"expansionspfad-kostenminimierung": {
+		"title": "Produktionstheorie: Expansionspfad & Kostenminimierung",
+		"subtitle": "Bestimmung von Isoquante, GRS, Expansionspfad und Minimalkostenkombination bei substitutionalen Produktionsfunktionen.",
+		"formulas": [
+			{
+				"id": "isoquante",
+				"name": "Isoquantengleichung",
+				"math": "r_2 = f(r_1, M)",
+				"result": {
+					"symbol": "r_2",
+					"description": "Faktoreinsatzmenge 2 in Abhängigkeit von r_1 und konstanter Ausbringungsmenge M"
+				},
+				"params": [
+					{ "symbol": "M", "description": "Vorgegebene Ausbringungsmenge" },
+					{ "symbol": "r_1", "description": "Faktoreinsatzmenge 1" }
+				]
+			},
+			{
+				"id": "grs",
+				"name": "Grenzrate der Substitution (GRS)",
+				"math": "GRS_{2,1} = \\frac{dr_2}{dr_1}",
+				"result": {
+					"symbol": "GRS_{2,1}",
+					"description": "Marginales Faktoraustauschverhältnis"
+				},
+				"params": [
+					{ "symbol": "r_1", "description": "Faktoreinsatzmenge 1" },
+					{ "symbol": "r_2", "description": "Faktoreinsatzmenge 2" }
+				]
+			},
+			{
+				"id": "kostenminimum",
+				"name": "Bedingung für Kostenminimum",
+				"math": "GRS_{2,1} = -\\frac{q_1}{q_2}",
+				"result": {
+					"symbol": "Expansionspfad",
+					"description": "Geometrischer Ort aller Minimalkostenkombinationen (Optimales Faktoreinsatzverhältnis)"
+				},
+				"params": [
+					{ "symbol": "q_1", "description": "Faktorpreis 1" },
+					{ "symbol": "q_2", "description": "Faktorpreis 2" }
+				]
+			},
+			{
+				"id": "kosten",
+				"name": "Kostenfunktion",
+				"math": "K = q_1 \\cdot r_1 + q_2 \\cdot r_2",
+				"result": {
+					"symbol": "K",
+					"description": "Gesamtkosten"
+				},
+				"params": [
+					{ "symbol": "q_1", "description": "Faktorpreis 1" },
+					{ "symbol": "q_2", "description": "Faktorpreis 2" },
+					{ "symbol": "r_1", "description": "Faktoreinsatzmenge 1" },
+					{ "symbol": "r_2", "description": "Faktoreinsatzmenge 2" }
+				]
+			},
+			{
+				"id": "homogenitaet",
+				"name": "Homogenitätsgrad",
+				"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^t \\cdot M(r_1, r_2)",
+				"result": {
+					"symbol": "t",
+					"description": "Homogenitätsgrad (Gibt Auskunft über Skalenerträge)"
+				},
+				"params": [
+					{ "symbol": "\\lambda", "description": "Skalierungsfaktor" },
+					{ "symbol": "M", "description": "Ausbringungsmenge" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassische Minimalkostenkombination (Klausurtyp)",
+				"descriptionTemplate": "Gegeben sei die substitutionale Produktionsfunktion {M_func}. Die Preise der beiden Einsatzfaktoren betragen {q_1} GE und {q_2} GE. Berechnen Sie die Faktoreinsatzmengen und die minimalen Kosten für eine vorgegebene Ausbringungsmenge von {M_target} ME.",
+				"given": [
+					{ "type": "formula", "symbol": "M_func", "math": "M(r_1, r_2) = 6 \\cdot r_1^3 \\cdot r_2", "label": "Produktionsfunktion" },
+					{ "type": "value", "symbol": "q_1", "value": 18, "unit": "GE", "label": "Faktorpreis 1" },
+					{ "type": "value", "symbol": "q_2", "value": 2, "unit": "GE", "label": "Faktorpreis 2" },
+					{ "type": "value", "symbol": "M_target", "value": 11250, "unit": "ME", "label": "Ausbringungsmenge" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Isoquantengleichung und die Grenzrate der Substitution $GRS_{2,1}$.",
+						"formulaRefs": ["isoquante", "grs"],
+						"interpretation": "Die Isoquante zeigt alle Faktorkombinationen, die zur gleichen Menge M führen. Die GRS gibt an, wie viele Einheiten von Faktor 2 man aufgeben muss, um eine zusätzliche Einheit von Faktor 1 einzusetzen, ohne den Output zu verändern.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Produktionsfunktion umstellen",
+								"description": "Um die Isoquantengleichung zu erhalten, stellen wir die Funktion nach $r_2$ um.",
+								"math": "M = 6 \\cdot r_1^3 \\cdot r_2"
+							},
+							{
+								"type": "result",
+								"title": "Isoquantengleichung",
+								"math": "r_2 = \\frac{M}{6 \\cdot r_1^3} = \\frac{M}{6} \\cdot r_1^{-3}"
+							},
+							{
+								"type": "formula",
+								"title": "GRS berechnen",
+								"description": "Die GRS ist die erste Ableitung der Isoquantengleichung nach $r_1$.",
+								"math": "GRS_{2,1} = \\frac{dr_2}{dr_1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ableiten",
+								"math": "GRS_{2,1} = -3 \\cdot \\frac{M}{6} \\cdot r_1^{-4}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis GRS",
+								"math": "GRS_{2,1} = -\\frac{M}{2 \\cdot r_1^4}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Expansionspfad.",
+						"formulaRefs": ["kostenminimum"],
+						"interpretation": "Der Expansionspfad gibt das kostenminimale Einsatzverhältnis der Faktoren unabhängig von der konkreten Produktionsmenge an.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung für das Kostenminimum",
+								"description": "Im Optimum entspricht die GRS dem negativen Faktorpreisverhältnis.",
+								"math": "GRS_{2,1} = -\\frac{q_1}{q_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen unsere ermittelte GRS und die gegebenen Faktorpreise ein.",
+								"math": "-\\frac{M}{2 \\cdot r_1^4} = -\\frac{18}{2}"
+							},
+							{
+								"type": "substitution",
+								"title": "M ersetzen",
+								"description": "Wir ersetzen $M$ wieder durch die ursprüngliche Produktionsfunktion, um den Ausdruck zu vereinfachen.",
+								"math": "-\\frac{6 \\cdot r_1^3 \\cdot r_2}{2 \\cdot r_1^4} = -9"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch kürzen",
+								"math": "-\\frac{3 \\cdot r_2}{r_1} = -9"
+							},
+							{
+								"type": "result",
+								"title": "Expansionspfad",
+								"description": "Durch Umstellen nach $r_2$ erhalten wir den Expansionspfad.",
+								"math": "r_2 = 3 \\cdot r_1"
+							}
+						]
+					},
+					{
+						"label": "c",
+						"question": "Ermitteln Sie die Minimalkostenkombination und die minimalen Gesamtkosten für $M = 11{.}250$.",
+						"formulaRefs": ["kosten"],
+						"interpretation": "Die Minimalkostenkombination zeigt exakt, wie viel von Faktor 1 und 2 eingesetzt werden muss, um das Produktionsziel am günstigsten zu erreichen.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Expansionspfad in Produktionsfunktion einsetzen",
+								"math": "11{.}250 = 6 \\cdot r_1^3 \\cdot (3 \\cdot r_1)"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung zusammenfassen",
+								"math": "11{.}250 = 18 \\cdot r_1^4"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach r_1 auflösen",
+								"math": "r_1^4 = \\frac{11{.}250}{18} = 625"
+							},
+							{
+								"type": "result",
+								"title": "Optimaler Einsatz von Faktor 1",
+								"description": "Die vierte Wurzel aus $625$ ergibt $r_1$.",
+								"math": "r_1^{opt} = 5"
+							},
+							{
+								"type": "substitution",
+								"title": "Faktor 2 berechnen",
+								"description": "Einsetzen von $r_1^{opt}$ in den Expansionspfad.",
+								"math": "r_2^{opt} = 3 \\cdot 5"
+							},
+							{
+								"type": "result",
+								"title": "Optimaler Einsatz von Faktor 2",
+								"math": "r_2^{opt} = 15"
+							},
+							{
+								"type": "substitution",
+								"title": "Minimale Kosten berechnen",
+								"description": "Einsetzen der optimalen Mengen und der Preise in die Kostenfunktion.",
+								"math": "K_{min} = 18 \\cdot 5 + 2 \\cdot 15"
+							},
+							{
+								"type": "result",
+								"title": "Minimale Gesamtkosten",
+								"math": "K_{min} = 120 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Outputmaximierung bei Budgetrestriktion",
+				"descriptionTemplate": "Ein Unternehmen verfügt über ein fixes Budget für den Einkauf von Produktionsfaktoren. Die Produktionsfunktion lautet {M_func}. Die Preise der beiden Einsatzfaktoren betragen {q_1} GE und {q_2} GE. Das verfügbare Budget liegt bei {K_max} GE. Ermitteln Sie die maximale Ausbringungsmenge, die mit diesem Budget realisiert werden kann.",
+				"given": [
+					{ "type": "formula", "symbol": "M_func", "math": "M(r_1, r_2) = r_1 \\cdot r_2", "label": "Produktionsfunktion" },
+					{ "type": "value", "symbol": "q_1", "value": 4, "unit": "GE", "label": "Faktorpreis 1" },
+					{ "type": "value", "symbol": "q_2", "value": 2, "unit": "GE", "label": "Faktorpreis 2" },
+					{ "type": "value", "symbol": "K_max", "value": 120, "unit": "GE", "label": "Maximales Budget" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Expansionspfad.",
+						"formulaRefs": ["isoquante", "grs", "kostenminimum"],
+						"interpretation": "Auch bei vorgegebenem Budget (Outputmaximierung statt Kostenminimierung) muss im Optimum das Grenzratenverhältnis dem Preisverhältnis entsprechen. Die Bedingung bleibt identisch.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Isoquantengleichung",
+								"math": "r_2 = \\frac{M}{r_1} = M \\cdot r_1^{-1}"
+							},
+							{
+								"type": "calculation",
+								"title": "GRS berechnen",
+								"description": "Ableitung der Isoquantengleichung nach $r_1$.",
+								"math": "GRS_{2,1} = -M \\cdot r_1^{-2} = -\\frac{r_1 \\cdot r_2}{r_1^2} = -\\frac{r_2}{r_1}"
+							},
+							{
+								"type": "formula",
+								"title": "Optimumsbedingung",
+								"math": "GRS_{2,1} = -\\frac{q_1}{q_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gleichsetzen",
+								"math": "-\\frac{r_2}{r_1} = -\\frac{4}{2} = -2"
+							},
+							{
+								"type": "result",
+								"title": "Expansionspfad",
+								"math": "r_2 = 2 \\cdot r_1"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die optimalen Faktoreinsatzmengen und die maximale Ausbringungsmenge $M_{max}$.",
+						"formulaRefs": ["kosten"],
+						"interpretation": "Durch das vollständige Ausschöpfen des Budgets entlang des Expansionspfades stellen wir sicher, dass keine Ressourcen verschwendet werden und das Produktionsmaximum erreicht wird.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kostenfunktion mit Budget",
+								"math": "K = q_1 \\cdot r_1 + q_2 \\cdot r_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte und Expansionspfad einsetzen",
+								"math": "120 = 4 \\cdot r_1 + 2 \\cdot (2 \\cdot r_1)"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung zusammenfassen",
+								"math": "120 = 8 \\cdot r_1"
+							},
+							{
+								"type": "result",
+								"title": "Optimaler Einsatz Faktor 1",
+								"math": "r_1^{opt} = 15"
+							},
+							{
+								"type": "substitution",
+								"title": "Optimaler Einsatz Faktor 2",
+								"math": "r_2^{opt} = 2 \\cdot 15"
+							},
+							{
+								"type": "result",
+								"title": "Faktor 2",
+								"math": "r_2^{opt} = 30"
+							},
+							{
+								"type": "substitution",
+								"title": "Maximale Ausbringungsmenge berechnen",
+								"math": "M_{max} = 15 \\cdot 30"
+							},
+							{
+								"type": "result",
+								"title": "Maximale Menge",
+								"math": "M_{max} = 450 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rückrechnung auf den Faktorpreis",
+				"descriptionTemplate": "Ein Unternehmen produziert mit der Funktion {M_func}. Es ist bekannt, dass bei den aktuellen Preisen die Faktorkombination $r_1 = {r_1_opt}$ und $r_2 = {r_2_opt}$ eine kostenminimale Kombination darstellt. Der Preis für Faktor 2 beträgt {q_2} GE/ME. Bestimmen Sie den Preis des ersten Faktors und die minimalen Gesamtkosten dieser Produktion.",
+				"given": [
+					{ "type": "formula", "symbol": "M_func", "math": "M(r_1, r_2) = 2 \\cdot r_1^2 \\cdot r_2", "label": "Produktionsfunktion" },
+					{ "type": "value", "symbol": "q_2", "value": 5, "unit": "GE", "label": "Faktorpreis 2" },
+					{ "type": "value", "symbol": "r_1_opt", "value": 10, "unit": "FE", "label": "Optimaler Einsatz r_1" },
+					{ "type": "value", "symbol": "r_2_opt", "value": 20, "unit": "FE", "label": "Optimaler Einsatz r_2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die GRS im vorliegenden Optimum und bestimmen Sie den unbekannten Faktorpreis $q_1$.",
+						"formulaRefs": ["isoquante", "grs", "kostenminimum"],
+						"interpretation": "Da wir wissen, dass die genutzte Kombination optimal ist, muss die Grenzrate der Substitution in genau diesem Punkt dem negativen Preisverhältnis entsprechen. Dies ermöglicht den Rückschluss auf unbekannte Marktpreise.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Isoquantengleichung",
+								"math": "r_2 = \\frac{M}{2 \\cdot r_1^2} = \\frac{M}{2} \\cdot r_1^{-2}"
+							},
+							{
+								"type": "calculation",
+								"title": "Allgemeine GRS berechnen",
+								"description": "Ableitung nach $r_1$.",
+								"math": "GRS_{2,1} = -2 \\cdot \\frac{M}{2 \\cdot r_1^3} = -\\frac{M}{r_1^3}"
+							},
+							{
+								"type": "substitution",
+								"title": "M durch Produktionsfunktion ersetzen",
+								"math": "GRS_{2,1} = -\\frac{2 \\cdot r_1^2 \\cdot r_2}{r_1^3} = -\\frac{2 \\cdot r_2}{r_1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Konkrete Mengen einsetzen",
+								"description": "Wir setzen die im Optimum verwendeten Mengen ein.",
+								"math": "GRS_{2,1} = -\\frac{2 \\cdot 20}{10}"
+							},
+							{
+								"type": "result",
+								"title": "Konkrete GRS",
+								"math": "GRS_{2,1} = -4"
+							},
+							{
+								"type": "formula",
+								"title": "Optimumsbedingung",
+								"math": "GRS_{2,1} = -\\frac{q_1}{q_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gleichung für q_1 aufstellen",
+								"math": "-4 = -\\frac{q_1}{5}"
+							},
+							{
+								"type": "result",
+								"title": "Unbekannter Faktorpreis",
+								"math": "q_1 = 20 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie die minimalen Gesamtkosten $K_{min}$.",
+						"formulaRefs": ["kosten"],
+						"interpretation": "Mit den nun vollständig bekannten Preisen und den eingesetzten Mengen lassen sich die Gesamtkosten direkt aggregieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kostenfunktion",
+								"math": "K_{min} = q_1 \\cdot r_1 + q_2 \\cdot r_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"math": "K_{min} = 20 \\cdot 10 + 5 \\cdot 20"
+							},
+							{
+								"type": "calculation",
+								"title": "Summe bilden",
+								"math": "K_{min} = 200 + 100"
+							},
+							{
+								"type": "result",
+								"title": "Minimale Kosten",
+								"math": "K_{min} = 300 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Homogenitätsgrad und Skalenerträge",
+				"descriptionTemplate": "Gegeben ist die Produktionsfunktion {M_func} vom Cobb-Douglas-Typ. Überprüfen Sie das Homogenitätsniveau der Funktion und bewerten Sie die Skalenerträge des Produktionsprozesses.",
+				"given": [
+					{ "type": "formula", "symbol": "M_func", "math": "M(r_1, r_2) = 4 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}8}", "label": "Produktionsfunktion" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Homogenitätsgrad $t$.",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "Der Homogenitätsgrad gibt an, wie sich der Output verändert, wenn der Einsatz aller Produktionsfaktoren um einen bestimmten Prozentsatz skaliert wird (Niveauvariation).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Definition Homogenität",
+								"description": "Wir vervielfachen jeden Faktoreinsatz um den Faktor $\\lambda$.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 4 \\cdot (\\lambda r_1)^{0{,}6} \\cdot (\\lambda r_2)^{0{,}8}"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenzen auflösen",
+								"math": "M(\\lambda r_1, \\lambda r_2) = 4 \\cdot \\lambda^{0{,}6} \\cdot r_1^{0{,}6} \\cdot \\lambda^{0{,}8} \\cdot r_2^{0{,}8}"
+							},
+							{
+								"type": "calculation",
+								"title": "Terme umsortieren",
+								"description": "Wir fassen die $\\lambda$-Terme zusammen und isolieren die ursprüngliche Produktionsfunktion.",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{0{,}6 + 0{,}8} \\cdot (4 \\cdot r_1^{0{,}6} \\cdot r_2^{0{,}8})"
+							},
+							{
+								"type": "calculation",
+								"title": "Ursprungsfunktion einsetzen",
+								"math": "M(\\lambda r_1, \\lambda r_2) = \\lambda^{1{,}4} \\cdot M(r_1, r_2)"
+							},
+							{
+								"type": "result",
+								"title": "Homogenitätsgrad",
+								"math": "t = 1{,}4"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Welche Skalenerträge liegen vor?",
+						"formulaRefs": ["homogenitaet"],
+						"interpretation": "Da der Homogenitätsgrad größer als 1 ist, führt eine Verdopplung des Faktoreinsatzes zu mehr als einer Verdopplung des Outputs (Massenproduktionsvorteile).",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Regel für Skalenerträge prüfen",
+								"description": "Wenn $t > 1$, liegen steigende Skalenerträge vor. Wenn $t = 1$, konstante Skalenerträge. Wenn $t < 1$, sinkende Skalenerträge.",
+								"math": "t = 1{,}4 > 1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"math": "t > 1 \\implies \\text{steigende Skalenerträge (überlinearhomogen)}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Herleitung der langfristigen Kostenfunktion",
+				"descriptionTemplate": "Gegeben sei die Produktionsfunktion {M_func}. Die Faktorpreise betragen {q_1} GE für Faktor 1 und {q_2} GE für Faktor 2. Leiten Sie die langfristige Kostenfunktion $K(M)$ analytisch her, welche die minimalen Kosten direkt in Abhängigkeit der Ausbringungsmenge $M$ darstellt.",
+				"given": [
+					{ "type": "formula", "symbol": "M_func", "math": "M(r_1, r_2) = r_1^{0{,}5} \\cdot r_2^{0{,}5}", "label": "Produktionsfunktion" },
+					{ "type": "value", "symbol": "q_1", "value": 2, "unit": "GE", "label": "Faktorpreis 1" },
+					{ "type": "value", "symbol": "q_2", "value": 8, "unit": "GE", "label": "Faktorpreis 2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Expansionspfad.",
+						"formulaRefs": ["isoquante", "grs", "kostenminimum"],
+						"interpretation": "Die Basis zur Herleitung einer mengenabhängigen Kostenfunktion ist der Expansionspfad, da er das optimale Einsatzverhältnis für jedes Outputniveau sichert.",
+						"steps": [
+							{
+								"type": "substitution",
+								"title": "Isoquantengleichung durch Quadrieren",
+								"description": "Um die Funktion leichter ableiten zu können, quadrieren wir $M$.",
+								"math": "M^2 = r_1 \\cdot r_2 \\implies r_2 = \\frac{M^2}{r_1} = M^2 \\cdot r_1^{-1}"
+							},
+							{
+								"type": "calculation",
+								"title": "GRS berechnen",
+								"math": "GRS_{2,1} = -M^2 \\cdot r_1^{-2} = -\\frac{r_1 \\cdot r_2}{r_1^2} = -\\frac{r_2}{r_1}"
+							},
+							{
+								"type": "formula",
+								"title": "Optimumsbedingung",
+								"math": "-\\frac{r_2}{r_1} = -\\frac{q_1}{q_2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"math": "-\\frac{r_2}{r_1} = -\\frac{2}{8} = -0{,}25"
+							},
+							{
+								"type": "result",
+								"title": "Expansionspfad",
+								"description": "Nach Umstellen auf $r_1$:",
+								"math": "r_1 = 4 \\cdot r_2"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Faktoreinsatzmengen $r_1$ und $r_2$ jeweils in direkter Abhängigkeit von der Menge $M$.",
+						"formulaRefs": ["isoquante"],
+						"interpretation": "Diese sogenannten bedingten Faktornachfragefunktionen zeigen an, wie viel von jedem Faktor bestellt werden muss, wenn man eine bestimmte Menge kosteneffizient produzieren möchte.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Produktionsfunktion nutzen",
+								"math": "M = r_1^{0{,}5} \\cdot r_2^{0{,}5}"
+							},
+							{
+								"type": "substitution",
+								"title": "Expansionspfad für r_1 einsetzen",
+								"math": "M = (4 \\cdot r_2)^{0{,}5} \\cdot r_2^{0{,}5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen und vereinfachen",
+								"math": "M = 2 \\cdot r_2^{0{,}5} \\cdot r_2^{0{,}5} = 2 \\cdot r_2"
+							},
+							{
+								"type": "result",
+								"title": "Faktor 2 in Abhängigkeit von M",
+								"math": "r_2^{opt}(M) = 0{,}5 \\cdot M"
+							},
+							{
+								"type": "substitution",
+								"title": "Faktor 1 berechnen",
+								"description": "Wir setzen das Ergebnis für Faktor 2 zurück in den Expansionspfad ein.",
+								"math": "r_1^{opt}(M) = 4 \\cdot (0{,}5 \\cdot M)"
+							},
+							{
+								"type": "result",
+								"title": "Faktor 1 in Abhängigkeit von M",
+								"math": "r_1^{opt}(M) = 2 \\cdot M"
+							}
+						]
+					},
+					{
+						"label": "c",
+						"question": "Ermitteln Sie die langfristige Kostenfunktion $K(M)$.",
+						"formulaRefs": ["kosten"],
+						"interpretation": "Diese Funktion ist linear, was bedeutet, dass jede weitere Einheit Output exakt konstante Grenzkosten in Höhe von 8 GE verursacht. Das deckt sich mit dem zuvor (potenziell) festgestellten linearhomogenen ($t=1$) Verhalten dieser Cobb-Douglas Funktion.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Allgemeine Kostenfunktion",
+								"math": "K(M) = q_1 \\cdot r_1^{opt}(M) + q_2 \\cdot r_2^{opt}(M)"
+							},
+							{
+								"type": "substitution",
+								"title": "Mengen-Funktionen und Preise einsetzen",
+								"math": "K(M) = 2 \\cdot (2 \\cdot M) + 8 \\cdot (0{,}5 \\cdot M)"
+							},
+							{
+								"type": "calculation",
+								"title": "Zusammenfassen",
+								"math": "K(M) = 4 \\cdot M + 4 \\cdot M"
+							},
+							{
+								"type": "result",
+								"title": "Langfristige Kostenfunktion",
+								"math": "K(M) = 8 \\cdot M"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

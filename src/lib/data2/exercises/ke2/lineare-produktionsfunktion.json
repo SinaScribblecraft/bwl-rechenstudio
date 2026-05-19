@@ -1,0 +1,351 @@
+{
+	"lineare-produktionsfunktion": {
+		"title": "Lineare Produktionsfunktionen (Perfekte Substitute)",
+		"subtitle": "Minimalkostenkombination und Randlösungen bei additiven Produktionsfaktoren.",
+		"formulas": [
+			{
+				"id": "gp-1-lin",
+				"name": "Grenzproduktivität Faktor 1",
+				"math": "GP_1 = \\frac{\\partial M}{\\partial r_1} = a",
+				"result": {
+					"symbol": "GP_1",
+					"description": "Konstante Grenzproduktivität des ersten Faktors"
+				},
+				"params": [
+					{ "symbol": "M", "description": "Produktionsfunktion" },
+					{ "symbol": "r_1", "description": "Einsatzmenge Faktor 1" }
+				]
+			},
+			{
+				"id": "gp-2-lin",
+				"name": "Grenzproduktivität Faktor 2",
+				"math": "GP_2 = \\frac{\\partial M}{\\partial r_2} = b",
+				"result": {
+					"symbol": "GP_2",
+					"description": "Konstante Grenzproduktivität des zweiten Faktors"
+				},
+				"params": [
+					{ "symbol": "M", "description": "Produktionsfunktion" },
+					{ "symbol": "r_2", "description": "Einsatzmenge Faktor 2" }
+				]
+			},
+			{
+				"id": "grs-lin",
+				"name": "Grenzrate der Substitution",
+				"math": "GRS_{2,1} = \\frac{GP_1}{GP_2}",
+				"result": { "symbol": "GRS_{2,1}", "description": "Konstante Grenzrate der Substitution" },
+				"params": [
+					{ "symbol": "GP_1", "description": "Grenzproduktivität Faktor 1" },
+					{ "symbol": "GP_2", "description": "Grenzproduktivität Faktor 2" }
+				]
+			},
+			{
+				"id": "preisverhaeltnis",
+				"name": "Faktorpreisverhältnis",
+				"math": "P_V = \\frac{q_1}{q_2}",
+				"result": { "symbol": "P_V", "description": "Verhältnis der Faktorpreise" },
+				"params": [
+					{ "symbol": "q_1", "description": "Faktorpreis 1" },
+					{ "symbol": "q_2", "description": "Faktorpreis 2" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Randlösung bei unterschiedlichen Produktivitäten",
+				"descriptionTemplate": "Eine Unternehmung produziert mit der linearen Produktionsfunktion {M}. Die Faktorpreise betragen {q_1} GE/ME für den ersten Faktor und {q_2} GE/ME für den zweiten Faktor. Es soll eine Menge von {M_ziel} ME produziert werden.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Spezifische KI-Aufgabe für Randlösungen",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 2 \\cdot r_1 + 1 \\cdot r_2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "q_1",
+						"value": 10,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 1"
+					},
+					{
+						"type": "value",
+						"symbol": "q_2",
+						"value": 8,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 2"
+					},
+					{
+						"type": "value",
+						"symbol": "M_ziel",
+						"value": 100,
+						"unit": "ME",
+						"label": "Ziel-Ausbringungsmenge"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Grenzrate der Substitution $GRS_{2,1}$ und das Faktorpreisverhältnis.",
+						"formulaRefs": ["gp-1-lin", "gp-2-lin", "grs-lin", "preisverhaeltnis"],
+						"interpretation": "Bei einer linearen Produktionsfunktion ist die GRS konstant. Sie hängt nicht von den eingesetzten Mengen ab. Dies bedeutet, dass die Faktoren vollkommene Substitute sind.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Grenzproduktivitäten bestimmen",
+								"description": "Da die Faktoren additiv verknüpft sind, sind die Ableitungen einfach die Vorfaktoren der Variablen.",
+								"math": "GP_1 = 2 \\text{ und } GP_2 = 1"
+							},
+							{
+								"type": "formula",
+								"title": "GRS aufstellen",
+								"description": "Wir teilen $GP_1$ durch $GP_2$.",
+								"math": "GRS_{2,1} = \\frac{2}{1}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis GRS",
+								"description": "Die GRS ist konstant $2$.",
+								"math": "GRS_{2,1} = 2"
+							},
+							{
+								"type": "formula",
+								"title": "Preisverhältnis berechnen",
+								"description": "Wir berechnen den Quotienten der Faktorpreise.",
+								"math": "P_V = \\frac{10}{8}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Preisverhältnis",
+								"description": "Das Preisverhältnis beträgt $1{,}25$.",
+								"math": "P_V = 1{,}25"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die kostenminimalen Einsatzmengen $r_1^*$ und $r_2^*$.",
+						"formulaRefs": [],
+						"interpretation": "Da die GRS (2) größer ist als das Preisverhältnis (1,25), bringt Faktor 1 relativ zu seinem Preis mehr Ertrag als Faktor 2. Das Unternehmen wird daher eine Randlösung wählen und ausschließlich Faktor 1 einsetzen.",
+						"steps": [
+							{
+								"type": "other",
+								"title": "Wirtschaftlichkeitsvergleich",
+								"description": "Da $GRS_{2,1} > \\frac{q_1}{q_2}$ ($2 > 1{,}25$), wird ausschließlich Faktor 1 verwendet. Für Faktor 2 gilt daher $r_2 = 0$.",
+								"math": "r_2^* = 0 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "In Produktionsfunktion einsetzen",
+								"description": "Wir setzen $r_2 = 0$ und die Zielmenge in die Produktionsfunktion ein.",
+								"math": "100 = 2 \\cdot r_1 + 1 \\cdot 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach r_1 auflösen",
+								"description": "Wir teilen beide Seiten durch $2$.",
+								"math": "r_1 = \\frac{100}{2}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Einsatzmengen",
+								"description": "Die kostenminimalen Einsatzmengen sind somit gefunden (Randlösung).",
+								"math": "r_1^* = 50 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "1:1 Substitution bei linearen Faktoren",
+				"descriptionTemplate": "Es liegt die Produktionsfunktion {M} vor. Das bedeutet, beide Faktoren können 1:1 gegeneinander ausgetauscht werden (z.B. zwei identische Rohstoffe von verschiedenen Lieferanten). Die Preise liegen bei {q_1} GE/ME und {q_2} GE/ME. Die geforderte Produktionsmenge ist {M_ziel} ME.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Klassisches Beispiel für vollkommene Substitute",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = r_1 + r_2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "q_1",
+						"value": 15,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 1"
+					},
+					{
+						"type": "value",
+						"symbol": "q_2",
+						"value": 12,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 2"
+					},
+					{
+						"type": "value",
+						"symbol": "M_ziel",
+						"value": 300,
+						"unit": "ME",
+						"label": "Ziel-Ausbringungsmenge"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Welche Mengen der beiden Faktoren werden in der Minimalkostenkombination eingesetzt?",
+						"formulaRefs": [],
+						"interpretation": "Wenn beide Faktoren technisch exakt gleichwertig sind (1:1 Austausch), entscheidet einzig und allein der Faktorpreis. Das Unternehmen kauft einfach nur den billigeren Faktor.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Grenzproduktivitäten vergleichen",
+								"description": "Beide Faktoren haben eine Grenzproduktivität von $1$. Ein Austausch verändert die Menge nicht.",
+								"math": "GP_1 = 1 \\text{ und } GP_2 = 1"
+							},
+							{
+								"type": "other",
+								"title": "Preisvergleich",
+								"description": "Wir vergleichen die Preise. Da $q_2 < q_1$ ($12 < 15$), ist Faktor 2 günstiger bei gleicher technischer Leistung. Faktor 1 wird daher gar nicht genutzt.",
+								"math": "r_1^* = 0 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Faktor 2 berechnen",
+								"description": "Wir setzen den Bedarf vollständig mit Faktor 2 in die Produktionsfunktion ein.",
+								"math": "300 = 0 + r_2"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Faktor 2",
+								"description": "Damit entspricht die Einsatzmenge von Faktor 2 genau der Zielmenge.",
+								"math": "r_2^* = 300 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Wie hoch wären die relativen Mehrkosten, wenn das Unternehmen stattdessen irrtümlich nur Faktor 1 einsetzen würde?",
+						"formulaRefs": [],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Kosten im Optimum",
+								"description": "Wir berechnen die Kosten für die optimale Randlösung (nur Faktor 2).",
+								"math": "K_{opt} = 300 \\cdot 12 = 3{.}600 \\text{ GE}"
+							},
+							{
+								"type": "calculation",
+								"title": "Kosten bei Fehlentscheidung",
+								"description": "Wir berechnen die fiktiven Kosten, wenn stattdessen $300$ ME von Faktor 1 genutzt würden.",
+								"math": "K_{falsch} = 300 \\cdot 15 = 4{.}500 \\text{ GE}"
+							},
+							{
+								"type": "calculation",
+								"title": "Mehrkosten berechnen",
+								"description": "Wir bilden die Differenz aus beiden Kostenwerten.",
+								"math": "\\Delta K = 4{.}500 - 3{.}600"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Mehrkosten",
+								"description": "Die Entscheidung für den falschen Faktor würde zusätzliche Kosten in dieser Höhe verursachen.",
+								"math": "\\Delta K = 900 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Umgekehrte Randlösung",
+				"descriptionTemplate": "Gegeben ist die Produktionsfunktion {M}. Die Faktorpreise betragen {q_1} GE/ME und {q_2} GE/ME. Die herzustellende Menge liegt bei {M_ziel} ME.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Variation zur Festigung des Konzepts",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "M",
+						"math": "M(r_1, r_2) = 0{,}5 \\cdot r_1 + 2 \\cdot r_2",
+						"label": "Produktionsfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "q_1",
+						"value": 5,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 1"
+					},
+					{
+						"type": "value",
+						"symbol": "q_2",
+						"value": 10,
+						"unit": "GE/ME",
+						"label": "Preis Faktor 2"
+					},
+					{
+						"type": "value",
+						"symbol": "M_ziel",
+						"value": 500,
+						"unit": "ME",
+						"label": "Ziel-Ausbringungsmenge"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die kostenminimalen Einsatzmengen $r_1^*$ und $r_2^*$.",
+						"formulaRefs": [],
+						"interpretation": "Man kann auch den Output pro eingesetzter Geldeinheit berechnen ($GP / q$), um direkt zu sehen, welcher Faktor wirtschaftlicher ist.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Ertrag pro Euro Faktor 1",
+								"description": "Wir teilen die Grenzproduktivität von Faktor 1 durch seinen Preis.",
+								"math": "E_1 = \\frac{0{,}5}{5} = 0{,}1 \\text{ ME/GE}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ertrag pro Euro Faktor 2",
+								"description": "Wir teilen die Grenzproduktivität von Faktor 2 durch seinen Preis.",
+								"math": "E_2 = \\frac{2}{10} = 0{,}2 \\text{ ME/GE}"
+							},
+							{
+								"type": "other",
+								"title": "Vergleich",
+								"description": "Da Faktor 2 pro Geldeinheit doppelt so viel Ertrag liefert wie Faktor 1 ($0{,}2 > 0{,}1$), ist Faktor 2 absolut überlegen. Faktor 1 wird nicht genutzt.",
+								"math": "r_1^* = 0 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsatzmenge Faktor 2",
+								"description": "Wir setzen $r_1 = 0$ in die Produktionsfunktion ein.",
+								"math": "500 = 0{,}5 \\cdot 0 + 2 \\cdot r_2"
+							},
+							{
+								"type": "calculation",
+								"title": "Auflösen nach r_2",
+								"description": "Wir dividieren die Zielmenge durch $2$.",
+								"math": "r_2 = \\frac{500}{2}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Einsatzmengen",
+								"description": "Die optimale Einsatzmenge für Faktor 2.",
+								"math": "r_2^* = 250 \\text{ ME}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

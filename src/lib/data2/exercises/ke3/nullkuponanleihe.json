@@ -1,0 +1,623 @@
+{
+	"nullkuponanleihe": {
+		"title": "Nullkuponanleihe (Zerobond)",
+		"subtitle": "Berechnung von Barwert, Endwert, Rendite und Laufzeit bei Nullkuponanleihen.",
+		"formulas": [
+			{
+				"id": "barwert-zerobond",
+				"name": "Barwert / Ausgabekurs",
+				"math": "K_0 = \\frac{N}{(1+i)^n}",
+				"result": {
+					"symbol": "K_0",
+					"description": "Gegenwärtiger Wert bzw. Ausgabekurs der Anleihe"
+				},
+				"params": [
+					{ "symbol": "N", "description": "Nominalwert bzw. Rückzahlungsbetrag (GE)" },
+					{ "symbol": "i", "description": "Marktzinssatz bzw. Rendite (Dezimal)" },
+					{ "symbol": "n", "description": "Laufzeit der Anleihe (Jahre)" }
+				]
+			},
+			{
+				"id": "rendite-zerobond",
+				"name": "Effektivverzinsung / Rendite",
+				"math": "i = \\left( \\frac{N}{K_0} \\right)^{\\frac{1}{n}} - 1",
+				"result": { "symbol": "i", "description": "Effektive Jahresrendite der Anleihe" },
+				"params": [
+					{ "symbol": "N", "description": "Nominalwert (GE)" },
+					{ "symbol": "K_0", "description": "Ausgabekurs bzw. aktueller Kurs (GE)" },
+					{ "symbol": "n", "description": "Laufzeit (Jahre)" }
+				]
+			},
+			{
+				"id": "laufzeit-zerobond",
+				"name": "Laufzeit",
+				"math": "n = \\frac{\\ln\\left(\\frac{N}{K_0}\\right)}{\\ln(1+i)}",
+				"result": { "symbol": "n", "description": "Benötigte Laufzeit in Jahren" },
+				"params": [
+					{ "symbol": "N", "description": "Nominalwert (GE)" },
+					{ "symbol": "K_0", "description": "Ausgabekurs (GE)" },
+					{ "symbol": "i", "description": "Zinssatz (Dezimal)" }
+				]
+			},
+			{
+				"id": "endwert-zerobond",
+				"name": "Nominalwert / Rückzahlungsbetrag",
+				"math": "N = K_0 \\cdot (1+i)^n",
+				"result": { "symbol": "N", "description": "Rückzahlungsbetrag am Ende der Laufzeit" },
+				"params": [
+					{ "symbol": "K_0", "description": "Eingesetztes Kapital bzw. Ausgabekurs (GE)" },
+					{ "symbol": "i", "description": "Zinssatz (Dezimal)" },
+					{ "symbol": "n", "description": "Laufzeit (Jahre)" }
+				]
+			},
+			{
+				"id": "verkaufskurs-zerobond",
+				"name": "Verkaufskurs während der Laufzeit",
+				"math": "K_t = \\frac{N}{(1+i_{neu})^{n-t}}",
+				"result": { "symbol": "K_t", "description": "Kurs der Anleihe im Zeitpunkt t" },
+				"params": [
+					{ "symbol": "N", "description": "Nominalwert (GE)" },
+					{ "symbol": "i_{neu}", "description": "Neuer Marktzins zum Zeitpunkt t (Dezimal)" },
+					{ "symbol": "n", "description": "Ursprüngliche Laufzeit (Jahre)" },
+					{ "symbol": "t", "description": "Haltedauer bis zum Verkauf (Jahre)" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassische Emission einer Nullkuponanleihe",
+				"descriptionTemplate": "Die A-AG plant die Emission einer Nullkuponanleihe mit einem Rückzahlungsbetrag (Nominalwert) von {N} GE. Die Laufzeit der Anleihe beträgt {n} Jahre. Der Kapitalmarkt fordert für dieses Risikoprofil eine Rendite von {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 3, Finanzierung",
+				"given": [
+					{ "type": "value", "symbol": "N", "value": 100000, "unit": "GE", "label": "Nominalwert" },
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" },
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.06,
+						"unit": "",
+						"label": "Marktzins (Dezimal)"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 6,
+						"unit": "%",
+						"label": "Marktzins (Prozent)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den fairen Ausgabekurs $K_0$ der Anleihe.",
+						"formulaRefs": ["barwert-zerobond"],
+						"interpretation": "Der Ausgabekurs liegt deutlich unter dem Nominalwert (Disagio), da der Anleger keine laufenden Zinszahlungen erhält. Die Rendite entsteht ausschließlich durch die Differenz zwischen Ausgabe- und Rückzahlungskurs.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Barwertformel aufstellen",
+								"description": "Um den Ausgabekurs zu berechnen, diskontieren wir den Nominalwert über die gesamte Laufzeit ab.",
+								"math": "K_0 = \\frac{N}{(1+i)^n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Nominalwert, den Zinssatz (als Dezimalzahl) und die Laufzeit in die Formel ein.",
+								"math": "K_0 = \\frac{100{.}000}{(1+0{,}06)^5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nenner berechnen",
+								"description": "Wir potenzieren den Zinsfaktor $(1{,}06)^5$.",
+								"math": "K_0 = \\frac{100{.}000}{1{,}338226}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der resultierende Bruch liefert den aktuellen Barwert.",
+								"math": "K_0 = 74{.}725{,}82 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ermittlung der Rendite",
+				"descriptionTemplate": "Ein Privatanleger kauft eine Nullkuponanleihe zu einem Kurs von {K_0} GE. Bei Fälligkeit nach {n} Jahren erhält er den Nominalwert von {N} GE zurück.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 09-2023",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 38000,
+						"unit": "GE",
+						"label": "Ausgabekurs"
+					},
+					{ "type": "value", "symbol": "N", "value": 50000, "unit": "GE", "label": "Nominalwert" },
+					{ "type": "value", "symbol": "n", "value": 6, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die effektive Jahresrendite $i$, die der Anleger mit dieser Investition erzielt.",
+						"formulaRefs": ["rendite-zerobond"],
+						"interpretation": "Die effektive Rendite ermöglicht den direkten Vergleich dieser Nullkuponanleihe mit anderen Finanzprodukten wie beispielsweise Festgeldkonten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Renditeformel aufstellen",
+								"description": "Wir verwenden die umgestellte Barwertformel, um den Zinsfuß zu isolieren.",
+								"math": "i = \\left( \\frac{N}{K_0} \\right)^{\\frac{1}{n}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Nominalwert, Kaufpreis und Laufzeit werden eingesetzt.",
+								"math": "i = \\left( \\frac{50{.}000}{38{.}000} \\right)^{\\frac{1}{6}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch auswerten",
+								"description": "Wir berechnen das Verhältnis aus Rückzahlung und Einsatz.",
+								"math": "i = (1{,}315789)^{\\frac{1}{6}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Das Ziehen der 6. Wurzel liefert den Zinsfaktor.",
+								"math": "i = 1{,}04675 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die effektive Jahresrendite wird als Dezimalzahl ausgewiesen (entspricht ca. $4{,}68\\%$).",
+								"math": "i = 0{,}0468"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Notwendige Laufzeit für ein Sparziel",
+				"descriptionTemplate": "Für eine Unternehmenserweiterung benötigt die Geschäftsführung exakt {N} GE. Derzeit stehen liquide Mittel in Höhe von {K_0} GE zur Verfügung, die in eine Nullkuponanleihe mit einer festen Verzinsung von {i_pct} % p.a. investiert werden sollen.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Generiert anhand Skriptbeispiel Finanzmathematik",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "N",
+						"value": 250000,
+						"unit": "GE",
+						"label": "Zielbetrag (Nominalwert)"
+					},
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 150000,
+						"unit": "GE",
+						"label": "Startkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.045,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 4.5,
+						"unit": "%",
+						"label": "Zinssatz (Prozent)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die mathematisch exakte Laufzeit $n$, bis der Zielbetrag erreicht ist.",
+						"formulaRefs": ["laufzeit-zerobond"],
+						"interpretation": "Da Anleihen in der Praxis in der Regel ganzjährige Laufzeiten haben, müsste das Unternehmen eine Anleihe mit der nächsthöheren ganzzahligen Laufzeit wählen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Laufzeitformel aufstellen",
+								"description": "Um den Exponenten $n$ zu ermitteln, logarithmieren wir die Barwertgleichung und stellen sie um.",
+								"math": "n = \\frac{\\ln\\left(\\frac{N}{K_0}\\right)}{\\ln(1+i)}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Beträge und den Zinssatz ein.",
+								"math": "n = \\frac{\\ln\\left(\\frac{250{.}000}{150{.}000}\\right)}{\\ln(1+0{,}045)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Brüche und Summen vereinfachen",
+								"description": "Wir vereinfachen das Argument des Logarithmus im Zähler sowie die Basis im Nenner.",
+								"math": "n = \\frac{\\ln(1{,}66667)}{\\ln(1{,}045)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Logarithmen auswerten",
+								"description": "Wir berechnen die natürlichen Logarithmen.",
+								"math": "n = \\frac{0{,}510826}{0{,}044017}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Ergebnis liefert die exakte Dauer in Jahren.",
+								"math": "n = 11{,}61 \\text{ Jahre}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rückzahlungsbetrag nach Anlage",
+				"descriptionTemplate": "Eine Investorin erwirbt am Primärmarkt eine Nullkuponanleihe für {K_0} GE. Die Anleihe wird mit {i_pct} % p.a. verzinst und hat eine Gesamtlaufzeit von {n} Jahren.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2024",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 75000,
+						"unit": "GE",
+						"label": "Emissionskurs"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.06,
+						"unit": "",
+						"label": "Verzinsung (Dezimal)"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 6,
+						"unit": "%",
+						"label": "Verzinsung (Prozent)"
+					},
+					{ "type": "value", "symbol": "n", "value": 10, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Nominalwert $N$, den die Investorin am Ende der Laufzeit erhält.",
+						"formulaRefs": ["endwert-zerobond"],
+						"interpretation": "Durch den Zinseszinseffekt über die lange Laufzeit von 10 Jahren wächst das eingesetzte Kapital erheblich an.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufzinsungsformel aufstellen",
+								"description": "Der Nominalwert entspricht dem aufgezinsten Startkapital.",
+								"math": "N = K_0 \\cdot (1+i)^n"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das investierte Kapital, den Zins und die Laufzeit ein.",
+								"math": "N = 75{.}000 \\cdot (1+0{,}06)^{10}"
+							},
+							{
+								"type": "calculation",
+								"title": "Aufzinsungsfaktor berechnen",
+								"description": "Wir berechnen den Zinseszinsfaktor für 10 Jahre.",
+								"math": "N = 75{.}000 \\cdot 1{,}790847"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Produkt ergibt den finalen Rückzahlungsbetrag.",
+								"math": "N = 134{.}313{,}58 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Vorzeitiger Verkauf bei Zinsänderung",
+				"descriptionTemplate": "Ein Anleger hat vor exakt {t} Jahren eine neu emittierte Nullkuponanleihe erworben. Die Gesamtlaufzeit der Anleihe betrug bei Emission {n} Jahre und der Nominalwert lautet auf {N} GE. Heute, im Zeitpunkt $t={t}$, ist das allgemeine Zinsniveau auf {i_neu_pct} % p.a. gestiegen. Der Anleger möchte die Anleihe nun sofort verkaufen.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Entworfen nach Zinsstruktur-Risiko Modellen",
+				"given": [
+					{ "type": "value", "symbol": "t", "value": 2, "unit": "Jahre", "label": "Haltedauer" },
+					{
+						"type": "value",
+						"symbol": "n",
+						"value": 8,
+						"unit": "Jahre",
+						"label": "Ursprüngliche Laufzeit"
+					},
+					{ "type": "value", "symbol": "N", "value": 150000, "unit": "GE", "label": "Nominalwert" },
+					{
+						"type": "value",
+						"symbol": "i_{neu}",
+						"value": 0.08,
+						"unit": "",
+						"label": "Neuer Marktzins"
+					},
+					{
+						"type": "value",
+						"symbol": "i_neu_pct",
+						"value": 8,
+						"unit": "%",
+						"label": "Neuer Marktzins (Prozent)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den fairen Verkaufskurs $K_t$, den der Anleger heute am Markt erzielen kann.",
+						"formulaRefs": ["verkaufskurs-zerobond"],
+						"interpretation": "Steigen die Zinsen am Markt, fällt der Kurs bestehender Anleihen (Kursrisiko). Der neue Käufer diskontiert den Nominalwert nur noch mit der Restlaufzeit, fordert dafür aber den neuen, höheren Marktzins.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Verkaufspreis bestimmen",
+								"description": "Der Wert der Anleihe im Zeitpunkt $t$ entspricht dem auf $t$ abgezinsten Nominalwert. Abgezinst wird über die verbleibende Restlaufzeit $(n-t)$ mit dem aktuell gültigen Marktzins.",
+								"math": "K_t = \\frac{N}{(1+i_{neu})^{n-t}}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen der Werte",
+								"description": "Wir setzen den Nominalwert, den neuen Zinssatz und die Restlaufzeit ($8 - 2 = 6$ Jahre) ein.",
+								"math": "K_t = \\frac{150{.}000}{(1+0{,}08)^{8-2}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nenner berechnen",
+								"description": "Wir berechnen den Abzinsungsfaktor für die restlichen 6 Jahre.",
+								"math": "K_t = \\frac{150{.}000}{1{,}08^6} = \\frac{150{.}000}{1{,}586874}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der resultierende Betrag ist der faire Kurs heute.",
+								"math": "K_t = 94{.}525{,}45 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ermittlung der Rendite bei Prozentnotiz",
+				"descriptionTemplate": "Eine {n}-jährige Nullkuponanleihe wird heute zu einem Kurs von {K_0_pct} % emittiert. Ein Investor überlegt, {N} GE Nominalwert dieser Anleihe zu zeichnen.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 3, Prozentnotiz bei Anleihen",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_{0,\\%}",
+						"value": 78,
+						"unit": "%",
+						"label": "Emissionskurs in Prozent"
+					},
+					{ "type": "value", "symbol": "n", "value": 7, "unit": "Jahre", "label": "Laufzeit" },
+					{ "type": "value", "symbol": "N", "value": 100000, "unit": "GE", "label": "Nominalwert" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie zunächst den Ausgabekurs $K_0$ in absoluten Geldeinheiten und berechnen Sie anschließend die jährliche Rendite $i$.",
+						"formulaRefs": ["rendite-zerobond"],
+						"interpretation": "Bei Anleihen ist eine Notierung in Prozent des Nominalwertes üblich. Ein Kurs von unter 100% (Disagio) ist bei Nullkuponanleihen zwingend erforderlich, da sonst keine positive Rendite erwirtschaftet werden kann.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Ausgabekurs in GE ermitteln",
+								"description": "Wir berechnen den absoluten Emissionskurs, indem wir den Prozentkurs mit dem Nominalwert multiplizieren.",
+								"math": "K_0 = \\frac{78}{100} \\cdot 100{.}000 = 78{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Renditeformel aufstellen",
+								"description": "Nun verwenden wir die Standardformel für die Rendite einer Nullkuponanleihe.",
+								"math": "i = \\left( \\frac{N}{K_0} \\right)^{\\frac{1}{n}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die berechneten absoluten Werte und die Laufzeit ein.",
+								"math": "i = \\left( \\frac{100{.}000}{78{.}000} \\right)^{\\frac{1}{7}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch auswerten und radizieren",
+								"description": "Das Verhältnis beträgt ca. $1{,}282$. Hieraus ziehen wir die 7. Wurzel.",
+								"math": "i = (1{,}28205)^{\\frac{1}{7}} - 1 = 1{,}03617 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die jährliche Rendite als Dezimalzahl ausgedrückt.",
+								"math": "i = 0{,}0362"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Vergleich zweier Investitionsalternativen",
+				"descriptionTemplate": "Ihnen liegen zwei Nullkuponanleihen zur Anlage von Kapital vor. Anleihe A bietet bei einer Laufzeit von {n_A} Jahren einen Rückzahlungsbetrag von {N_A} GE, ihr aktueller Kurs liegt bei {K_0A} GE. Anleihe B bietet bei gleicher Laufzeit von {n_B} Jahren einen Rückzahlungsbetrag von {N_B} GE zu einem Kurs von {K_0B} GE.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Abgewandelte Klausuraufgabe Investitionsvergleich",
+				"given": [
+					{ "type": "value", "symbol": "n_A", "value": 4, "unit": "Jahre", "label": "Laufzeit A" },
+					{
+						"type": "value",
+						"symbol": "N_A",
+						"value": 200000,
+						"unit": "GE",
+						"label": "Nominalwert A"
+					},
+					{
+						"type": "value",
+						"symbol": "K_{0,A}",
+						"value": 160000,
+						"unit": "GE",
+						"label": "Kurs A"
+					},
+					{ "type": "value", "symbol": "n_B", "value": 4, "unit": "Jahre", "label": "Laufzeit B" },
+					{
+						"type": "value",
+						"symbol": "N_B",
+						"value": 300000,
+						"unit": "GE",
+						"label": "Nominalwert B"
+					},
+					{ "type": "value", "symbol": "K_{0,B}", "value": 235000, "unit": "GE", "label": "Kurs B" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Rendite $i_A$ der Anleihe A.",
+						"formulaRefs": ["rendite-zerobond"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Renditeformel für A",
+								"description": "Wir berechnen den Zinsfuß für die erste Alternative.",
+								"math": "i_A = \\left( \\frac{N_A}{K_{0,A}} \\right)^{\\frac{1}{n_A}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Werte der Anleihe A werden eingesetzt.",
+								"math": "i_A = \\left( \\frac{200{.}000}{160{.}000} \\right)^{\\frac{1}{4}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Wir vereinfachen den Bruch zu $1{,}25$.",
+								"math": "i_A = (1{,}25)^{0{,}25} - 1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rendite A",
+								"description": "Die jährliche Verzinsung der Anleihe A.",
+								"math": "i_A = 0{,}0574"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Rendite $i_B$ der Anleihe B.",
+						"formulaRefs": ["rendite-zerobond"],
+						"interpretation": "Ein rationaler Investor, der strikt nach dem Gewinnmaximierungsprinzip handelt, würde sich für Anleihe B entscheiden, da sie eine höhere Jahresrendite (ca. 6,3%) im Vergleich zu Anleihe A (ca. 5,7%) bietet.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Renditeformel für B",
+								"description": "Analog verfahren wir für die zweite Alternative.",
+								"math": "i_B = \\left( \\frac{N_B}{K_{0,B}} \\right)^{\\frac{1}{n_B}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Werte der Anleihe B werden eingesetzt.",
+								"math": "i_B = \\left( \\frac{300{.}000}{235{.}000} \\right)^{\\frac{1}{4}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Wir vereinfachen das Verhältnis.",
+								"math": "i_B = (1{,}27659)^{0{,}25} - 1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rendite B",
+								"description": "Die jährliche Verzinsung der Anleihe B.",
+								"math": "i_B = 0{,}0630"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Emissionskurs im Hochzinsumfeld",
+				"descriptionTemplate": "Ein aufstrebendes Startup möchte eine {n}-jährige Nullkuponanleihe ausgeben, um sich Liquidität zu beschaffen. Wegen des hohen Risikos fordern Investoren eine jährliche Verzinsung von stolzen {i_pct} % p.a. Der Rückzahlungsbetrag soll {N} GE betragen.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Simulation eines Hochrisikoprofils",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "N",
+						"value": 500000,
+						"unit": "GE",
+						"label": "Rückzahlungsbetrag"
+					},
+					{ "type": "value", "symbol": "n", "value": 10, "unit": "Jahre", "label": "Laufzeit" },
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.12,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 12,
+						"unit": "%",
+						"label": "Zinssatz (Prozent)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den fairen Emissionskurs $K_0$, den das Startup bei diesem Zinssatz erzielen kann.",
+						"formulaRefs": ["barwert-zerobond"],
+						"interpretation": "Im Hochzinsumfeld gepaart mit langer Laufzeit schrumpft der Ausgabekurs dramatisch. Das Startup muss heute einen sehr hohen Abschlag (Disagio) hinnehmen, d.h. es erhält prozessbedingt deutlich weniger Liquidität als der spätere Nominalwert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Barwertformel",
+								"description": "Der Emissionskurs berechnet sich als Barwert des Nominalwertes.",
+								"math": "K_0 = \\frac{N}{(1+i)^n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Nominalwert, den Zins von $12\\%$ und die Laufzeit von $10$ Jahren ein.",
+								"math": "K_0 = \\frac{500{.}000}{(1+0{,}12)^{10}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zinsfaktor potenzieren",
+								"description": "Der hohe Zins über 10 Jahre führt zu einem enormen Diskontierungsfaktor.",
+								"math": "K_0 = \\frac{500{.}000}{3{,}105848}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der Ausgabekurs, den das Startup am Markt realisieren kann.",
+								"math": "K_0 = 160{.}986{,}62 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

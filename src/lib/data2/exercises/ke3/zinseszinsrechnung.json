@@ -1,0 +1,708 @@
+{
+	"zinseszinsrechnung": {
+		"title": "Zinseszinsrechnung",
+		"subtitle": "Berechnung von Barwert, Endwert, Zinssatz und Laufzeit bei Zinseszins.",
+		"formulas": [
+			{
+				"id": "aufzinsung",
+				"name": "Endwert (Aufzinsung)",
+				"math": "K_n = K_0 \\cdot (1+i)^n",
+				"result": {
+					"symbol": "K_n",
+					"description": "Endwert nach n Perioden"
+				},
+				"params": [
+					{ "symbol": "K_0", "description": "Barwert / Startkapital" },
+					{ "symbol": "i", "description": "Zinssatz pro Periode" },
+					{ "symbol": "n", "description": "Anzahl der Perioden" }
+				]
+			},
+			{
+				"id": "abzinsung",
+				"name": "Barwert (Abzinsung)",
+				"math": "K_0 = K_n \\cdot (1+i)^{-n}",
+				"result": {
+					"symbol": "K_0",
+					"description": "Barwert (Kapital in t=0)"
+				},
+				"params": [
+					{ "symbol": "K_n", "description": "Endwert nach n Perioden" },
+					{ "symbol": "i", "description": "Zinssatz pro Periode" },
+					{ "symbol": "n", "description": "Anzahl der Perioden" }
+				]
+			},
+			{
+				"id": "zinsfaktor",
+				"name": "Zinsfaktor",
+				"math": "q = 1 + i",
+				"result": {
+					"symbol": "q",
+					"description": "Aufzinsungsfaktor"
+				},
+				"params": [{ "symbol": "i", "description": "Zinssatz pro Periode" }]
+			},
+			{
+				"id": "aufzinsung-q",
+				"name": "Endwert mit Zinsfaktor",
+				"math": "K_n = K_0 \\cdot q^n",
+				"result": {
+					"symbol": "K_n",
+					"description": "Endwert nach n Perioden"
+				},
+				"params": [
+					{ "symbol": "K_0", "description": "Barwert / Startkapital" },
+					{ "symbol": "q", "description": "Zinsfaktor" },
+					{ "symbol": "n", "description": "Anzahl der Perioden" }
+				]
+			},
+			{
+				"id": "zinssatz",
+				"name": "Zinssatz berechnen",
+				"math": "i = \\sqrt[n]{\\frac{K_n}{K_0}} - 1",
+				"result": {
+					"symbol": "i",
+					"description": "Zinssatz pro Periode"
+				},
+				"params": [
+					{ "symbol": "K_n", "description": "Endwert" },
+					{ "symbol": "K_0", "description": "Barwert" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "laufzeit",
+				"name": "Laufzeit berechnen",
+				"math": "n = \\frac{\\ln(\\frac{K_n}{K_0})}{\\ln(1+i)}",
+				"result": {
+					"symbol": "n",
+					"description": "Anzahl der Perioden"
+				},
+				"params": [
+					{ "symbol": "K_n", "description": "Endwert" },
+					{ "symbol": "K_0", "description": "Barwert" },
+					{ "symbol": "i", "description": "Zinssatz" }
+				]
+			},
+			{
+				"id": "verdopplung",
+				"name": "Zinssatz bei Kapitalverdopplung",
+				"math": "i = \\sqrt[n]{2} - 1",
+				"result": {
+					"symbol": "i",
+					"description": "Zinssatz pro Periode"
+				},
+				"params": [{ "symbol": "n", "description": "Laufzeit bis zur Verdopplung" }]
+			},
+			{
+				"id": "zinsertrag",
+				"name": "Absoluter Zinsertrag",
+				"math": "Z = K_n - K_0",
+				"result": {
+					"symbol": "Z",
+					"description": "Gesamter Zinsertrag in GE"
+				},
+				"params": [
+					{ "symbol": "K_n", "description": "Endwert" },
+					{ "symbol": "K_0", "description": "Barwert" }
+				]
+			},
+			{
+				"id": "abzinsung-zwischen",
+				"name": "Barwert auf Zwischenzeitpunkt",
+				"math": "K_t = K_T \\cdot (1+i)^{-(T-t)}",
+				"result": {
+					"symbol": "K_t",
+					"description": "Wert der Zahlung im Zeitpunkt t"
+				},
+				"params": [
+					{ "symbol": "K_T", "description": "Zahlung im Zeitpunkt T" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "T", "description": "Späterer Zeitpunkt" },
+					{ "symbol": "t", "description": "Früherer Zeitpunkt" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlagen der Aufzinsung",
+				"descriptionTemplate": "Ein Anleger zahlt heute {K_0} GE auf ein Sparkonto ein. Der Zinssatz beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 2, Finanzmathematik",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 5000,
+						"unit": "GE",
+						"label": "Startkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 4,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.04,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Endwert $K_n$ nach {n} Jahren.",
+						"formulaRefs": ["aufzinsung"],
+						"interpretation": "Der Endwert gibt an, auf welchen Betrag das eingesetzte Kapital inklusive Zinseszinseffekt angewachsen ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Endwertformel aufstellen",
+								"description": "Wir verwenden die Standardformel zur Aufzinsung bei Zinseszins.",
+								"math": "K_n = K_0 \\cdot (1+i)^n"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das Startkapital, den Zinssatz als Dezimalzahl und die Laufzeit in Jahren ein.",
+								"math": "K_n = 5{.}000 \\cdot (1+0{,}04)^5"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer berechnen",
+								"description": "Wir addieren die Werte in der Klammer.",
+								"math": "K_n = 5{.}000 \\cdot 1{,}04^5"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Wir berechnen den Aufzinsungsfaktor $1{,}04^5$.",
+								"math": "K_n = 5{.}000 \\cdot 1{,}21665"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Produkt ergibt den gesuchten Endwert.",
+								"math": "K_n = 6{.}083{,}25 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rückwärtsrechnung: Benötigtes Startkapital",
+				"descriptionTemplate": "Ein Unternehmen benötigt in {n} Jahren genau {K_n} GE für eine Ersatzinvestition. Der Anlagezins beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2023",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_n",
+						"value": 15000,
+						"unit": "GE",
+						"label": "Zielkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 6,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.06,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{ "type": "value", "symbol": "n", "value": 8, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den benötigten Anlagebetrag $K_0$ in $t=0$.",
+						"formulaRefs": ["abzinsung"],
+						"interpretation": "Dieser Barwert zeigt, wie viel heute zurückgelegt werden muss, um in der Zukunft den Zielbetrag punktgenau zu erreichen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Abzinsungsformel",
+								"description": "Um den Barwert $K_0$ zu ermitteln, zinsen wir den zukünftigen Betrag $K_n$ ab.",
+								"math": "K_0 = K_n \\cdot (1+i)^{-n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den zukünftigen Betrag, den Zinssatz und die Laufzeit ein.",
+								"math": "K_0 = 15{.}000 \\cdot (1+0{,}06)^{-8}"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer zusammenfassen",
+								"description": "Wir berechnen die Basis der Potenz.",
+								"math": "K_0 = 15{.}000 \\cdot 1{,}06^{-8}"
+							},
+							{
+								"type": "calculation",
+								"title": "Abzinsungsfaktor berechnen",
+								"description": "Wir berechnen den Term $1{,}06^{-8}$.",
+								"math": "K_0 = 15{.}000 \\cdot 0{,}62741"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Multiplikation liefert den heute bereitzustellenden Betrag.",
+								"math": "K_0 = 9{.}411{,}15 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ermittlung des impliziten Zinssatzes",
+				"descriptionTemplate": "Ein Startkapital von {K_0} GE ist innerhalb von {n} Jahren auf {K_n} GE angewachsen.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "AI-generiert anhand von Skriptinhalten",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 10000,
+						"unit": "GE",
+						"label": "Startkapital"
+					},
+					{ "type": "value", "symbol": "K_n", "value": 12500, "unit": "GE", "label": "Endkapital" },
+					{ "type": "value", "symbol": "n", "value": 4, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den durchschnittlichen jährlichen Zinssatz $i$.",
+						"formulaRefs": ["zinssatz"],
+						"interpretation": "Dieser Zinssatz entspricht der internen Verzinsung der Anlage.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für den Zinssatz",
+								"description": "Die Formel zur Berechnung des Zinssatzes $i$ resultiert aus der Umstellung der Aufzinsungsformel.",
+								"math": "i = \\sqrt[n]{\\frac{K_n}{K_0}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Endwert, den Barwert und die Laufzeit ein.",
+								"math": "i = \\sqrt[4]{\\frac{12{.}500}{10{.}000}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir dividieren zunächst unter der Wurzel.",
+								"math": "i = \\sqrt[4]{1{,}25} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Wir berechnen die 4. Wurzel aus $1{,}25$.",
+								"math": "i = 1{,}05737 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Subtraktion der 1 liefert den Zinssatz als Dezimalbruch.",
+								"math": "i = 0{,}0574"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Laufzeit berechnen per Logarithmus",
+				"descriptionTemplate": "Eine Investorin legt {K_0} GE zu einem Zinssatz von {i_pct} % p.a. an. Sie möchte wissen, wann das Kapital auf {K_n} GE angewachsen ist.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Manuell erstellt, Fokus auf Logarithmus",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 8000,
+						"unit": "GE",
+						"label": "Startkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "K_n",
+						"value": 12000,
+						"unit": "GE",
+						"label": "Zielkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 5,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.05,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Laufzeit $n$ in Jahren.",
+						"formulaRefs": ["laufzeit"],
+						"interpretation": "Dies zeigt an, wie lange das Kapital gebunden ist, bis die gewünschte Zielsumme erreicht ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Laufzeit aufstellen",
+								"description": "Um den Exponenten $n$ zu isolieren, nutzen wir die Formel, die auf dem natürlichen Logarithmus basiert.",
+								"math": "n = \\frac{\\ln(\\frac{K_n}{K_0})}{\\ln(1+i)}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das Endkapital, das Startkapital sowie den Zinssatz ein.",
+								"math": "n = \\frac{\\ln(\\frac{12{.}000}{8{.}000})}{\\ln(1+0{,}05)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Innere Terme vereinfachen",
+								"description": "Wir berechnen den Bruch im Zähler und die Summe im Nenner.",
+								"math": "n = \\frac{\\ln(1{,}5)}{\\ln(1{,}05)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Logarithmen berechnen",
+								"description": "Wir ermitteln die Werte für $\\ln(1{,}5)$ und $\\ln(1{,}05)$.",
+								"math": "n = \\frac{0{,}405465}{0{,}048790}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Durch Division erhalten wir die exakte Dauer.",
+								"math": "n = 8{,}31 \\text{ Jahre}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zinsfaktor und Endwert kombiniert",
+				"descriptionTemplate": "Ein Lottogewinn von {K_0} GE wird zu {i_pct} % p.a. angelegt.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 09-2023 (adaptiert)",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 20000,
+						"unit": "GE",
+						"label": "Startkapital"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 7,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.07,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{ "type": "value", "symbol": "n_1", "value": 3, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Aufzinsungsfaktor $q$.",
+						"formulaRefs": ["zinsfaktor"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Definition Zinsfaktor",
+								"description": "Der Zinsfaktor $q$ fasst das Basiswachstum pro Periode zusammen.",
+								"math": "q = 1 + i"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen den Zinssatz $i$ ein.",
+								"math": "q = 1 + 0{,}07"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis q",
+								"description": "Damit haben wir den Faktor bestimmt.",
+								"math": "q = 1{,}07"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Endwert $K_n$ nach {n_1} Jahren.",
+						"formulaRefs": ["aufzinsung-q"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufzinsung mit q",
+								"description": "Wir nutzen den berechneten Faktor $q$ zur Aufzinsung.",
+								"math": "K_n = K_0 \\cdot q^{n_1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das Startkapital und $q$ für die gegebene Laufzeit ein.",
+								"math": "K_n = 20{.}000 \\cdot 1{,}07^3"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Wir berechnen den Gesamtaufzinsungsfaktor über 3 Jahre.",
+								"math": "K_n = 20{.}000 \\cdot 1{,}22504"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Endwert",
+								"description": "Multiplikation mit dem Startkapital liefert den Endwert.",
+								"math": "K_n = 24{.}500{,}80 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kapitalverdopplung",
+				"descriptionTemplate": "Ein Sparer möchte wissen, bei welchem Zinssatz $i$ sich sein angelegtes Kapital innerhalb von {n} Jahren exakt verdoppelt.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel 2, Zinseszins",
+				"given": [
+					{ "type": "value", "symbol": "n", "value": 10, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den gesuchten Zinssatz $i$.",
+						"formulaRefs": ["verdopplung"],
+						"interpretation": "Dies zeigt eindrücklich den Zinseszinseffekt; eine Verdopplung erfordert nicht $10\\%$ über 10 Jahre, sondern aufgrund des exponentiellen Wachstums deutlich weniger.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Spezialformel Verdopplung",
+								"description": "Da sich das Kapital verdoppeln soll, gilt $K_n / K_0 = 2$. Dies setzen wir in die allgemeine Zinssatzformel ein.",
+								"math": "i = \\sqrt[n]{2} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Laufzeit einsetzen",
+								"description": "Wir setzen $n$ für die 10 Jahre ein.",
+								"math": "i = \\sqrt[10]{2} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Wir berechnen die 10. Wurzel aus 2.",
+								"math": "i = 1{,}07177 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Subtraktion der 1 liefert den finalen Zinssatz als Dezimalwert.",
+								"math": "i = 0{,}0718"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zerlegung in Barwert und Zinsertrag",
+				"descriptionTemplate": "Ein Sparer hat nach {n} Jahren {K_n} GE auf dem Konto. Der Zinssatz betrug konstant {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "AI-generiert für Zinsbetrag-Berechnung",
+				"given": [
+					{ "type": "value", "symbol": "K_n", "value": 50000, "unit": "GE", "label": "Endwert" },
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 3,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.03,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					},
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie das anfängliche Kapital $K_0$.",
+						"formulaRefs": ["abzinsung"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Abzinsungsformel",
+								"description": "Wir nutzen die Formel zur Abzinsung.",
+								"math": "K_0 = K_n \\cdot (1+i)^{-n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen die Werte für Endwert, Zinssatz und Laufzeit ein.",
+								"math": "K_0 = 50{.}000 \\cdot (1+0{,}03)^{-5}"
+							},
+							{
+								"type": "calculation",
+								"title": "Abzinsungsfaktor",
+								"description": "Wir berechnen den Faktor $1{,}03^{-5}$.",
+								"math": "K_0 = 50{.}000 \\cdot 0{,}862609"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Startkapital",
+								"description": "Wir erhalten das Startkapital.",
+								"math": "K_0 = 43{.}130{,}45 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Wie hoch ist der absolute Zinsertrag $Z$ über die gesamte Laufzeit?",
+						"formulaRefs": ["zinsertrag"],
+						"interpretation": "Der Zinsertrag $Z$ zeigt in absoluten Zahlen, welcher Gewinn durch die Überlassung des Kapitals in Verbindung mit dem Zinseszinseffekt generiert wurde.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Zinsertrag",
+								"description": "Der Zinsertrag ist die Differenz zwischen Endwert und Startkapital.",
+								"math": "Z = K_n - K_0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den gegebenen Endwert und den in a) berechneten Barwert ein.",
+								"math": "Z = 50{.}000 - 43{.}130{,}45"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Zinsertrag",
+								"description": "Die Differenz ist der reine Zinsertrag.",
+								"math": "Z = 6{.}869{,}55 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zeitwertverschiebung auf einen Zwischenzeitpunkt",
+				"descriptionTemplate": "Ein Zahlungsanspruch über {K_T} GE im Jahr $t={T}$ soll bereits im Jahr $t={t}$ verkauft werden. Der Marktzins beträgt {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Manuell erstellt, Zeitwertverschiebung",
+				"given": [
+					{ "type": "value", "symbol": "K_T", "value": 25000, "unit": "GE", "label": "Endzahlung" },
+					{
+						"type": "value",
+						"symbol": "T",
+						"value": 7,
+						"unit": "Jahre",
+						"label": "Zeitpunkt der Zahlung"
+					},
+					{
+						"type": "value",
+						"symbol": "t",
+						"value": 3,
+						"unit": "Jahre",
+						"label": "Bewertungszeitpunkt"
+					},
+					{
+						"type": "value",
+						"symbol": "i_pct",
+						"value": 5,
+						"unit": "%",
+						"label": "Zinssatz (Anzeige)"
+					},
+					{
+						"type": "value",
+						"symbol": "i",
+						"value": 0.05,
+						"unit": "",
+						"label": "Zinssatz (Dezimal)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den fairen Wert der Zahlung im Jahr $t={t}$ (bezeichnet als $K_t$).",
+						"formulaRefs": ["abzinsung-zwischen"],
+						"interpretation": "Der faire Wert zu einem Zwischenzeitpunkt bereinigt den zukünftigen Wert um die Zinsen, die in den verbleibenden Jahren vom Käufer der Forderung noch verdient werden müssen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel anpassen",
+								"description": "Wir modifizieren die Abzinsungsformel. Wir zinsen nicht bis $t=0$ ab, sondern nur über die verbleibende Restlaufzeit von $T-t$.",
+								"math": "K_t = K_T \\cdot (1+i)^{-(T-t)}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den Zahlungswert, den Zinssatz sowie $T$ und $t$ ein.",
+								"math": "K_t = 25{.}000 \\cdot (1+0{,}05)^{-(7-3)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Restlaufzeit bestimmen",
+								"description": "Wir berechnen die Anzahl der Jahre, über die abgezinst werden muss.",
+								"math": "K_t = 25{.}000 \\cdot 1{,}05^{-4}"
+							},
+							{
+								"type": "calculation",
+								"title": "Abzinsungsfaktor",
+								"description": "Wir berechnen den Faktor $1{,}05^{-4}$.",
+								"math": "K_t = 25{.}000 \\cdot 0{,}822702"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Das Produkt ergibt den Wert der Zahlung im Jahr $t=3$.",
+								"math": "K_t = 20{.}567{,}55 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

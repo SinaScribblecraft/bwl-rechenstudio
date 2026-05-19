@@ -1,0 +1,850 @@
+{
+	"gewinn-und-rentabilitaet": {
+		"title": "Gewinn und Rentabilität",
+		"subtitle": "Berechnung von Kosten, Erlösen, Gewinnschwelle, Stückgewinn und Rentabilitätskennzahlen.",
+		"formulas": [
+			{
+				"id": "erloesfunktion",
+				"name": "Erlösfunktion",
+				"math": "E(x) = p \\cdot x",
+				"result": { "symbol": "E(x)", "description": "Erlös in Abhängigkeit der Menge" },
+				"params": [
+					{ "symbol": "p", "description": "Verkaufspreis pro ME" },
+					{ "symbol": "x", "description": "Absatzmenge" }
+				]
+			},
+			{
+				"id": "kostenfunktion",
+				"name": "Kostenfunktion",
+				"math": "K(x) = K_f + k_v \\cdot x",
+				"result": { "symbol": "K(x)", "description": "Gesamtkosten in Abhängigkeit der Menge" },
+				"params": [
+					{ "symbol": "K_f", "description": "Fixkosten" },
+					{ "symbol": "k_v", "description": "Variable Stückkosten" },
+					{ "symbol": "x", "description": "Ausbringungsmenge" }
+				]
+			},
+			{
+				"id": "gewinnfunktion",
+				"name": "Gewinnfunktion",
+				"math": "G(x) = E(x) - K(x)",
+				"result": { "symbol": "G(x)", "description": "Gewinn in Abhängigkeit der Menge" },
+				"params": [
+					{ "symbol": "E(x)", "description": "Erlöse" },
+					{ "symbol": "K(x)", "description": "Kosten" }
+				]
+			},
+			{
+				"id": "rentabilitaet",
+				"name": "Rentabilitätsfunktion",
+				"math": "R(x) = \\frac{G(x)}{K(x)}",
+				"result": {
+					"symbol": "R(x)",
+					"description": "Rentabilität (Verzinsung des Kosteneinsatzes)"
+				},
+				"params": [
+					{ "symbol": "G(x)", "description": "Gewinn" },
+					{ "symbol": "K(x)", "description": "Gesamtkosten" }
+				]
+			},
+			{
+				"id": "stueckdeckungsbeitrag",
+				"name": "Stückdeckungsbeitrag",
+				"math": "db = p - k_v",
+				"result": { "symbol": "db", "description": "Deckungsbeitrag pro Stück" },
+				"params": [
+					{ "symbol": "p", "description": "Preis" },
+					{ "symbol": "k_v", "description": "Variable Stückkosten" }
+				]
+			},
+			{
+				"id": "gewinnschwelle",
+				"name": "Gewinnschwelle (Break-Even-Point)",
+				"math": "x_{BEP} = \\frac{K_f}{db}",
+				"result": {
+					"symbol": "x_{BEP}",
+					"description": "Menge, bei der Erlös und Kosten gleich sind"
+				},
+				"params": [
+					{ "symbol": "K_f", "description": "Fixkosten" },
+					{ "symbol": "db", "description": "Stückdeckungsbeitrag" }
+				]
+			},
+			{
+				"id": "zielgewinn",
+				"name": "Zielgewinn-Menge",
+				"math": "x_{ziel} = \\frac{K_f + G_{ziel}}{db}",
+				"result": { "symbol": "x_{ziel}", "description": "Menge zur Erreichung eines Zielgewinns" },
+				"params": [
+					{ "symbol": "K_f", "description": "Fixkosten" },
+					{ "symbol": "G_{ziel}", "description": "Angestrebter Gewinn" },
+					{ "symbol": "db", "description": "Stückdeckungsbeitrag" }
+				]
+			},
+			{
+				"id": "stueckgewinn",
+				"name": "Stückgewinn",
+				"math": "g = \\frac{G(x)}{x}",
+				"result": { "symbol": "g", "description": "Gewinn pro Mengeneinheit" },
+				"params": [
+					{ "symbol": "G(x)", "description": "Gesamtgewinn" },
+					{ "symbol": "x", "description": "Menge" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Grundlagen: Erlös, Kosten und Rentabilität",
+				"descriptionTemplate": "Ein produzierendes Unternehmen stellt {x} Mengeneinheiten eines Produkts her und setzt diese zu einem Preis von {p} GE ab. Die fixen Kosten belaufen sich auf {K_f} GE, die variablen Stückkosten betragen {k_v} GE.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Grundlagenaufgabe",
+				"given": [
+					{ "type": "value", "symbol": "x", "value": 400, "unit": "ME", "label": "Absatzmenge" },
+					{ "type": "value", "symbol": "p", "value": 150, "unit": "GE/ME", "label": "Preis" },
+					{ "type": "value", "symbol": "K_f", "value": 12000, "unit": "GE", "label": "Fixkosten" },
+					{
+						"type": "value",
+						"symbol": "k_v",
+						"value": 90,
+						"unit": "GE/ME",
+						"label": "Variable Stückkosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gesamterlöse $E$ und die Gesamtkosten $K$.",
+						"formulaRefs": ["erloesfunktion", "kostenfunktion"],
+						"interpretation": "Diese Werte bilden die Basis für alle weiteren Erfolgsrechnungen des Unternehmens.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion",
+								"description": "Wir berechnen zunächst den Erlös durch Multiplikation von Preis und Menge.",
+								"math": "E = p \\cdot x"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Werte für Preis und Menge ein.",
+								"math": "E = 150 \\cdot 400"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Erlös",
+								"description": "Der Gesamterlös beträgt:",
+								"math": "E = 60{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Kostenfunktion",
+								"description": "Anschließend berechnen wir die Gesamtkosten als Summe aus Fixkosten und variablen Kosten.",
+								"math": "K = K_f + k_v \\cdot x"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in Kostenfunktion einsetzen",
+								"description": "Wir setzen die Fixkosten, die variablen Stückkosten und die Menge ein.",
+								"math": "K = 12{.}000 + 90 \\cdot 400"
+							},
+							{
+								"type": "calculation",
+								"title": "Variable Kosten berechnen",
+								"description": "Wir berechnen zunächst den variablen Kostenblock.",
+								"math": "K = 12{.}000 + 36{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kosten",
+								"description": "Die Gesamtkosten belaufen sich auf:",
+								"math": "K = 48{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Gewinn $G$ und die Rentabilität $R$.",
+						"formulaRefs": ["gewinnfunktion", "rentabilitaet"],
+						"interpretation": "Die Rentabilität zeigt an, mit wie viel Prozent sich das eingesetzte Kapital (hier in Form der Kosten) verzinst hat.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion aufstellen",
+								"description": "Der Gewinn ist die Differenz aus Erlösen und Kosten.",
+								"math": "G = E - K"
+							},
+							{
+								"type": "substitution",
+								"title": "Berechnete Werte einsetzen",
+								"description": "Wir nutzen die Ergebnisse aus Teilaufgabe a).",
+								"math": "G = 60{.}000 - 48{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn",
+								"description": "Der Gesamtgewinn beträgt:",
+								"math": "G = 12{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Rentabilitätsfunktion",
+								"description": "Die Rentabilität ergibt sich aus dem Verhältnis von Gewinn zu Kosten.",
+								"math": "R = \\frac{G}{K}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den ermittelten Gewinn und die Kosten ein.",
+								"math": "R = \\frac{12{.}000}{48{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rentabilität",
+								"description": "Wir erhalten die Rentabilität als Dezimalzahl, was $25 \\%$ entspricht.",
+								"math": "R = 0{,}25"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Break-Even und Zielgewinnplanung",
+				"descriptionTemplate": "Für ein neues Produkt plant ein Betrieb mit fixen Kosten von {K_f} GE pro Periode. Die variablen Stückkosten liegen bei {k_v} GE, der geplante Verkaufspreis bei {p} GE. Das Management hat als Zielvorgabe einen Gewinn von {G_ziel} GE pro Periode festgelegt.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Kombination aus Break-Even- und Zielgewinnanalyse",
+				"given": [
+					{ "type": "value", "symbol": "K_f", "value": 30000, "unit": "GE", "label": "Fixkosten" },
+					{
+						"type": "value",
+						"symbol": "k_v",
+						"value": 25,
+						"unit": "GE/ME",
+						"label": "Variable Stückkosten"
+					},
+					{
+						"type": "value",
+						"symbol": "p",
+						"value": 40,
+						"unit": "GE/ME",
+						"label": "Verkaufspreis"
+					},
+					{
+						"type": "value",
+						"symbol": "G_ziel",
+						"value": 15000,
+						"unit": "GE",
+						"label": "Zielgewinn"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gewinnschwelle $x_{BEP}$.",
+						"formulaRefs": ["stueckdeckungsbeitrag", "gewinnschwelle"],
+						"interpretation": "Die Gewinnschwelle gibt an, wie viele Einheiten verkauft werden müssen, um genau die Gesamtkosten zu decken. Ab der nächsten verkauften Einheit erwirtschaftet das Unternehmen einen Gewinn.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Deckungsbeitrag bestimmen",
+								"description": "Zuerst ermitteln wir den Deckungsbeitrag pro Stück.",
+								"math": "db = p - k_v"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir ziehen die variablen Kosten vom Preis ab.",
+								"math": "db = 40 - 25"
+							},
+							{
+								"type": "calculation",
+								"title": "Ergebnis Deckungsbeitrag",
+								"description": "Jedes Stück trägt mit diesem Betrag zur Fixkostendeckung bei.",
+								"math": "db = 15 \\text{ GE/ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnschwellen-Formel",
+								"description": "Wir setzen die Fixkosten ins Verhältnis zum Stückdeckungsbeitrag.",
+								"math": "x_{BEP} = \\frac{K_f}{db}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Die gegebenen Fixkosten und der ermittelte Deckungsbeitrag werden eingesetzt.",
+								"math": "x_{BEP} = \\frac{30{.}000}{15}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinnschwelle",
+								"description": "Die Break-Even-Menge lautet:",
+								"math": "x_{BEP} = 2{.}000 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Absatzmenge $x_{ziel}$, bei der der anvisierte Zielgewinn erreicht wird.",
+						"formulaRefs": ["zielgewinn"],
+						"interpretation": "Um den Zielgewinn zu erreichen, muss der Deckungsbeitrag nicht nur die Fixkosten, sondern zusätzlich den geplanten Gewinn abdecken.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Zielgewinn-Formel",
+								"description": "Wir erweitern die Gewinnschwellenformel um den Zielgewinn im Zähler.",
+								"math": "x_{ziel} = \\frac{K_f + G_{ziel}}{db}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir addieren Fixkosten und Zielgewinn und teilen durch den Deckungsbeitrag.",
+								"math": "x_{ziel} = \\frac{30{.}000 + 15{.}000}{15}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler zusammenfassen",
+								"description": "Die Summe im Zähler stellt den insgesamt zu deckenden Betrag dar.",
+								"math": "x_{ziel} = \\frac{45{.}000}{15}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Zielmenge",
+								"description": "Die erforderliche Absatzmenge für den Zielgewinn lautet:",
+								"math": "x_{ziel} = 3{.}000 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rückrechnung aus der Rentabilität",
+				"descriptionTemplate": "Aus dem internen Rechnungswesen ist bekannt, dass in der abgelaufenen Periode Gesamtkosten in Höhe von {K} GE angefallen sind. Der Jahresabschluss weist für diese Periode eine Rentabilität von {R_pct} % aus.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Umformung der Rentabilitätsgleichung",
+				"given": [
+					{ "type": "value", "symbol": "K", "value": 50000, "unit": "GE", "label": "Gesamtkosten" },
+					{
+						"type": "value",
+						"symbol": "R",
+						"value": 0.2,
+						"unit": "",
+						"label": "Rentabilität (Dezimal)"
+					},
+					{ "type": "value", "symbol": "R_pct", "value": 20, "unit": "%", "label": "Rentabilität" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den erzielten Gewinn $G$ und die Erlöse $E$.",
+						"formulaRefs": ["rentabilitaet", "gewinnfunktion"],
+						"interpretation": "Durch das Umstellen von Kennzahlen können fehlende absolute Größen im Nachhinein rekonstruiert werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Rentabilitätsfunktion",
+								"description": "Wir beginnen mit der Definition der Rentabilität als Quotient aus Gewinn und Kosten.",
+								"math": "R = \\frac{G}{K}"
+							},
+							{
+								"type": "other",
+								"title": "Formel umstellen",
+								"description": "Um den Gewinn zu berechnen, stellen wir die Gleichung nach $G$ um.",
+								"math": "G = R \\cdot K"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebene Rentabilität (als Dezimalzahl) und die Kosten ein.",
+								"math": "G = 0{,}2 \\cdot 50{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis Gewinn",
+								"description": "Daraus resultiert ein Gewinn in Höhe von:",
+								"math": "G = 10{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion",
+								"description": "Wir rufen uns die grundlegende Gewinnfunktion in Erinnerung.",
+								"math": "G = E - K"
+							},
+							{
+								"type": "other",
+								"title": "Nach Erlösen auflösen",
+								"description": "Um die Erlöse zu finden, stellen wir die Funktion nach $E$ um.",
+								"math": "E = G + K"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir addieren den berechneten Gewinn zu den gegebenen Kosten.",
+								"math": "E = 10{.}000 + 50{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis Erlöse",
+								"description": "Die Gesamterlöse der Periode betrugen:",
+								"math": "E = 60{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Stückgewinnanalyse bei gegebener Ausbringungsmenge",
+				"descriptionTemplate": "Ein Anbieter vertreibt {x} Einheiten eines Gutes. Der Marktpreis liegt fest bei {p} GE. Die Kostenstruktur des Unternehmens umfasst Fixkosten in Höhe von {K_f} GE sowie variable Stückkosten von {k_v} GE.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Analyse von stückbezogenen Erfolgsgrößen",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "x",
+						"value": 1000,
+						"unit": "ME",
+						"label": "Ausbringungsmenge"
+					},
+					{ "type": "value", "symbol": "p", "value": 200, "unit": "GE/ME", "label": "Preis" },
+					{ "type": "value", "symbol": "K_f", "value": 50000, "unit": "GE", "label": "Fixkosten" },
+					{
+						"type": "value",
+						"symbol": "k_v",
+						"value": 120,
+						"unit": "GE/ME",
+						"label": "Variable Kosten"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Gesamtgewinn $G(x)$.",
+						"formulaRefs": ["gewinnfunktion", "erloesfunktion", "kostenfunktion"],
+						"interpretation": "Der Gesamtgewinn resultiert aus den Gesamterlösen abzüglich der gesamten angefallenen Kosten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erweiterte Gewinnfunktion",
+								"description": "Wir können Erlös- und Kostenfunktion direkt in die Gewinnfunktion integrieren.",
+								"math": "G(x) = p \\cdot x - (K_f + k_v \\cdot x)"
+							},
+							{
+								"type": "substitution",
+								"title": "Alle Werte einsetzen",
+								"description": "Wir setzen Preis, Menge, Fixkosten und variable Kosten in die Gleichung ein.",
+								"math": "G = 200 \\cdot 1{.}000 - (50{.}000 + 120 \\cdot 1{.}000)"
+							},
+							{
+								"type": "calculation",
+								"title": "Erlöse und Kosten berechnen",
+								"description": "Wir berechnen getrennt die Werte für Erlös und Kosten.",
+								"math": "G = 200{.}000 - (50{.}000 + 120{.}000)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer auflösen",
+								"description": "Wir addieren die Kostenkomponenten in der Klammer.",
+								"math": "G = 200{.}000 - 170{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gesamtgewinn",
+								"description": "Daraus ergibt sich der Gesamtgewinn für die Periode.",
+								"math": "G = 30{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Stückgewinn $g$.",
+						"formulaRefs": ["stueckgewinn"],
+						"interpretation": "Der Stückgewinn zeigt, welcher durchschnittliche Gewinnanteil auf eine einzige verkaufte Mengeneinheit entfällt. Er steigt mit zunehmender Absatzmenge, da sich die Fixkosten auf mehr Einheiten verteilen (Fixkostendegression).",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Stückgewinn",
+								"description": "Der Stückgewinn ergibt sich durch Division des Gesamtgewinns durch die Absatzmenge.",
+								"math": "g = \\frac{G}{x}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir verwenden den in Teil a) berechneten Gewinn und die vorgegebene Menge.",
+								"math": "g = \\frac{30{.}000}{1{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Stückgewinn",
+								"description": "Der Gewinn pro Stück beträgt:",
+								"math": "g = 30 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rentabilitätsziel erreichen",
+				"descriptionTemplate": "Eine Unternehmung verkauft ein Produkt zu {p} GE pro Stück. Die variablen Stückkosten betragen {k_v} GE, die Fixkosten liegen bei {K_f} GE. Das Management fordert eine Mindestrentabilität von {R_ziel_pct} %.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Umformungsintensive Aufgabe zur Zielrentabilität",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 22, "unit": "GE/ME", "label": "Preis" },
+					{
+						"type": "value",
+						"symbol": "k_v",
+						"value": 12,
+						"unit": "GE/ME",
+						"label": "Variable Kosten"
+					},
+					{ "type": "value", "symbol": "K_f", "value": 1000, "unit": "GE", "label": "Fixkosten" },
+					{
+						"type": "value",
+						"symbol": "R_{ziel}",
+						"value": 0.1,
+						"unit": "",
+						"label": "Zielrentabilität"
+					},
+					{
+						"type": "value",
+						"symbol": "R_ziel_pct",
+						"value": 10,
+						"unit": "%",
+						"label": "Zielrentabilität (%)"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Absatzmenge $x$, bei der genau die geforderte Zielrentabilität $R_{ziel}$ erreicht wird.",
+						"formulaRefs": ["rentabilitaet", "gewinnfunktion", "kostenfunktion", "erloesfunktion"],
+						"interpretation": "Im Gegensatz zum einfachen Zielgewinn wachsen hier mit steigender Menge auch die Kosten an, die den Nenner der Rentabilität bilden. Daher ist eine Gleichungsauflösung notwendig.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Rentabilitätsgleichung aufstellen",
+								"description": "Wir setzen Erlös- und Kostenfunktion direkt in die Rentabilitätsfunktion ein.",
+								"math": "R_{ziel} = \\frac{p \\cdot x - (K_f + k_v \\cdot x)}{K_f + k_v \\cdot x}"
+							},
+							{
+								"type": "substitution",
+								"title": "Gegebene Werte einsetzen",
+								"description": "Wir setzen die Vorgaben für Preis, Kosten und die Zielrentabilität als Dezimalzahl ein.",
+								"math": "0{,}1 = \\frac{22 \\cdot x - (1{.}000 + 12 \\cdot x)}{1{.}000 + 12 \\cdot x}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler zusammenfassen",
+								"description": "Wir fassen die Terme mit $x$ im Zähler zusammen ($22x - 12x = 10x$).",
+								"math": "0{,}1 = \\frac{10 \\cdot x - 1{.}000}{1{.}000 + 12 \\cdot x}"
+							},
+							{
+								"type": "other",
+								"title": "Mit Nenner multiplizieren",
+								"description": "Um den Bruch aufzulösen, multiplizieren wir beide Seiten mit dem Nenner.",
+								"math": "0{,}1 \\cdot (1{.}000 + 12 \\cdot x) = 10 \\cdot x - 1{.}000"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer ausmultiplizieren",
+								"description": "Wir lösen die Klammer auf der linken Seite auf.",
+								"math": "100 + 1{,}2 \\cdot x = 10 \\cdot x - 1{.}000"
+							},
+							{
+								"type": "other",
+								"title": "Nach x umstellen",
+								"description": "Wir bringen alle Terme mit $x$ auf eine Seite und die Zahlen auf die andere.",
+								"math": "1{.}100 = 8{,}8 \\cdot x"
+							},
+							{
+								"type": "calculation",
+								"title": "Letzte Division",
+								"description": "Wir teilen durch $8{,}8$, um $x$ zu isolieren.",
+								"math": "x = \\frac{1{.}100}{8{,}8}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die erforderliche Absatzmenge lautet:",
+								"math": "x = 125 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ermittlung unbekannter Kostenkomponenten",
+				"descriptionTemplate": "Einem Klausurteilnehmer liegen folgende lückenhafte Angaben eines Betriebs vor: Es wurden {x} Stück verkauft. Der Preis liegt bei {p} GE. Die Fixkosten betragen {K_f} GE. Bekannt ist zudem, dass das Unternehmen in dieser Periode eine Rentabilität von {R_pct} % erwirtschaftet hat.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an typische Rückrechnungsaufgaben in EBWL Klausuren",
+				"given": [
+					{ "type": "value", "symbol": "p", "value": 50, "unit": "GE/ME", "label": "Preis" },
+					{ "type": "value", "symbol": "x", "value": 1000, "unit": "ME", "label": "Menge" },
+					{
+						"type": "value",
+						"symbol": "R",
+						"value": 0.25,
+						"unit": "",
+						"label": "Rentabilität (Dezimal)"
+					},
+					{ "type": "value", "symbol": "R_pct", "value": 25, "unit": "%", "label": "Rentabilität" },
+					{ "type": "value", "symbol": "K_f", "value": 8000, "unit": "GE", "label": "Fixkosten" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gesamtkosten $K$ der abgelaufenen Periode.",
+						"formulaRefs": ["erloesfunktion", "rentabilitaet", "gewinnfunktion"],
+						"interpretation": "Um auf die Struktur der Stückkosten zu schließen, müssen wir zuerst das gesamte Kostenvolumen aus der bekannten Rentabilität extrahieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlöse berechnen",
+								"description": "Wir starten mit der Erlösberechnung, da Preis und Menge bekannt sind.",
+								"math": "E = p \\cdot x"
+							},
+							{
+								"type": "substitution",
+								"title": "Erlöse Werte einsetzen",
+								"description": "Wir setzen die Werte ein.",
+								"math": "E = 50 \\cdot 1{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis Erlöse",
+								"description": "Die Gesamterlöse belaufen sich auf:",
+								"math": "E = 50{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Beziehung von Erlös, Kosten und Rentabilität",
+								"description": "Wir wissen, dass $R = \\frac{E - K}{K}$. Wir multiplizieren mit $K$.",
+								"math": "R \\cdot K = E - K"
+							},
+							{
+								"type": "other",
+								"title": "Gleichung nach K umformen",
+								"description": "Wir bringen $-K$ auf die andere Seite ($+K$) und klammern $K$ aus.",
+								"math": "K \\cdot (R + 1) = E"
+							},
+							{
+								"type": "calculation",
+								"title": "Kostenfunktion isolieren",
+								"description": "Wir teilen durch $(R+1)$.",
+								"math": "K = \\frac{E}{1 + R}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den berechneten Erlös und die Rentabilität ein.",
+								"math": "K = \\frac{50{.}000}{1 + 0{,}25}"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis Kosten",
+								"description": "Wir erhalten die gesamten angefallenen Kosten.",
+								"math": "K = 40{.}000 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die variablen Stückkosten $k_v$.",
+						"formulaRefs": ["kostenfunktion"],
+						"interpretation": "Sobald die Gesamtkosten bekannt sind, können wir bei gegebenen Fixkosten auf die variablen Anteile je Produkteinheit schließen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kostenaufspaltung",
+								"description": "Wir verwenden die Definition der Gesamtkosten.",
+								"math": "K = K_f + k_v \\cdot x"
+							},
+							{
+								"type": "other",
+								"title": "Nach k_v auflösen",
+								"description": "Wir stellen die Gleichung schrittweise nach den variablen Stückkosten um.",
+								"math": "k_v = \\frac{K - K_f}{x}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die ermittelten Gesamtkosten, die gegebenen Fixkosten und die Menge ein.",
+								"math": "k_v = \\frac{40{.}000 - 8{.}000}{1{.}000}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler berechnen",
+								"description": "Wir ziehen die Fixkosten ab, um die gesamten variablen Kosten zu erhalten.",
+								"math": "k_v = \\frac{32{.}000}{1{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die variablen Stückkosten betragen:",
+								"math": "k_v = 32 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Produktionsprogrammvergleich: Gewinn vs. Rentabilität",
+				"descriptionTemplate": "Ein Unternehmen evaluiert zwei voneinander unabhängige Investitionsprojekte (Produkte). Produkt A generiert einen absoluten Gewinn von {G_A} GE bei Kosten in Höhe von {K_A} GE. Produkt B hingegen liefert einen Gewinn von {G_B} GE bei Kosten von {K_B} GE.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Vergleichsaufgabe zur Interpretation von Kennzahlen",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "G_A",
+						"value": 12000,
+						"unit": "GE",
+						"label": "Gewinn Produkt A"
+					},
+					{
+						"type": "value",
+						"symbol": "K_A",
+						"value": 60000,
+						"unit": "GE",
+						"label": "Kosten Produkt A"
+					},
+					{
+						"type": "value",
+						"symbol": "G_B",
+						"value": 15000,
+						"unit": "GE",
+						"label": "Gewinn Produkt B"
+					},
+					{
+						"type": "value",
+						"symbol": "K_B",
+						"value": 100000,
+						"unit": "GE",
+						"label": "Kosten Produkt B"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Rentabilitäten $R_A$ und $R_B$ beider Produkte.",
+						"formulaRefs": ["rentabilitaet"],
+						"interpretation": "Ein höherer absoluter Gewinn (wie bei B) bedeutet nicht zwangsläufig eine höhere Rentabilität. Produkt A ist rentabler, da hier weniger Kapiteleinsatz (Kosten) nötig ist, um einen Euro Gewinn zu generieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Rentabilität Produkt A",
+								"description": "Wir verwenden die Standardformel für das erste Produkt.",
+								"math": "R_A = \\frac{G_A}{K_A}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte A einsetzen",
+								"description": "Wir setzen Gewinn und Kosten für A ein.",
+								"math": "R_A = \\frac{12{.}000}{60{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rentabilität A",
+								"description": "Die Rentabilität von Produkt A beträgt $20 \\%$.",
+								"math": "R_A = 0{,}20"
+							},
+							{
+								"type": "formula",
+								"title": "Rentabilität Produkt B",
+								"description": "Dasselbe Vorgehen wenden wir für Produkt B an.",
+								"math": "R_B = \\frac{G_B}{K_B}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte B einsetzen",
+								"description": "Wir setzen Gewinn und Kosten für B ein.",
+								"math": "R_B = \\frac{15{.}000}{100{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rentabilität B",
+								"description": "Die Rentabilität von Produkt B liegt nur bei $15 \\%$.",
+								"math": "R_B = 0{,}15"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zusammenhang von Erlös, Gewinn und Kosten",
+				"descriptionTemplate": "Aus dem Jahresabschluss einer Gesellschaft gehen lediglich zwei aggregierte Größen hervor: Die gesamten Erlöse der Geschäftsperiode betrugen {E} GE, dabei wurde ein Jahresgewinn von {G} GE ausgewiesen.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Grundlegende Verknüpfung der aggregierten Größen",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "E",
+						"value": 150000,
+						"unit": "GE",
+						"label": "Gesamterlöse"
+					},
+					{ "type": "value", "symbol": "G", "value": 30000, "unit": "GE", "label": "Gewinn" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Gesamtkosten $K$ und darauf basierend die Rentabilität $R$.",
+						"formulaRefs": ["gewinnfunktion", "rentabilitaet"],
+						"interpretation": "Selbst wenn die detaillierte Preis-Mengen-Struktur unbekannt ist, lassen sich aus den globalen Werten zentrale betriebswirtschaftliche Kennzahlen ableiten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kosten ermitteln",
+								"description": "Aus der allgemeinen Gewinnfunktion $G = E - K$ leiten wir die Kosten ab, indem wir die Gleichung umstellen.",
+								"math": "K = E - G"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir subtrahieren den Gewinn von den Erlösen.",
+								"math": "K = 150{.}000 - 30{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis Kosten",
+								"description": "Die Gesamtkosten der Periode betrugen:",
+								"math": "K = 120{.}000 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Rentabilität aufstellen",
+								"description": "Nun können wir die Rentabilität berechnen.",
+								"math": "R = \\frac{G}{K}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen den vorgegebenen Gewinn und die soeben errechneten Kosten ein.",
+								"math": "R = \\frac{30{.}000}{120{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rentabilität",
+								"description": "Das Ergebnis entspricht einer Rentabilität von $25 \\%$.",
+								"math": "R = 0{,}25"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
+

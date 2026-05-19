@@ -1,0 +1,744 @@
+{
+	"endwert-vofi": {
+		"title": "Endwert und Vollständiger Finanzplan (VOFI)",
+		"subtitle": "Berechnung von Endwerten, Zinseszinsen und die Aufstellung von Finanzplänen.",
+		"formulas": [
+			{
+				"id": "zinseszins",
+				"name": "Zinseszinsformel (Endwert)",
+				"math": "K_n = K_0 \\cdot (1+i)^n",
+				"result": { "symbol": "K_n", "description": "Endkapital nach n Perioden" },
+				"params": [
+					{ "symbol": "K_0", "description": "Anfangskapital" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "barwert-zinseszins",
+				"name": "Barwertformel",
+				"math": "K_0 = \\frac{K_n}{(1+i)^n}",
+				"result": { "symbol": "K_0", "description": "Heutiger Anlagebetrag (Barwert)" },
+				"params": [
+					{ "symbol": "K_n", "description": "Zielkapital" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "kapitalwert",
+				"name": "Kapitalwert",
+				"math": "C = \\sum_{t=0}^n g_t \\cdot (1+i)^{-t}",
+				"result": { "symbol": "C", "description": "Kapitalwert (Nettobarwert) in t=0" },
+				"params": [
+					{ "symbol": "g_t", "description": "Zahlungsüberschuß in Periode t" },
+					{ "symbol": "i", "description": "Kalkulationszinssatz" },
+					{ "symbol": "n", "description": "Planungshorizont" }
+				]
+			},
+			{
+				"id": "endwert-ueber-kapitalwert",
+				"name": "Endwert (über Kapitalwert)",
+				"math": "EW = (C + EK) \\cdot (1+i)^n",
+				"result": { "symbol": "EW", "description": "Endwert am Planungshorizont" },
+				"params": [
+					{ "symbol": "C", "description": "Kapitalwert" },
+					{ "symbol": "EK", "description": "Vorhandenes Eigenkapital in t=0" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "endwert-direkt",
+				"name": "Endwert einer Zahlungsreihe (direkt)",
+				"math": "EW = \\sum_{t=0}^n g_t \\cdot (1+i)^{n-t}",
+				"result": { "symbol": "EW", "description": "Endwert am Planungshorizont" },
+				"params": [
+					{ "symbol": "g_t", "description": "Zahlungen in Periode t" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Planungshorizont" }
+				]
+			},
+			{
+				"id": "vofi-saldo",
+				"name": "VOFI - Rekursive Saldenberechnung",
+				"math": "S_t = S_{t-1} \\cdot (1+i) + g_t",
+				"result": { "symbol": "S_t", "description": "Kontosaldo in Periode t" },
+				"params": [
+					{ "symbol": "S_{t-1}", "description": "Kontosaldo der Vorperiode" },
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "g_t", "description": "Zahlung in Periode t" }
+				]
+			},
+			{
+				"id": "zinsertrag",
+				"name": "Gesamter Zinsertrag",
+				"math": "Z = K_n - K_0",
+				"result": { "symbol": "Z", "description": "Summe der erwirtschafteten Zinsen" },
+				"params": [
+					{ "symbol": "K_n", "description": "Endkapital" },
+					{ "symbol": "K_0", "description": "Anfangskapital" }
+				]
+			},
+			{
+				"id": "rentenendwertfaktor",
+				"name": "Rentenendwertfaktor",
+				"math": "REF_{i,n} = \\frac{(1+i)^n - 1}{i}",
+				"result": { "symbol": "REF_{i,n}", "description": "Rentenendwertfaktor" },
+				"params": [
+					{ "symbol": "i", "description": "Zinssatz" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			},
+			{
+				"id": "rentenendwert",
+				"name": "Rentenendwert",
+				"math": "R_n = g \\cdot REF_{i,n}",
+				"result": { "symbol": "R_n", "description": "Endwert der Rente" },
+				"params": [
+					{ "symbol": "g", "description": "Konstante Einzahlung (Rente)" },
+					{ "symbol": "REF_{i,n}", "description": "Rentenendwertfaktor" }
+				]
+			},
+			{
+				"id": "interner-zinsfuss",
+				"name": "Interner Zinsfuß (Nullkuponanleihe)",
+				"math": "r = \\sqrt[n]{\\frac{K_n}{K_0}} - 1",
+				"result": { "symbol": "r", "description": "Rendite / Interner Zinsfuß" },
+				"params": [
+					{ "symbol": "K_n", "description": "Rückzahlungskurs" },
+					{ "symbol": "K_0", "description": "Emissionskurs" },
+					{ "symbol": "n", "description": "Laufzeit" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Klassische Endwertberechnung über den Kapitalwert",
+				"descriptionTemplate": "Ein Investor prüft ein Projekt mit der Zahlungsreihe $g_0 = {g0}$ GE, $g_1 = {g1}$ GE, $g_2 = {g2}$ GE und $g_3 = {g3}$ GE. Der Kalkulationszins beträgt {i_pct} % p.a. Dem Investor steht ein Eigenkapital von $EK = {EK}$ GE zur Verfügung.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "In Anlehnung an Skript EBWL 3, S. 12",
+				"given": [
+					{ "type": "value", "symbol": "g0", "value": -1000, "unit": "GE", "label": "Zahlung in t=0" },
+					{ "type": "value", "symbol": "g1", "value": 400, "unit": "GE", "label": "Zahlung in t=1" },
+					{ "type": "value", "symbol": "g2", "value": 400, "unit": "GE", "label": "Zahlung in t=2" },
+					{ "type": "value", "symbol": "g3", "value": 400, "unit": "GE", "label": "Zahlung in t=3" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zinssatz (Anzeige)" },
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Kalkulationszinssatz" },
+					{ "type": "value", "symbol": "EK", "value": 1000, "unit": "GE", "label": "Eigenkapital" },
+					{ "type": "value", "symbol": "n", "value": 3, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Kapitalwert $C$ der Investition.",
+						"formulaRefs": ["kapitalwert"],
+						"interpretation": "Der positive Kapitalwert signalisiert, dass die Investition vorteilhaft ist und im Vergleich zur Anlage am Kapitalmarkt einen zusätzlichen Vermögenszuwachs generiert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertformel aufstellen",
+								"description": "Zur Berechnung zinsen wir alle künftigen Zahlungen auf den Zeitpunkt $t=0$ ab und addieren sie zur Anfangsauszahlung.",
+								"math": "C = \\sum_{t=0}^n g_t \\cdot (1+i)^{-t}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Zahlungen und den Kalkulationszinssatz in die Formel ein.",
+								"math": "C = -1{.}000 + \\frac{400}{1{,}05^1} + \\frac{400}{1{,}05^2} + \\frac{400}{1{,}05^3}"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwerte der einzelnen Perioden berechnen",
+								"description": "Wir berechnen die Barwerte für $t=1$, $t=2$ und $t=3$.",
+								"math": "C = -1{.}000 + 380{,}95 + 362{,}81 + 345{,}54"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Kapitalwert",
+								"description": "Die Summe ergibt den Kapitalwert der Investition.",
+								"math": "C = 89{,}30 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Endwert $EW$ der gesamten Unternehmung (inklusive Eigenkapital) zum Zeitpunkt $t=3$.",
+						"formulaRefs": ["endwert-ueber-kapitalwert"],
+						"interpretation": "Der Endwert zeigt den Gesamtkontostand am Ende der Laufzeit. Er setzt sich zusammen aus der Verzinsung des Eigenkapitals und dem auf den Endzeitpunkt aufgezinsten Kapitalwert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Endwert über Kapitalwert definieren",
+								"description": "Der Endwert lässt sich berechnen, indem man die Summe aus Kapitalwert und Eigenkapital auf den Horizont $n$ aufzinst.",
+								"math": "EW = (C + EK) \\cdot (1+i)^n"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir nutzen den zuvor ermittelten Kapitalwert und setzen das Eigenkapital von $1{.}000 \\text{ GE}$ ein.",
+								"math": "EW = (89{,}30 + 1{.}000) \\cdot 1{,}05^3"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer und Zinsfaktor berechnen",
+								"description": "Wir fassen die Werte in der Klammer zusammen und potenzieren den Zinsfaktor.",
+								"math": "EW = 1{.}089{,}30 \\cdot 1{,}1576"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert",
+								"description": "Die Multiplikation ergibt den endgültigen Kontostand im Zeitpunkt $t=3$.",
+								"math": "EW = 1{.}261{,}00 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Verzinsung und Thesaurierung",
+				"descriptionTemplate": "Sie legen {K0} € zu {i_pct} % p.a. auf einem Sparbuch an. Die Guthabenzinsen werden jährlich thesauriert, und das gesamte Kapital wird nach {n} Jahren ausgezahlt.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "In Anlehnung an Klausur 03-2023 Aufgabe 4",
+				"given": [
+					{ "type": "value", "symbol": "K0", "value": 20000, "unit": "€", "label": "Anfangskapital" },
+					{ "type": "value", "symbol": "i", "value": 0.02, "unit": "", "label": "Zinssatz (dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 2, "unit": "%", "label": "Zinssatz p.a." },
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie das Endkapital $K_n$ nach $5$ Jahren.",
+						"formulaRefs": ["zinseszins"],
+						"interpretation": "Durch die Thesaurierung entsteht der Zinseszinseffekt, da in den Folgejahren auch die bereits gutgeschriebenen Zinsen verzinst werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Zinseszinsformel anwenden",
+								"description": "Wir nutzen die grundlegende Zinseszinsformel zur Bestimmung des Endkapitals.",
+								"math": "K_n = K_0 \\cdot (1+i)^n"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das Anfangskapital, den Zinssatz und die Laufzeit ein.",
+								"math": "K_n = 20{.}000 \\cdot (1 + 0{,}02)^5"
+							},
+							{
+								"type": "calculation",
+								"title": "Potenz berechnen",
+								"description": "Wir berechnen zunächst den Wert der Potenz $(1{,}02)^5$.",
+								"math": "K_n = 20{.}000 \\cdot 1{,}10408"
+							},
+							{
+								"type": "result",
+								"title": "Endkapital",
+								"description": "Nach Multiplikation erhalten wir das angesparte Endkapital.",
+								"math": "K_n = 22{.}081{,}62 \\text{ \\euro}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie die Höhe der insgesamt erwirtschafteten Zinsen $Z$.",
+						"formulaRefs": ["zinsertrag"],
+						"interpretation": "Die Differenz zwischen End- und Anfangskapital gibt den rein aus der Anlage resultierenden Zinsertrag an.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Zinsertrag aufstellen",
+								"description": "Der Zinsertrag ergibt sich aus der Differenz von Endkapital und Anfangskapital.",
+								"math": "Z = K_n - K_0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die bekannten Werte ein.",
+								"math": "Z = 22{.}081{,}62 - 20{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die Subtraktion liefert die erwirtschafteten Zinsen.",
+								"math": "Z = 2{.}081{,}62 \\text{ \\euro}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kapitalbedarf für zukünftige Ausgaben",
+				"descriptionTemplate": "Ein Hausbesitzer benötigt in {n} Jahren {Kn} € für die Sanierung des Dachs. Die Bank verspricht für Anlagen einen Zins in Höhe von {i_pct} % p.a.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2023 Aufgabe 4",
+				"given": [
+					{ "type": "value", "symbol": "Kn", "value": 20000, "unit": "€", "label": "Zielkapital" },
+					{ "type": "value", "symbol": "i", "value": 0.02, "unit": "", "label": "Zinssatz (dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 2, "unit": "%", "label": "Zinssatz p.a." },
+					{ "type": "value", "symbol": "n", "value": 20, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den Betrag $K_0$, den der Hausbesitzer heute anlegen muss.",
+						"formulaRefs": ["barwert-zinseszins"],
+						"interpretation": "Dieser heutige Wert (Barwert) ist geringer als die in der Zukunft benötigte Summe, da der Betrag über die Jahre durch Zins und Zinseszins anwächst.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Barwertformel",
+								"description": "Wir stellen die Zinseszinsformel um, um das notwendige Anfangskapital $K_0$ zu ermitteln.",
+								"math": "K_0 = \\frac{K_n}{(1+i)^n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen das benötigte Zielkapital und den Aufzinsungsfaktor ein.",
+								"math": "K_0 = \\frac{20{.}000}{(1{,}02)^{20}}"
+							},
+							{
+								"type": "calculation",
+								"title": "Nenner ausrechnen",
+								"description": "Wir werten zunächst den Nenner $(1{,}02)^{20}$ aus.",
+								"math": "K_0 = \\frac{20{.}000}{1{,}48595}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Barwert",
+								"description": "Die Division liefert den heute bereitzustellenden Betrag.",
+								"math": "K_0 = 13{.}459{,}43 \\text{ \\euro}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Aufstellung eines Vollständigen Finanzplans (VOFI)",
+				"descriptionTemplate": "Ein Unternehmen evaluiert eine Investition mit den folgenden Zahlungen: $g_0 = {g0}$ GE, $g_1 = {g1}$ GE und $g_2 = {g2}$ GE. Dem Unternehmen steht heute ($t=0$) ein Eigenkapital von $EK = {EK}$ GE zur Verfügung. Fehlbeträge können zu {i_pct} % p.a. als Kredit aufgenommen werden, Überschüsse lassen sich zum gleichen Zinssatz anlegen (vollkommener Kapitalmarkt).",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Manuell erstellt zur Übung der Saldenberechnung im VOFI (in Anlehnung an Skript EBWL 3, S. 15)",
+				"given": [
+					{ "type": "value", "symbol": "g0", "value": -1000, "unit": "GE", "label": "Auszahlung in t=0" },
+					{ "type": "value", "symbol": "g1", "value": 600, "unit": "GE", "label": "Einzahlung in t=1" },
+					{ "type": "value", "symbol": "g2", "value": 600, "unit": "GE", "label": "Einzahlung in t=2" },
+					{ "type": "value", "symbol": "EK", "value": 400, "unit": "GE", "label": "Eigenkapital" },
+					{ "type": "value", "symbol": "i", "value": 0.10, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 10, "unit": "%", "label": "Zinssatz p.a." }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Kontosalden $S_0$ und $S_1$ am Ende der Jahre $0$ und $1$.",
+						"formulaRefs": ["vofi-saldo"],
+						"interpretation": "Ein negativer Saldo bedeutet, dass in der jeweiligen Periode ein Kredit (Fremdkapital) in Anspruch genommen wird, um offene Zahlungen zu leisten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Startsaldo aufstellen",
+								"description": "Der Saldo in $t=0$ ergibt sich direkt aus der Investitionsauszahlung und dem vorhandenen Eigenkapital.",
+								"math": "S_0 = EK + g_0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für S_0 einsetzen",
+								"description": "Wir setzen das vorhandene Eigenkapital und die Anfangszahlung ein.",
+								"math": "S_0 = 400 - 1{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis S_0",
+								"description": "Dies entspricht dem anfänglichen Kreditbedarf.",
+								"math": "S_0 = -600 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Rekursive Saldenformel für S_1",
+								"description": "Für die Folgeperiode verzinsen wir den alten Saldo und addieren die Zahlung der Periode hinzu.",
+								"math": "S_1 = S_0 \\cdot (1+i) + g_1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für S_1 einsetzen",
+								"description": "Wir setzen den berechneten Saldo $S_0$, den Zinsfaktor $(1{,}10)$ und die Rückflüsse in $t=1$ ein.",
+								"math": "S_1 = -600 \\cdot 1{,}10 + 600"
+							},
+							{
+								"type": "calculation",
+								"title": "Verzinsung berechnen",
+								"description": "Zuerst wird die Schuld inklusive Zinsen ausgerechnet, anschließend der Rückfluss abgezogen.",
+								"math": "S_1 = -660 + 600"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis S_1",
+								"description": "Die Restschuld am Ende von $t=1$ lautet:",
+								"math": "S_1 = -60 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Endsaldo $S_2$ im Zeitpunkt $t=2$.",
+						"formulaRefs": ["vofi-saldo"],
+						"interpretation": "Da der Endsaldo positiv ist, hat die Investition ihre eigenen Kosten sowie die Zinskosten getilgt und noch einen Vermögenszuwachs hinterlassen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Saldenformel für S_2",
+								"description": "Auch hier wird der Saldo des Vorjahres mit Zinsen fortgeschrieben und mit dem aktuellen Zahlungsfluss verrechnet.",
+								"math": "S_2 = S_1 \\cdot (1+i) + g_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in S_2 einsetzen",
+								"description": "Die Restschuld des Vorjahres wird eingesetzt.",
+								"math": "S_2 = -60 \\cdot 1{,}10 + 600"
+							},
+							{
+								"type": "calculation",
+								"title": "Zinsen und Verrechnung",
+								"description": "Wir rechnen die Zinsen aus und verrechnen sie mit der Einzahlung in $t=2$.",
+								"math": "S_2 = -66 + 600"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert",
+								"description": "Der finale Kontostand ist der Endwert.",
+								"math": "S_2 = 534 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rentenendwert eines Sparplans",
+				"descriptionTemplate": "Ein Investor bespart einen Fonds und zahlt {n} Jahre lang am Ende jedes Jahres konstant einen Betrag von {g} GE ein. Der Fonds wird durchgehend mit {i_pct} % p.a. verzinst.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Eigene Aufgabe zum Thema Rentenendwert",
+				"given": [
+					{ "type": "value", "symbol": "g", "value": 2000, "unit": "GE", "label": "Konstante Rate" },
+					{ "type": "value", "symbol": "i", "value": 0.04, "unit": "", "label": "Zinssatz (dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 4, "unit": "%", "label": "Zinssatz p.a." },
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Rentenendwertfaktor $REF_{i,n}$.",
+						"formulaRefs": ["rentenendwertfaktor"],
+						"interpretation": "Der Rentenendwertfaktor summiert die diskreten Aufzinsungsfaktoren für alle Rentenzahlungen auf.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Rentenendwertfaktor aufstellen",
+								"description": "Wir nutzen die Summenformel der geometrischen Reihe, um den Faktor direkt zu berechnen.",
+								"math": "REF_{i,n} = \\frac{(1+i)^n - 1}{i}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen Laufzeit $n=5$ und Zinssatz $i=0{,}04$ ein.",
+								"math": "REF_{0{,}04, 5} = \\frac{(1{,}04)^5 - 1}{0{,}04}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Wir berechnen den Zählerwert und teilen durch $0{,}04$.",
+								"math": "REF_{0{,}04, 5} = \\frac{1{,}21665 - 1}{0{,}04}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rentenendwertfaktor",
+								"description": "Der berechnete Faktor lautet:",
+								"math": "REF_{0{,}04, 5} = 5{,}4163"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den Rentenendwert $R_n$ zum Ende der Laufzeit.",
+						"formulaRefs": ["rentenendwert"],
+						"interpretation": "Dieser Betrag stellt das nach Ablauf der Periode zur Verfügung stehende Gesamtvermögen aus Einzahlungen und Zinsgewinnen dar.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für den Rentenendwert aufstellen",
+								"description": "Der Rentenendwert ergibt sich aus der Multiplikation der jährlichen Rate mit dem Rentenendwertfaktor.",
+								"math": "R_n = g \\cdot REF_{i,n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Rate $2{.}000$ und den zuvor ermittelten Faktor ein.",
+								"math": "R_n = 2{.}000 \\cdot 5{,}4163"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert",
+								"description": "Die Multiplikation ergibt das ersparte Kapital.",
+								"math": "R_n = 10{.}832{,}60 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Rendite einer Nullkuponanleihe",
+				"descriptionTemplate": "Ein Emittent bringt eine Nullkuponanleihe mit einer Laufzeit von {n} Jahren auf den Markt. Der Emissionskurs beläuft sich auf {K0} % vom Nennwert. Am Ende der Laufzeit erfolgt eine Tilgung zum Rückzahlungskurs von {Kn} %.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "In Anlehnung an Skript EBWL 3, S. 47",
+				"given": [
+					{ "type": "value", "symbol": "K0", "value": 30, "unit": "%", "label": "Emissionskurs" },
+					{ "type": "value", "symbol": "Kn", "value": 100, "unit": "%", "label": "Rückzahlungskurs" },
+					{ "type": "value", "symbol": "n", "value": 12, "unit": "Jahre", "label": "Laufzeit" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Emissionsrendite (den internen Zinsfuß $r$) dieser Anleihe.",
+						"formulaRefs": ["interner-zinsfuss"],
+						"interpretation": "Da während der Laufzeit keine Auszahlungen erfolgen, entspricht die Emissionsrendite der genauen jährlichen Verzinsung (Effektivverzinsung) des eingesetzten Kapitals, wobei Zinseszinsen direkt wieder angelegt werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Renditeformel aufstellen",
+								"description": "Der interne Zinsfuß ist jener Zinssatz, bei dem der Barwert der Rückzahlung exakt dem Ausgabekurs entspricht.",
+								"math": "r = \\sqrt[n]{\\frac{K_n}{K_0}} - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Prozentwerte als Absolutzahlen in die Bestimmungsgleichung ein.",
+								"math": "r = \\sqrt[12]{\\frac{100}{30}} - 1"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Wir berechnen den Wert des Bruchs unter der Wurzel und lösen diese auf.",
+								"math": "r = \\sqrt[12]{3{,}3333} - 1 = 1{,}1055 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Rendite",
+								"description": "Daraus folgt eine Effektivverzinsung von ca. $10{,}55 \\%$.",
+								"math": "r = 0{,}1055"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Endwertvergleich zweier Investitionen",
+				"descriptionTemplate": "Sie müssen sich zwischen Projekt A und Projekt B entscheiden, deren Lebensdauer jeweils 2 Jahre beträgt. Beide weisen eine Anfangsauszahlung von $500 \\text{ GE}$ auf. Projekt A liefert nach einem Jahr einen Rückfluss von $g_{A1} = {gA1} \\text{ GE}$ und ist dann beendet. Projekt B liefert in $t=1$ $g_{B1} = {gB1} \\text{ GE}$ und in $t=2$ nochmal $g_{B2} = {gB2} \\text{ GE}$. Der Kapitalmarktzins liegt einheitlich bei {i_pct} % p.a. Rückflüsse in $t=1$ werden am Markt zum Zinssatz angelegt.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Eigene Aufgabe zum Endwertvergleich (direkte Aufzinsung)",
+				"given": [
+					{ "type": "value", "symbol": "gA1", "value": 550, "unit": "GE", "label": "Rückfluss A in t=1" },
+					{ "type": "value", "symbol": "gB1", "value": 200, "unit": "GE", "label": "Rückfluss B in t=1" },
+					{ "type": "value", "symbol": "gB2", "value": 378, "unit": "GE", "label": "Rückfluss B in t=2" },
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Zinssatz" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zinssatz p.a." }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den Kapitalendwert $EW_A$ für Projekt A im Zeitpunkt $t=2$.",
+						"formulaRefs": ["endwert-direkt"],
+						"interpretation": "Der Endwert im Jahr 2 enthält die vollverzinsten Rückflüsse aus Jahr 1, die bis Jahr 2 am Kapitalmarkt arbeiten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufzinsungsformel Projekt A",
+								"description": "Wir zinsen die Auszahlung von $t=0$ über zwei Perioden und die Einzahlung aus $t=1$ über eine Periode auf.",
+								"math": "EW_A = -500 \\cdot (1+i)^2 + g_{A1} \\cdot (1+i)^1"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Der Zinssatz von $0{,}05$ wird verwendet.",
+								"math": "EW_A = -500 \\cdot (1{,}05)^2 + 550 \\cdot 1{,}05"
+							},
+							{
+								"type": "calculation",
+								"title": "Einzelsummen ausrechnen",
+								"description": "Wir lösen die beiden Terme auf.",
+								"math": "EW_A = -551{,}25 + 577{,}50"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert A",
+								"description": "Die Summe liefert den reinen Endwert der Zahlungsreihe in $t=2$.",
+								"math": "EW_A = 26{,}25 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Kapitalendwert $EW_B$ für Projekt B im Zeitpunkt $t=2$.",
+						"formulaRefs": ["endwert-direkt"],
+						"interpretation": "Der Endwert für Projekt B fällt höher aus. Beide Projekte haben denselben Kapitalbedarf, aber Projekt B generiert insgesamt mehr Zinseszinseffekte und Überschüsse auf dem Konto.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Aufzinsungsformel Projekt B",
+								"description": "Wir wiederholen den Ansatz, fügen aber die zusätzliche Einzahlung in $t=2$ hinzu, die nicht mehr verzinst werden muss.",
+								"math": "EW_B = -500 \\cdot (1+i)^2 + g_{B1} \\cdot (1+i)^1 + g_{B2}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für B einsetzen",
+								"description": "Wir setzen die Cashflows von Projekt B ein.",
+								"math": "EW_B = -500 \\cdot (1{,}05)^2 + 200 \\cdot 1{,}05 + 378"
+							},
+							{
+								"type": "calculation",
+								"title": "Einzelsummen ausrechnen",
+								"description": "Terme werden berechnet.",
+								"math": "EW_B = -551{,}25 + 210 + 378"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert B",
+								"description": "Das finale Kontoguthaben des Projekts B.",
+								"math": "EW_B = 36{,}75 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "VOFI mit vollständiger Fremdfinanzierung",
+				"descriptionTemplate": "Eine Investition hat folgende Cashflows: $g_0 = {g0}$, $g_1 = {g1}$, $g_2 = {g2}$, $g_3 = {g3}$ (in GE). Es ist kein eigenes Startkapital vorhanden ($EK = 0$). Der Zinssatz für Kredite und Anlagen ist identisch und beträgt {i_pct} %.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Aufbau eines VOFIs ohne Eigenkapital",
+				"given": [
+					{ "type": "value", "symbol": "g0", "value": -800, "unit": "GE", "label": "Auszahlung in t=0" },
+					{ "type": "value", "symbol": "g1", "value": 300, "unit": "GE", "label": "Einzahlung in t=1" },
+					{ "type": "value", "symbol": "g2", "value": 400, "unit": "GE", "label": "Einzahlung in t=2" },
+					{ "type": "value", "symbol": "g3", "value": 300, "unit": "GE", "label": "Einzahlung in t=3" },
+					{ "type": "value", "symbol": "i", "value": 0.05, "unit": "", "label": "Zinssatz (dezimal)" },
+					{ "type": "value", "symbol": "i_pct", "value": 5, "unit": "%", "label": "Zinssatz p.a." }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Salden $S_0$ und $S_1$ der ersten beiden Zeitpunkte.",
+						"formulaRefs": ["vofi-saldo"],
+						"interpretation": "Da kein Eigenkapital vorhanden ist, entspricht $S_0$ dem vollen Kreditvolumen, welches im ersten Jahr getilgt und verzinst werden muss.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Startsaldo",
+								"description": "Ohne Eigenkapital entspricht der Startsaldo $S_0$ direkt der Anschaffungsauszahlung.",
+								"math": "S_0 = g_0"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis S_0",
+								"description": "Dieser stellt die Fremdverschuldung in $t=0$ dar.",
+								"math": "S_0 = -800 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Saldo S_1",
+								"description": "Wir berechnen den Zins der Periode auf den Vorjahressaldo und addieren den Rückfluss.",
+								"math": "S_1 = S_0 \\cdot (1+i) + g_1"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Zinsatz $0{,}05$ wird eingesetzt.",
+								"math": "S_1 = -800 \\cdot 1{,}05 + 300"
+							},
+							{
+								"type": "calculation",
+								"title": "Zinsen verrechnen",
+								"description": "Schuld plus Zins ist $-840$, die Einzahlung beträgt $+300$.",
+								"math": "S_1 = -840 + 300"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis S_1",
+								"description": "Die Restschuld reduziert sich.",
+								"math": "S_1 = -540 \\text{ GE}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die Salden $S_2$ und den Endwert $S_3$.",
+						"formulaRefs": ["vofi-saldo"],
+						"interpretation": "Ein positiver Endsaldo trotz 100% Fremdfinanzierung beweist die absolute Vorteilhaftigkeit der Investition.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Saldo S_2",
+								"description": "Die Vorjahresschuld aus $t=1$ wird fortgeschrieben.",
+								"math": "S_2 = S_1 \\cdot (1+i) + g_2"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte für S_2 einsetzen",
+								"description": "Wir übernehmen $S_1$ und fügen die Zahlung der Periode 2 an.",
+								"math": "S_2 = -540 \\cdot 1{,}05 + 400"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnung S_2",
+								"description": "Schuld erhöht sich durch Zinsen auf $567 \\text{ GE}$, wird durch die Einnahme auf $167 \\text{ GE}$ gemindert.",
+								"math": "S_2 = -567 + 400"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis S_2",
+								"description": "Es verbleibt noch eine kleine Restschuld.",
+								"math": "S_2 = -167 \\text{ GE}"
+							},
+							{
+								"type": "formula",
+								"title": "Saldo S_3 (Endwert)",
+								"description": "Der finale Saldo ergibt sich aus der Verzinsung der letzten Restschuld plus der abschließenden Zahlung.",
+								"math": "S_3 = S_2 \\cdot (1+i) + g_3"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Alle bekannten Endwerte einfügen.",
+								"math": "S_3 = -167 \\cdot 1{,}05 + 300"
+							},
+							{
+								"type": "calculation",
+								"title": "Berechnung S_3",
+								"description": "Die Restschuld von $-175{,}35$ wird durch $300$ beglichen.",
+								"math": "S_3 = -175{,}35 + 300"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Endwert",
+								"description": "Nach Rückzahlung aller Schulden verbleibt als Endwert:",
+								"math": "S_3 = 124{,}65 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

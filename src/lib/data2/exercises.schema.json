@@ -197,7 +197,7 @@
 		"Exercise": {
 			"type": "object",
 			"description": "Eine vollständige Aufgabe mit Aufgabenstellung, Gegebenen-Werten und Teilaufgaben",
-			"required": ["title", "descriptionTemplate", "given", "subTasks"],
+			"required": ["title", "descriptionTemplate", "verified", "sourceType", "given", "subTasks"],
 			"additionalProperties": false,
 			"properties": {
 				"title": {
@@ -207,6 +207,19 @@
 				"descriptionTemplate": {
 					"type": "string",
 					"description": "Klausur-Fließtext mit {symbol}-Platzhaltern. {symbol} wird zur Laufzeit durch den Wert oder die LaTeX-Formel aus given interpoliert"
+				},
+				"verified": {
+					"type": "boolean",
+					"description": "Gibt an, ob die Aufgabe manuell von einem Menschen geprüft wurde. Wird bei KI-Generierung immer auf false gesetzt."
+				},
+				"sourceType": {
+					"type": "string",
+					"enum": ["Klausur", "Skript", "AI-generated", "Manuell"],
+					"description": "Kategorisierung der Aufgabenquelle."
+				},
+				"sourceDetails": {
+					"type": ["string", "null"],
+					"description": "Optionale Zusatzinfos zur Quelle, z.B. 'Klausur WS 25/26' oder 'Skript S. 42'."
 				},
 				"given": {
 					"type": "array",

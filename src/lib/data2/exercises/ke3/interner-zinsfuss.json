@@ -1,0 +1,868 @@
+{
+	"interner-zinsfuss": {
+		"title": "Interner Zinsfuß",
+		"subtitle": "Bestimmung der effektiven Verzinsung einer Investition durch Nullsetzung des Kapitalwerts.",
+		"formulas": [
+			{
+				"id": "kw-bed",
+				"name": "Kapitalwert-Bedingung",
+				"math": "C_0 = 0",
+				"result": { "symbol": "C_0", "description": "Kapitalwert gleich Null" },
+				"params": []
+			},
+			{
+				"id": "kw-1",
+				"name": "Kapitalwert (1 Periode)",
+				"math": "C_0 = z_0 + z_1 \\cdot (1+r)^{-1}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert" },
+				"params": [
+					{ "symbol": "z_0", "description": "Anfangsauszahlung" },
+					{ "symbol": "z_1", "description": "Rückfluss in t=1" },
+					{ "symbol": "r", "description": "Interner Zinsfuß" }
+				]
+			},
+			{
+				"id": "kw-2-q",
+				"name": "Kapitalwert (2 Perioden mit Abzinsungsfaktor)",
+				"math": "C_0 = z_0 + z_1 \\cdot q^{-1} + z_2 \\cdot q^{-2}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert" },
+				"params": [
+					{ "symbol": "z_0", "description": "Cashflow t=0" },
+					{ "symbol": "z_1", "description": "Cashflow t=1" },
+					{ "symbol": "z_2", "description": "Cashflow t=2" },
+					{ "symbol": "q", "description": "Abzinsungsfaktor (1+r)" }
+				]
+			},
+			{
+				"id": "kw-3-q",
+				"name": "Kapitalwert (3 Perioden)",
+				"math": "C_0 = z_0 + z_1 \\cdot q^{-1} + z_2 \\cdot q^{-2} + z_3 \\cdot q^{-3}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert" },
+				"params": [{ "symbol": "q", "description": "Abzinsungsfaktor (1+r)" }]
+			},
+			{
+				"id": "pq",
+				"name": "p-q-Formel",
+				"math": "q_{1,2} = -\\frac{p}{2} \\pm \\sqrt{\\left(\\frac{p}{2}\\right)^2 - c}",
+				"result": { "symbol": "q_{1,2}", "description": "Lösungen der quadratischen Gleichung" },
+				"params": [
+					{ "symbol": "p", "description": "Koeffizient des linearen Terms" },
+					{ "symbol": "c", "description": "Absolutes Glied" }
+				]
+			},
+			{
+				"id": "q-r",
+				"name": "Zins aus Abzinsungsfaktor",
+				"math": "r = q - 1",
+				"result": { "symbol": "r", "description": "Zinssatz" },
+				"params": [{ "symbol": "q", "description": "Abzinsungsfaktor" }]
+			},
+			{
+				"id": "reg-fal",
+				"name": "Regula Falsi (Lineare Interpolation)",
+				"math": "r^* \\approx i_1 - C_1 \\cdot \\frac{i_2 - i_1}{C_2 - C_1}",
+				"result": { "symbol": "r^*", "description": "Näherungswert für internen Zinsfuß" },
+				"params": [
+					{ "symbol": "i_1", "description": "Erster Versuchszinssatz" },
+					{ "symbol": "i_2", "description": "Zweiter Versuchszinssatz" },
+					{ "symbol": "C_1", "description": "Kapitalwert bei i_1" },
+					{ "symbol": "C_2", "description": "Kapitalwert bei i_2" }
+				]
+			},
+			{
+				"id": "ew-re",
+				"name": "Kapitalwert Ewige Rente",
+				"math": "C_0 = z_0 + \\frac{z}{r}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert der ewigen Rente" },
+				"params": [
+					{ "symbol": "z_0", "description": "Anfangsinvestition" },
+					{ "symbol": "z", "description": "Konstanter ewiger Cashflow" },
+					{ "symbol": "r", "description": "Zinssatz" }
+				]
+			},
+			{
+				"id": "diff-cf",
+				"name": "Differenz-Cashflow",
+				"math": "\\Delta z_t = z_{B,t} - z_{A,t}",
+				"result": { "symbol": "\\Delta z_t", "description": "Cashflow der Differenzinvestition" },
+				"params": [
+					{ "symbol": "z_{A,t}", "description": "Cashflow Projekt A" },
+					{ "symbol": "z_{B,t}", "description": "Cashflow Projekt B" }
+				]
+			},
+			{
+				"id": "kw-zb",
+				"name": "Kapitalwert Zero-Bond",
+				"math": "C_0 = z_0 + z_n \\cdot q^{-n}",
+				"result": { "symbol": "C_0", "description": "Kapitalwert" },
+				"params": [
+					{ "symbol": "z_0", "description": "Auszahlung t=0" },
+					{ "symbol": "z_n", "description": "Einmalige Rückzahlung t=n" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Standard-Investition (2 Perioden)",
+				"descriptionTemplate": "Ein Investitionsprojekt weist folgende Zahlungsreihe auf: $z_0 = {z_0}$ GE, $z_1 = {z_1}$ GE und $z_2 = {z_2}$ GE. Ermitteln Sie den internen Zinsfuß dieser Investition.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Angelehnt an typische Altklausuren",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_0",
+						"value": -100,
+						"unit": "GE",
+						"label": "Cashflow t=0"
+					},
+					{ "type": "value", "symbol": "z_1", "value": 55, "unit": "GE", "label": "Cashflow t=1" },
+					{ "type": "value", "symbol": "z_2", "value": 60.5, "unit": "GE", "label": "Cashflow t=2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die Bestimmungsgleichung für den Abzinsungsfaktor $q$ auf und normieren Sie diese auf die Normalform $q^2 + p \\cdot q + c = 0$.",
+						"formulaRefs": ["kw-bed", "kw-2-q"],
+						"interpretation": "Der interne Zinsfuß ist derjenige Zins, bei dem der Kapitalwert der Investition genau Null wird. Wir substituieren $(1+r)$ durch $q$, um ein Polynom zu erhalten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwert nullsetzen",
+								"description": "Wir stellen die Gleichung für den Kapitalwert auf und setzen diese gleich Null.",
+								"math": "C_0 = z_0 + z_1 \\cdot q^{-1} + z_2 \\cdot q^{-2} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Zahlungen in die Gleichung ein.",
+								"math": "-100 + 55 \\cdot q^{-1} + 60{,}5 \\cdot q^{-2} = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Mit q² multiplizieren",
+								"description": "Um die negativen Exponenten aufzulösen, multiplizieren wir die gesamte Gleichung mit $q^2$.",
+								"math": "-100 \\cdot q^2 + 55 \\cdot q + 60{,}5 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Auf Normalform bringen",
+								"description": "Wir teilen durch $-100$, um die Gleichung in die p-q-Normalform zu bringen.",
+								"math": "q^2 - 0{,}55 \\cdot q - 0{,}605 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Normalform",
+								"description": "Die Gleichung liegt nun in der gewünschten Form vor.",
+								"math": "q^2 - 0{,}55 \\cdot q - 0{,}605 = 0"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den internen Zinsfuß $r$.",
+						"formulaRefs": ["pq", "q-r"],
+						"interpretation": "Durch Lösen der quadratischen Gleichung erhalten wir den Abzinsungsfaktor $q$, aus dem sich der gesuchte Zinsfuß $r$ ergibt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "p-q-Formel anwenden",
+								"description": "Wir setzen $p = -0{,}55$ und $c = -0{,}605$ in die Lösungsformel ein.",
+								"math": "q_{1,2} = -\\frac{-0{,}55}{2} \\pm \\sqrt{\\left(\\frac{-0{,}55}{2}\\right)^2 - (-0{,}605)}"
+							},
+							{
+								"type": "calculation",
+								"title": "Werte unter der Wurzel berechnen",
+								"description": "Wir vereinfachen den Term schrittweise.",
+								"math": "q_{1,2} = 0{,}275 \\pm \\sqrt{0{,}075625 + 0{,}605}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Wir fassen die Summe zusammen und ziehen die Wurzel aus $0{,}680625$.",
+								"math": "q_{1,2} = 0{,}275 \\pm 0{,}825"
+							},
+							{
+								"type": "calculation",
+								"title": "Sinnvolle Lösung ermitteln",
+								"description": "Da ein negativer Abzinsungsfaktor ökonomisch keinen Sinn ergibt, betrachten wir nur die positive Lösung.",
+								"math": "q = 0{,}275 + 0{,}825 = 1{,}1"
+							},
+							{
+								"type": "formula",
+								"title": "Zinsfuß berechnen",
+								"description": "Abschließend berechnen wir aus $q$ den internen Zinsfuß $r$.",
+								"math": "r = q - 1"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen $q = 1{,}1$ ein.",
+								"math": "r = 1{,}1 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der interne Zinsfuß beträgt $10\\%$.",
+								"math": "r = 10 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Einfaches 1-Perioden-Projekt",
+				"descriptionTemplate": "Ein kleines Projekt erfordert heute eine Investition von {z_0} GE. Genau ein Jahr später erfolgt eine garantierte Rückzahlung von {z_1} GE. Wie hoch ist der interne Zinsfuß?",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Basisaufgabe zum Einstieg",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_0",
+						"value": -500,
+						"unit": "GE",
+						"label": "Auszahlung t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "z_1",
+						"value": 540,
+						"unit": "GE",
+						"label": "Einzahlung t=1"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die Kapitalwertfunktion auf und setzen Sie sie null.",
+						"formulaRefs": ["kw-bed", "kw-1"],
+						"interpretation": "Bei nur einer Periode vereinfacht sich die Suche nach dem internen Zinsfuß auf eine lineare Gleichung.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung aufstellen",
+								"description": "Wir fordern, dass der Kapitalwert $C_0$ gleich Null ist.",
+								"math": "C_0 = z_0 + z_1 \\cdot (1+r)^{-1} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Zahlenwerte einsetzen",
+								"description": "Wir setzen die gegebenen Ein- und Auszahlungen ein.",
+								"math": "-500 + 540 \\cdot (1+r)^{-1} = 0"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis",
+								"description": "Die Bestimmungsgleichung steht bereit.",
+								"math": "-500 + \\frac{540}{1+r} = 0"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie $r$.",
+						"formulaRefs": [],
+						"interpretation": "Der errechnete Zins entspricht exakt der Rendite dieses Ein-Jahres-Projekts.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Umstellen nach dem Bruch",
+								"description": "Wir bringen die $500$ auf die andere Seite.",
+								"math": "\\frac{540}{1+r} = 500"
+							},
+							{
+								"type": "calculation",
+								"title": "Mit dem Nenner multiplizieren",
+								"description": "Wir multiplizieren beide Seiten mit $(1+r)$ und teilen durch $500$.",
+								"math": "1+r = \\frac{540}{500}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch ausrechnen",
+								"description": "Wir berechnen den Wert des Bruchs.",
+								"math": "1+r = 1{,}08"
+							},
+							{
+								"type": "calculation",
+								"title": "r isolieren",
+								"description": "Wir ziehen $1$ ab.",
+								"math": "r = 0{,}08"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der interne Zinsfuß liegt bei $8\\%$.",
+								"math": "r = 8 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Bergbauprojekt (Multiple Renditen)",
+				"descriptionTemplate": "Bei einem Projekt im Tagebau gibt es aufgrund von Renaturierungskosten am Ende eine negative Zahlung. Die Zahlungsreihe lautet: $z_0 = {z_0}$ GE, $z_1 = {z_1}$ GE, $z_2 = {z_2}$ GE. Ermitteln Sie die zugehörigen internen Zinsfüße.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Typisches Beispiel für nicht-Normalinvestitionen",
+				"given": [
+					{ "type": "value", "symbol": "z_0", "value": -50, "unit": "GE", "label": "Cashflow t=0" },
+					{ "type": "value", "symbol": "z_1", "value": 115, "unit": "GE", "label": "Cashflow t=1" },
+					{ "type": "value", "symbol": "z_2", "value": -66, "unit": "GE", "label": "Cashflow t=2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die quadratische Gleichung für den Abzinsungsfaktor $q$ auf und bringen Sie sie auf die Form $q^2 + p \\cdot q + c = 0$.",
+						"formulaRefs": ["kw-bed", "kw-2-q"],
+						"interpretation": "Aufgrund des mehrfachen Vorzeichenwechsels können bei diesem Projekt bis zu zwei positive Zinsfüße existieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwert gleich Null",
+								"description": "Wir nutzen wieder die Definitionsgleichung des internen Zinsfußes.",
+								"math": "C_0 = z_0 + z_1 \\cdot q^{-1} + z_2 \\cdot q^{-2} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der gegebenen Zahlungsreihe.",
+								"math": "-50 + 115 \\cdot q^{-1} - 66 \\cdot q^{-2} = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Mit q² durchmultiplizieren",
+								"description": "Wir beheben die Brüche, indem wir alles mit $q^2$ multiplizieren.",
+								"math": "-50 \\cdot q^2 + 115 \\cdot q - 66 = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Normalform herstellen",
+								"description": "Durch Division mit $-50$ isolieren wir $q^2$.",
+								"math": "q^2 - 2{,}3 \\cdot q + 1{,}32 = 0"
+							},
+							{
+								"type": "result",
+								"title": "Gleichungssystem",
+								"description": "Das fertige Polynom für die p-q-Formel.",
+								"math": "q^2 - 2{,}3 \\cdot q + 1{,}32 = 0"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie beide internen Zinsfüße $r_1$ und $r_2$ (in Prozent).",
+						"formulaRefs": ["pq", "q-r"],
+						"interpretation": "Beide Lösungen repräsentieren mathematisch korrekte interne Zinsfüße, was die Entscheidungsfindung in der Praxis erschwert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Lösungsformel",
+								"description": "Wir setzen $p = -2{,}3$ und $c = 1{,}32$ ein.",
+								"math": "q_{1,2} = -\\frac{-2{,}3}{2} \\pm \\sqrt{\\left(\\frac{-2{,}3}{2}\\right)^2 - 1{,}32}"
+							},
+							{
+								"type": "calculation",
+								"title": "Vereinfachen",
+								"description": "Wir berechnen den Term vor und unter der Wurzel.",
+								"math": "q_{1,2} = 1{,}15 \\pm \\sqrt{1{,}3225 - 1{,}32}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Die Differenz unter der Wurzel beträgt exakt $0{,}0025$.",
+								"math": "q_{1,2} = 1{,}15 \\pm 0{,}05"
+							},
+							{
+								"type": "calculation",
+								"title": "Faktoren bestimmen",
+								"description": "Daraus resultieren zwei gültige positive Abzinsungsfaktoren.",
+								"math": "q_1 = 1{,}2 \\quad \\text{und} \\quad q_2 = 1{,}1"
+							},
+							{
+								"type": "result",
+								"title": "Zinsfüße ermitteln",
+								"description": "Wir ziehen von beiden Faktoren $1$ ab, um die Zinssätze zu erhalten.",
+								"math": "r_1 = 20 \\% \\quad \\text{und} \\quad r_2 = 10 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Näherungsverfahren (Regula Falsi)",
+				"descriptionTemplate": "Für ein komplexes Projekt ist eine geschlossene Lösung des Zinsfußes schwierig. Es wurden bereits zwei Probekapitalwerte ermittelt: Bei einem Zins von $i_1 = {i_1_pct}\\%$ beträgt der Kapitalwert $C_1 = {C_1}$ GE. Bei einem Zins von $i_2 = {i_2_pct}\\%$ beträgt er $C_2 = {C_2}$ GE. Schätzen Sie den internen Zinsfuß mittels linearer Interpolation.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Häufige Aufgabe zur numerischen Näherung",
+				"given": [
+					{ "type": "value", "symbol": "i_1", "value": 0.08, "unit": "", "label": "Zins 1" },
+					{
+						"type": "value",
+						"symbol": "i_1_pct",
+						"value": 8,
+						"unit": "%",
+						"label": "Zins 1 Prozent"
+					},
+					{ "type": "value", "symbol": "C_1", "value": 45, "unit": "GE", "label": "Kapitalwert 1" },
+					{ "type": "value", "symbol": "i_2", "value": 0.12, "unit": "", "label": "Zins 2" },
+					{
+						"type": "value",
+						"symbol": "i_2_pct",
+						"value": 12,
+						"unit": "%",
+						"label": "Zins 2 Prozent"
+					},
+					{ "type": "value", "symbol": "C_2", "value": -25, "unit": "GE", "label": "Kapitalwert 2" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Geben Sie die Formel für die Regula Falsi an und setzen Sie die Werte ein.",
+						"formulaRefs": ["reg-fal"],
+						"interpretation": "Die Regula Falsi zieht eine Sekante zwischen den beiden Punkten auf der Kapitalwertkurve. Der Schnittpunkt dieser Gerade mit der x-Achse dient als Näherung für den echten Nullpunkt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Regula Falsi aufstellen",
+								"description": "Wir notieren die Formel zur linearen Interpolation.",
+								"math": "r^* \\approx i_1 - C_1 \\cdot \\frac{i_2 - i_1}{C_2 - C_1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Zinssätze als Dezimalzahlen und die Kapitalwerte ein.",
+								"math": "r^* \\approx 0{,}08 - 45 \\cdot \\frac{0{,}12 - 0{,}08}{-25 - 45}"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis",
+								"description": "Der berechenbare Bruch ist aufgestellt.",
+								"math": "r^* \\approx 0{,}08 - 45 \\cdot \\frac{0{,}04}{-70}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den genäherten Zinsfuß $r^*$ in Prozent (auf zwei Nachkommastellen genau).",
+						"formulaRefs": [],
+						"interpretation": "Da die wahre Kapitalwertkurve konvex ist, liegt der mit der Sekante geschätzte Wert strukturell leicht über dem wahren internen Zinsfuß.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Bruch auswerten",
+								"description": "Wir teilen $0{,}04$ durch $-70$.",
+								"math": "r^* \\approx 0{,}08 - 45 \\cdot (-0{,}0005714)"
+							},
+							{
+								"type": "calculation",
+								"title": "Produkt berechnen",
+								"description": "Multiplikation des Kapitalwerts mit dem berechneten Quotienten.",
+								"math": "r^* \\approx 0{,}08 + 0{,}0257"
+							},
+							{
+								"type": "calculation",
+								"title": "Summieren",
+								"description": "Wir addieren die Zinsaufschläge.",
+								"math": "r^* \\approx 0{,}1057"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der genäherte Zinsfuß lautet rund $10{,}57\\%$.",
+								"math": "r^* \\approx 10{,}57 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Ewige Rente",
+				"descriptionTemplate": "Eine unendliche Zahlungsreihe erfordert zum Zeitpunkt $t=0$ eine Investition von {z_0} GE. Danach generiert sie ab $t=1$ in jeder Periode bis in die Unendlichkeit konstante Zahlungen in Höhe von {z} GE. Bestimmen Sie den internen Zinsfuß.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Grundlagen der Rentenrechnung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_0",
+						"value": -1000,
+						"unit": "GE",
+						"label": "Startinvestition"
+					},
+					{ "type": "value", "symbol": "z", "value": 80, "unit": "GE", "label": "Ewiger Cashflow" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die Kapitalwertgleichung für diesen Spezialfall auf.",
+						"formulaRefs": ["kw-bed", "ew-re"],
+						"interpretation": "Da die Zahlungen ewig fließen, nutzen wir die Rentenbarwertformel für die ewige Rente, um den Gegenwartswert aller zukünftigen Rückflüsse extrem kompakt darzustellen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Bedingung Ewige Rente",
+								"description": "Der Barwert aller Rückflüsse muss der Anfangsauszahlung entsprechen, damit der Kapitalwert Null wird.",
+								"math": "C_0 = z_0 + \\frac{z}{r} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Investitionssumme und die laufende Zahlung ein.",
+								"math": "-1000 + \\frac{80}{r} = 0"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis",
+								"description": "Die zu lösende Gleichung.",
+								"math": "-1000 + \\frac{80}{r} = 0"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den internen Zinsfuß $r$.",
+						"formulaRefs": [],
+						"interpretation": "Bei einer ewigen Rente entspricht der interne Zinsfuß exakt dem Verhältnis aus jährlicher Zahlung und eingesetztem Kapital.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Umstellen",
+								"description": "Wir addieren $1000$ auf beiden Seiten.",
+								"math": "\\frac{80}{r} = 1000"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach r auflösen",
+								"description": "Wir multiplizieren mit $r$ und teilen durch $1000$.",
+								"math": "r = \\frac{80}{1000}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Wir berechnen den Dezimalwert.",
+								"math": "r = 0{,}08"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die Verzinsung dieses unendlichen Projekts beträgt $8\\%$.",
+								"math": "r = 8 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Zero-Bond-Struktur",
+				"descriptionTemplate": "Sie investieren in eine Anlageform, die in $t=0$ eine Einzahlung in Höhe von {z_0} GE erfordert. In den ersten beiden Jahren gibt es keine Rückflüsse ($z_1 = 0$, $z_2 = 0$). Erst am Ende des dritten Jahres ($t=3$) erhalten Sie eine Einmalzahlung von {z_3} GE. Bestimmen Sie den internen Zinsfuß.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Übung zum Ziehen höherer Wurzeln",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_0",
+						"value": -100,
+						"unit": "GE",
+						"label": "Auszahlung t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "z_3",
+						"value": 133.1,
+						"unit": "GE",
+						"label": "Einzahlung t=3"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie die Kapitalwertgleichung in Abhängigkeit von $q$ auf.",
+						"formulaRefs": ["kw-bed", "kw-zb"],
+						"interpretation": "Da es keine Zwischenauszahlungen gibt, reduziert sich das Polynom 3. Grades auf einen direkten Potenzansatz.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gleichung für Zero-Bond",
+								"description": "Wir setzen den Kapitalwert auf Null. Die Terme für $t=1$ und $t=2$ entfallen, da $z_1 = z_2 = 0$.",
+								"math": "C_0 = z_0 + z_3 \\cdot q^{-3} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir fügen die Zahlenwerte ein.",
+								"math": "-100 + 133{,}1 \\cdot q^{-3} = 0"
+							},
+							{
+								"type": "result",
+								"title": "Aufgestellte Gleichung",
+								"description": "Dies ist die Bestimmungsgleichung für diese Zahlungsreihe.",
+								"math": "-100 + \\frac{133{,}1}{q^3} = 0"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den Abzinsungsfaktor $q$ und daraus den Zinsfuß $r$.",
+						"formulaRefs": ["q-r"],
+						"interpretation": "Der Zinsfuß entspricht hier der reinen geometrischen Durchschnittsverzinsung über 3 Jahre.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Umstellen",
+								"description": "Wir bringen die $100$ auf die andere Seite.",
+								"math": "\\frac{133{,}1}{q^3} = 100"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach q³ auflösen",
+								"description": "Wir multiplizieren mit $q^3$ und teilen durch $100$.",
+								"math": "q^3 = \\frac{133{,}1}{100}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch berechnen",
+								"description": "Wir vereinfachen die rechte Seite.",
+								"math": "q^3 = 1{,}331"
+							},
+							{
+								"type": "calculation",
+								"title": "Dritte Wurzel ziehen",
+								"description": "Wir ziehen die dritte Wurzel, um $q$ zu erhalten.",
+								"math": "q = \\sqrt[3]{1{,}331} = 1{,}1"
+							},
+							{
+								"type": "formula",
+								"title": "Rendite aus q ableiten",
+								"description": "Mit $r = q - 1$ ermitteln wir den Zins.",
+								"math": "r = 1{,}1 - 1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die jährliche Verzinsung beträgt exakt $10\\%$.",
+								"math": "r = 10 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Differenzinvestition (Kritischer Zinsfuß)",
+				"descriptionTemplate": "Es stehen zwei sich ausschließende Projekte zur Wahl. Projekt A erfordert in $t=0$ eine Zahlung von {z_A0} GE und bringt in $t=1$ {z_A1} GE. Projekt B erfordert {z_B0} GE und bringt in $t=1$ {z_B1} GE. Berechnen Sie den internen Zinsfuß der Differenzinvestition (Projekt B minus Projekt A).",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Konzept des Fisher-Zinses",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_A0",
+						"value": -100,
+						"unit": "GE",
+						"label": "Projekt A t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "z_A1",
+						"value": 120,
+						"unit": "GE",
+						"label": "Projekt A t=1"
+					},
+					{
+						"type": "value",
+						"symbol": "z_B0",
+						"value": -150,
+						"unit": "GE",
+						"label": "Projekt B t=0"
+					},
+					{
+						"type": "value",
+						"symbol": "z_B1",
+						"value": 175,
+						"unit": "GE",
+						"label": "Projekt B t=1"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Zahlungsreihe der Differenzinvestition (B - A).",
+						"formulaRefs": ["diff-cf"],
+						"interpretation": "Die Differenzinvestition zeigt an, was der Mehrbetrag an Investition bei Projekt B im Vergleich zu Projekt A an zusätzlichem Rückfluss generiert.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Differenz bilden",
+								"description": "Wir ziehen für jeden Zeitpunkt die Zahlungen von Projekt A von Projekt B ab.",
+								"math": "\\Delta z_t = z_{B,t} - z_{A,t}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zeitpunkt t=0",
+								"description": "Differenz der Anfangsauszahlungen.",
+								"math": "\\Delta z_0 = -150 - (-100) = -50"
+							},
+							{
+								"type": "calculation",
+								"title": "Zeitpunkt t=1",
+								"description": "Differenz der Rückflüsse.",
+								"math": "\\Delta z_1 = 175 - 120 = 55"
+							},
+							{
+								"type": "result",
+								"title": "Zahlungsreihe",
+								"description": "Die Differenzinvestition ist nun definiert.",
+								"math": "\\Delta z_0 = -50 \\quad \\text{und} \\quad \\Delta z_1 = 55"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie den kritischen Zinsfuß (den internen Zinsfuß der Differenzinvestition).",
+						"formulaRefs": ["kw-bed", "kw-1"],
+						"interpretation": "Dieser Zinsfuß (Fisher-Zins) gibt an, ab welchem Kalkulationszinsfuß die Vorteilhaftigkeit zwischen den beiden Projekten umschlägt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwert der Differenz",
+								"description": "Wir setzen den Kapitalwert der neuen Zahlungsreihe gleich Null.",
+								"math": "C_0(\\Delta) = \\Delta z_0 + \\frac{\\Delta z_1}{1+r} = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir nutzen die in (a) berechneten Werte.",
+								"math": "-50 + \\frac{55}{1+r} = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach r umstellen",
+								"description": "Wir bringen die $50$ auf die rechte Seite und multiplizieren mit dem Nenner.",
+								"math": "1+r = \\frac{55}{50}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch auflösen",
+								"description": "Wir dividieren $55$ durch $50$.",
+								"math": "1+r = 1{,}1"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der kritische Zinsfuß liegt bei $10\\%$.",
+								"math": "r = 10 \\%"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Verifikation durch Einsetzen (3 Perioden)",
+				"descriptionTemplate": "Gegeben ist ein Projekt mit Zahlungen über 3 Perioden: $z_0 = {z_0}$ GE, $z_1 = {z_1}$ GE, $z_2 = {z_2}$ GE, $z_3 = {z_3}$ GE. Zeigen Sie durch schrittweises Einsetzen und Ausrechnen, dass der interne Zinsfuß exakt {r_test} % beträgt.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Probeweises Einsetzen bei komplexen Polynomen",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "z_0",
+						"value": -1000,
+						"unit": "GE",
+						"label": "Cashflow t=0"
+					},
+					{ "type": "value", "symbol": "z_1", "value": 330, "unit": "GE", "label": "Cashflow t=1" },
+					{ "type": "value", "symbol": "z_2", "value": 363, "unit": "GE", "label": "Cashflow t=2" },
+					{
+						"type": "value",
+						"symbol": "z_3",
+						"value": 532.4,
+						"unit": "GE",
+						"label": "Cashflow t=3"
+					},
+					{
+						"type": "value",
+						"symbol": "r_test",
+						"value": 10,
+						"unit": "%",
+						"label": "Zu prüfender Zins"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Stellen Sie den Ansatz für den Kapitalwert mit dem zu prüfenden Zinssatz $r = 10\\%$ auf.",
+						"formulaRefs": ["kw-3-q"],
+						"interpretation": "Oftmals ist bei $T > 2$ eine direkte rechnerische Lösung nicht mehr im Kopf möglich, aber ein gegebener (oder ratbarer) Zins lässt sich durch Einsetzen validieren.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kapitalwertgleichung für T=3",
+								"description": "Wir notieren die Summe der Barwerte für drei Perioden.",
+								"math": "C_0 = z_0 + z_1 \\cdot q^{-1} + z_2 \\cdot q^{-2} + z_3 \\cdot q^{-3}"
+							},
+							{
+								"type": "substitution",
+								"title": "Abzinsungsfaktor einsetzen",
+								"description": "Bei $r = 10\\%$ beträgt der Faktor $q = 1{,}1$.",
+								"math": "C_0 = -1000 + 330 \\cdot 1{,}1^{-1} + 363 \\cdot 1{,}1^{-2} + 532{,}4 \\cdot 1{,}1^{-3}"
+							},
+							{
+								"type": "result",
+								"title": "Ansatz",
+								"description": "Die Rechnung steht bereit zur Auswertung.",
+								"math": "C_0 = -1000 + \\frac{330}{1{,}1} + \\frac{363}{1{,}1^2} + \\frac{532{,}4}{1{,}1^3}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Berechnen Sie die einzelnen Barwerte und summieren Sie diese auf.",
+						"formulaRefs": ["kw-bed"],
+						"interpretation": "Wenn die Summe exakt null ergibt, haben wir bewiesen, dass es sich um einen internen Zinsfuß handelt.",
+						"steps": [
+							{
+								"type": "calculation",
+								"title": "Barwert t=1",
+								"description": "Abzinsung der ersten Zahlung.",
+								"math": "BW_1 = \\frac{330}{1{,}1} = 300"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwert t=2",
+								"description": "Abzinsung der zweiten Zahlung durch $1{,}21$.",
+								"math": "BW_2 = \\frac{363}{1{,}21} = 300"
+							},
+							{
+								"type": "calculation",
+								"title": "Barwert t=3",
+								"description": "Abzinsung der dritten Zahlung durch $1{,}331$.",
+								"math": "BW_3 = \\frac{532{,}4}{1{,}331} = 400"
+							},
+							{
+								"type": "calculation",
+								"title": "Gesamtsumme bilden",
+								"description": "Wir fassen die Anfangsauszahlung und die Barwerte zusammen.",
+								"math": "C_0 = -1000 + 300 + 300 + 400"
+							},
+							{
+								"type": "result",
+								"title": "Beweis abgeschlossen",
+								"description": "Der Kapitalwert ist Null, somit ist die Hypothese bestätigt.",
+								"math": "C_0 = 0"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

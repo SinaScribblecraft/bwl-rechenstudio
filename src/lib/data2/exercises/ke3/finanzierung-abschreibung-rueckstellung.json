@@ -1,0 +1,568 @@
+{
+	"finanzierung-abschreibung-rueckstellung": {
+		"title": "Finanzierung aus Abschreibungen und Rückstellungen",
+		"subtitle": "Lohmann-Ruchti-Effekt, Innenfinanzierung, Steuerstundung und Cash-Flow-Effekte.",
+		"formulas": [
+			{
+				"id": "kef",
+				"name": "Kapazitätserweiterungsfaktor (KEF)",
+				"math": "KEF = \\frac{2 \\cdot n}{n + 1}",
+				"result": { "symbol": "KEF", "description": "Maximaler Kapazitätserweiterungsfaktor" },
+				"params": [{ "symbol": "n", "description": "Nutzungsdauer der Anlage" }]
+			},
+			{
+				"id": "abschreibung-linear",
+				"name": "Lineare Abschreibung",
+				"math": "a = \\frac{A_0 - RW}{n}",
+				"result": { "symbol": "a", "description": "Jährlicher Abschreibungsbetrag" },
+				"params": [
+					{ "symbol": "A_0", "description": "Anschaffungswert" },
+					{ "symbol": "RW", "description": "Restwert (Liquidationserlös)" },
+					{ "symbol": "n", "description": "Nutzungsdauer" }
+				]
+			},
+			{
+				"id": "kapazitaet-max",
+				"name": "Maximale Kapazität",
+				"math": "K_{max} = K_0 \\cdot KEF",
+				"result": { "symbol": "K_{max}", "description": "Maximal erreichbare Anlagenkapazität" },
+				"params": [
+					{ "symbol": "K_0", "description": "Anfängliche Kapazität (Anzahl Anlagen)" },
+					{ "symbol": "KEF", "description": "Kapazitätserweiterungsfaktor" }
+				]
+			},
+			{
+				"id": "steuerersparnis",
+				"name": "Steuerersparnis durch Rückstellungen",
+				"math": "S = R \\cdot s",
+				"result": { "symbol": "S", "description": "Liquiditätswirksame Steuerersparnis" },
+				"params": [
+					{ "symbol": "R", "description": "Höhe der Rückstellungszuführung" },
+					{ "symbol": "s", "description": "Ertragsteuersatz" }
+				]
+			},
+			{
+				"id": "cash-flow",
+				"name": "Praktiker-Cash-Flow",
+				"math": "CF = G + A + \\Delta R",
+				"result": { "symbol": "CF", "description": "Cash Flow als Innenfinanzierungspotenzial" },
+				"params": [
+					{ "symbol": "G", "description": "Jahresüberschuss (Gewinn)" },
+					{ "symbol": "A", "description": "Abschreibungen" },
+					{ "symbol": "\\Delta R", "description": "Zuführung zu Rückstellungen" }
+				]
+			},
+			{
+				"id": "kaufzeitpunkt",
+				"name": "Zeitpunkt der ersten Ersatzinvestition",
+				"math": "t = \\frac{A_0}{a}",
+				"result": {
+					"symbol": "t",
+					"description": "Jahr, in dem genug liquide Mittel angespart sind"
+				},
+				"params": [
+					{ "symbol": "A_0", "description": "Anschaffungskosten der neuen Anlage" },
+					{ "symbol": "a", "description": "Jährlicher Abschreibungsbetrag der ersten Anlage" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Lohmann-Ruchti-Effekt: Erweiterungsfaktor",
+				"descriptionTemplate": "Ein produzierendes Unternehmen plant die Erweiterung seines Maschinenparks durch den Lohmann-Ruchti-Effekt. Die Maschinen haben alle eine einheitliche Nutzungsdauer von {n} Jahren. Die Abschreibungsgegenwerte fließen sofort und kontinuierlich als liquide Mittel ins Unternehmen zurück.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel Finanzierung, Lohmann-Ruchti-Effekt",
+				"given": [
+					{ "type": "value", "symbol": "n", "value": 4, "unit": "Jahre", "label": "Nutzungsdauer" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den maximalen Kapazitätserweiterungsfaktor $KEF$.",
+						"formulaRefs": ["kef"],
+						"interpretation": "Der KEF gibt an, um welchen Faktor die ursprüngliche Kapazität maximal ausgedehnt werden kann, ohne dass externe Finanzmittel zugeführt werden müssen.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für KEF",
+								"description": "Wir nutzen die vereinfachte Formel für den Kapazitätserweiterungsfaktor bei linearer Abschreibung.",
+								"math": "KEF = \\frac{2 \\cdot n}{n + 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebene Nutzungsdauer von $n=4$ ein.",
+								"math": "KEF = \\frac{2 \\cdot 4}{4 + 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "Bruch vereinfachen",
+								"description": "Wir berechnen Zähler und Nenner.",
+								"math": "KEF = \\frac{8}{5}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der maximale Erweiterungsfaktor als Dezimalzahl lautet:",
+								"math": "KEF = 1{,}6"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Kalkulation erster Reinvestitionszeitpunkt",
+				"descriptionTemplate": "Die 'Klausur GmbH' beschafft eine Maschine mit Anschaffungskosten von {A_0} GE. Diese wird über eine Nutzungsdauer von {n} Jahren linear auf einen Restbuchwert von {RW} GE abgeschrieben. Die Abschreibungsbeträge werden sofort reinvestiert.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Klausur 03-2024, Aufgabe 3",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "A_0",
+						"value": 12000,
+						"unit": "GE",
+						"label": "Anschaffungskosten"
+					},
+					{ "type": "value", "symbol": "n", "value": 3, "unit": "Jahre", "label": "Nutzungsdauer" },
+					{ "type": "value", "symbol": "RW", "value": 0, "unit": "GE", "label": "Restwert" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie den jährlichen Abschreibungsbetrag $a$.",
+						"formulaRefs": ["abschreibung-linear"],
+						"interpretation": "Dieser Betrag fließt dem Unternehmen jährlich als Liquidität über die Umsatzerlöse zu.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für lineare Abschreibung",
+								"description": "Die lineare Abschreibung verteilt die Kosten gleichmäßig über die Laufzeit.",
+								"math": "a = \\frac{A_0 - RW}{n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Einsetzen der gegebenen Anschaffungskosten und Nutzungsdauer.",
+								"math": "a = \\frac{12{.}000 - 0}{3}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Der jährliche Abschreibungsbetrag beträgt:",
+								"math": "a = 4{.}000 \\text{ GE/Jahr}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Bestimmen Sie den Zeitpunkt (Jahr) $t$, an dem exakt genügend liquide Mittel aus den Abschreibungen angesammelt sind, um eine zweite, identische Maschine (Erweiterungsinvestition) zu kaufen.",
+						"formulaRefs": ["kaufzeitpunkt"],
+						"interpretation": "Dies demonstriert den Start des Kapazitätserweiterungseffekts in der Praxis.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kaufzeitpunkt bestimmen",
+								"description": "Wir setzen die nötigen Anschaffungskosten ins Verhältnis zur jährlichen Abschreibung, um die nötigen Jahre zu ermitteln.",
+								"math": "t = \\frac{A_0}{a}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Anschaffungskosten und die zuvor berechnete jährliche Abschreibung ein.",
+								"math": "t = \\frac{12{.}000}{4{.}000}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Am Ende welchen Jahres kann die Maschine gekauft werden?",
+								"math": "t = 3 \\text{ Jahre}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Steuerstundungseffekt durch Rückstellungen",
+				"descriptionTemplate": "Ein Unternehmen bildet für drohende Verluste aus schwebenden Geschäften eine Rückstellung in Höhe von {R} GE. Der relevante Ertragsteuersatz des Unternehmens beträgt {s_pct} % (entspricht einem Faktor von {s}).",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "AI-generiert anhand von Skript-Grundlagen zur Innenfinanzierung",
+				"given": [
+					{ "type": "value", "symbol": "R", "value": 50000, "unit": "GE", "label": "Rückstellung" },
+					{
+						"type": "value",
+						"symbol": "s_pct",
+						"value": 30,
+						"unit": "%",
+						"label": "Steuersatz in Prozent"
+					},
+					{
+						"type": "value",
+						"symbol": "s",
+						"value": 0.3,
+						"unit": "",
+						"label": "Steuersatz als Faktor"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die steuerliche Liquiditätsersparnis $S$ (Steuerstundungseffekt), die im Jahr der Rückstellungsbildung auftritt.",
+						"formulaRefs": ["steuerersparnis"],
+						"interpretation": "Die Bildung der Rückstellung mindert den steuerpflichtigen Gewinn. Die dadurch eingesparte Steuerzahlung steht dem Unternehmen als temporäre Finanzierungsquelle zur Verfügung.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel für Steuerersparnis",
+								"description": "Die Liquiditätsersparnis entspricht der Gewinnminderung multipliziert mit dem Steuersatz.",
+								"math": "S = R \\cdot s"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die Höhe der Rückstellung und den Steuersatz ein.",
+								"math": "S = 50{.}000 \\cdot 0{,}3"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die direkte Steuerersparnis beläuft sich auf:",
+								"math": "S = 15{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Absoluter Lohmann-Ruchti-Effekt",
+				"descriptionTemplate": "Ein Fuhrparkunternehmen startet mit einer Erstausstattung von {K_0} baugleichen LKW. Die Nutzungsdauer pro LKW beträgt {n} Jahre. Es soll das theoretische Maximum der Kapazität durch Reinvestition der Abschreibungsgegenwerte ermittelt werden.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Typische Übungsaufgabe zur maximalen Kapazität",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "K_0",
+						"value": 15,
+						"unit": "LKW",
+						"label": "Anfangskapazität"
+					},
+					{ "type": "value", "symbol": "n", "value": 5, "unit": "Jahre", "label": "Nutzungsdauer" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die maximal erreichbare Anlagenkapazität $K_{max}$.",
+						"formulaRefs": ["kef", "kapazitaet-max"],
+						"interpretation": "Dieser Wert zeigt, auf wie viele LKW der Fuhrpark rein aus eigenen Abschreibungsmitteln (ohne Eigen- oder Fremdkapitalzuführung) anwachsen kann.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "KEF ermitteln",
+								"description": "Zuerst stellen wir die Formel für den Kapazitätserweiterungsfaktor auf.",
+								"math": "KEF = \\frac{2 \\cdot n}{n + 1}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in KEF einsetzen",
+								"description": "Wir setzen $n=5$ in die Formel ein.",
+								"math": "KEF = \\frac{2 \\cdot 5}{5 + 1}"
+							},
+							{
+								"type": "calculation",
+								"title": "KEF berechnen",
+								"description": "Der Bruch wird vereinfacht.",
+								"math": "KEF = \\frac{10}{6} = \\frac{5}{3}"
+							},
+							{
+								"type": "formula",
+								"title": "Maximale Kapazität aufstellen",
+								"description": "Nun multiplizieren wir die Anfangskapazität mit dem KEF.",
+								"math": "K_{max} = K_0 \\cdot KEF"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in Kapazitätsformel einsetzen",
+								"description": "Wir setzen die 15 LKW und den Bruch $\\frac{5}{3}$ ein.",
+								"math": "K_{max} = 15 \\cdot \\frac{5}{3}"
+							},
+							{
+								"type": "calculation",
+								"title": "Ausrechnen",
+								"description": "Wir rechnen $15 \\cdot 5 = 75$ und teilen durch $3$.",
+								"math": "K_{max} = \\frac{75}{3}"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Die maximale Kapazität beträgt:",
+								"math": "K_{max} = 25 \\text{ LKW}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Innenfinanzierungsvolumen (Praktiker-Cash-Flow)",
+				"descriptionTemplate": "Der Jahresabschluss eines Unternehmens weist folgende Werte aus: Ein Jahresüberschuss (Gewinn) von {G} GE, planmäßige Abschreibungen von {A} GE und eine Netto-Zuführung zu den Rückstellungen (Pensionsrückstellungen) von {deltaR} GE.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Kapitel Finanzierung - Innenfinanzierung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "G",
+						"value": 120000,
+						"unit": "GE",
+						"label": "Jahresüberschuss"
+					},
+					{
+						"type": "value",
+						"symbol": "A",
+						"value": 80000,
+						"unit": "GE",
+						"label": "Abschreibungen"
+					},
+					{
+						"type": "value",
+						"symbol": "deltaR",
+						"value": 25000,
+						"unit": "GE",
+						"label": "Rückstellungszuführung"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie das gesamte Innenfinanzierungsvolumen $CF$ (vereinfachter Praktiker-Cash-Flow) dieser Periode.",
+						"formulaRefs": ["cash-flow"],
+						"interpretation": "Abschreibungen und Rückstellungszuführungen sind Aufwendungen, die in der aktuellen Periode nicht zu Auszahlungen führen. Daher müssen sie dem Gewinn wieder hinzugerechnet werden, um die tatsächlich erwirtschaftete Liquidität zu ermitteln.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel Praktiker-Cash-Flow",
+								"description": "Das Innenfinanzierungsvolumen entspricht der Summe aus Gewinn, Abschreibungen und der Veränderung der Rückstellungen.",
+								"math": "CF = G + A + \\Delta R"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die gegebenen Werte aus dem Jahresabschluss in die Gleichung ein.",
+								"math": "CF = 120{.}000 + 80{.}000 + 25{.}000"
+							},
+							{
+								"type": "calculation",
+								"title": "Addieren",
+								"description": "Wir summieren die drei Komponenten auf.",
+								"math": "CF = 200{.}000 + 25{.}000"
+							},
+							{
+								"type": "result",
+								"title": "Endergebnis",
+								"description": "Der Cash Flow (Innenfinanzierungsvolumen) beträgt:",
+								"math": "CF = 225{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Lohmann-Ruchti mit Restwert",
+				"descriptionTemplate": "Es wird eine neue Produktionsanlage für {A_0} GE erworben. Die Anlage hat eine Nutzungsdauer von {n} Jahren. Am Ende der Nutzungsdauer wird mit einem garantierten Liquidationserlös (Restwert) von {RW} GE gerechnet.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "AI-generierte Abwandlung der linearen Abschreibung",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "A_0",
+						"value": 85000,
+						"unit": "GE",
+						"label": "Anschaffungskosten"
+					},
+					{ "type": "value", "symbol": "RW", "value": 15000, "unit": "GE", "label": "Restwert" },
+					{ "type": "value", "symbol": "n", "value": 7, "unit": "Jahre", "label": "Nutzungsdauer" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den jährlichen Abschreibungsbetrag $a$, der als Finanzierungsquelle aus dem Umsatzprozess zurückfließt.",
+						"formulaRefs": ["abschreibung-linear"],
+						"interpretation": "Ein Restwert mindert das Abschreibungsvolumen pro Jahr, da nicht der volle Anschaffungswert über die Nutzungsdauer als Aufwand verrechnet wird.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Abschreibungsformel mit Restwert",
+								"description": "Wir verwenden die modifizierte Formel für die lineare Abschreibung, bei der der Restwert vor der Division abgezogen wird.",
+								"math": "a = \\frac{A_0 - RW}{n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen die {A_0} GE, {RW} GE und {n} Jahre ein.",
+								"math": "a = \\frac{85{.}000 - 15{.}000}{7}"
+							},
+							{
+								"type": "calculation",
+								"title": "Zähler berechnen",
+								"description": "Zuerst subtrahieren wir den Restwert vom Anschaffungswert.",
+								"math": "a = \\frac{70{.}000}{7}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Daraus ergibt sich der jährliche Abschreibungsbetrag:",
+								"math": "a = 10{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Vergleich der Finanzierungswirkung von Rückstellungen",
+				"descriptionTemplate": "Eine GmbH weist einen vorläufigen Gewinn (vor Steuern und Rückstellungen) von {G_vor} GE aus. Es muss entschieden werden, ob eine Rückstellung für Gewährleistungen in Höhe von {R} GE gebildet wird. Der Steuersatz beträgt {s_pct} % ({s} als Dezimalzahl).",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Eigenentwicklung zur Verdeutlichung der isolierten Effekte",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "G_vor",
+						"value": 200000,
+						"unit": "GE",
+						"label": "Gewinn vor Rückstellung"
+					},
+					{ "type": "value", "symbol": "R", "value": 40000, "unit": "GE", "label": "Rückstellung" },
+					{
+						"type": "value",
+						"symbol": "s_pct",
+						"value": 25,
+						"unit": "%",
+						"label": "Steuersatz in %"
+					},
+					{ "type": "value", "symbol": "s", "value": 0.25, "unit": "", "label": "Steuersatz" }
+				],
+				"inputTable": [
+					["Szenario", "Gewinn vor Steuern", "Steuer", "Jahresüberschuss", "Liquidität"],
+					["Ohne Rückstellung", "200.000", "50.000", "150.000", "150.000"],
+					["Mit Rückstellung", "160.000", "40.000", "120.000", "160.000"]
+				],
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie rechnerisch direkt die steuerliche Liquiditätsersparnis $S$, die durch die Rückstellungsbildung entsteht.",
+						"formulaRefs": ["steuerersparnis"],
+						"interpretation": "Die Tabelle oben veranschaulicht den Effekt: Obwohl der Gewinn sinkt (von 150.000 auf 120.000), steigt die im Unternehmen verbleibende Liquidität (Jahresüberschuss + Rückstellung = 160.000 statt 150.000). Die Differenz ist exakt die Steuerersparnis.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Steuerersparnis berechnen",
+								"description": "Die Ersparnis ist das Produkt aus abzugsfähigem Aufwand (Rückstellung) und Steuersatz.",
+								"math": "S = R \\cdot s"
+							},
+							{
+								"type": "substitution",
+								"title": "Einsetzen",
+								"description": "Wir setzen die Rückstellung von 40.000 GE und den Steuersatz von 25 % ein.",
+								"math": "S = 40{.}000 \\cdot 0{,}25"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Die gewonnene Liquidität aus gestundeten Steuern beträgt:",
+								"math": "S = 10{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gesamtes Reinvestitionsvolumen nach mehreren Jahren",
+				"descriptionTemplate": "Eine Fräsmaschine für {A_0} GE (Nutzungsdauer {n} Jahre, ohne Restwert) wird beschafft. Gesucht ist die Menge an liquiden Mitteln, die nach exakt {t_jahre} Jahren durch die kumulierten Abschreibungen für Reinvestitionen im Unternehmen zur Verfügung stehen.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Variante von Klausur 03-2024, Tabelle 'Aufgelaufene liquide Mittel'",
+				"given": [
+					{
+						"type": "value",
+						"symbol": "A_0",
+						"value": 24000,
+						"unit": "GE",
+						"label": "Anschaffungskosten"
+					},
+					{ "type": "value", "symbol": "n", "value": 6, "unit": "Jahre", "label": "Nutzungsdauer" },
+					{
+						"type": "value",
+						"symbol": "t_jahre",
+						"value": 4,
+						"unit": "Jahre",
+						"label": "Betrachtungszeitraum"
+					},
+					{ "type": "value", "symbol": "RW", "value": 0, "unit": "GE", "label": "Restwert" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie den jährlichen Abschreibungsbetrag $a$.",
+						"formulaRefs": ["abschreibung-linear"],
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Formel",
+								"description": "Zunächst bestimmen wir die konstante jährliche Abschreibung.",
+								"math": "a = \\frac{A_0 - RW}{n}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir setzen Anschaffungskosten und Nutzungsdauer ein.",
+								"math": "a = \\frac{24{.}000 - 0}{6}"
+							},
+							{
+								"type": "result",
+								"title": "Zwischenergebnis",
+								"description": "Wir erhalten die Abschreibung pro Jahr.",
+								"math": "a = 4{.}000 \\text{ GE/Jahr}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie die kumulierten liquiden Mittel $L_{kum}$ am Ende von Jahr $t = 4$.",
+						"formulaRefs": [],
+						"interpretation": "Dieser kumulierte Betrag reicht im 4. Jahr noch nicht aus, um eine identische Maschine zu 24.000 GE neu zu kaufen, kann aber z.B. verzinst angelegt oder für andere Zwecke genutzt werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Kumulierte Mittel",
+								"description": "Die kumulierten Mittel sind die Summe der bisherigen jährlichen Abschreibungen.",
+								"math": "L_{kum} = a \\cdot t_{jahre}"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte einsetzen",
+								"description": "Wir multiplizieren die jährliche Abschreibung mit den 4 vergangenen Jahren.",
+								"math": "L_{kum} = 4{.}000 \\cdot 4"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis",
+								"description": "Am Ende von Jahr 4 sind somit folgende liquide Mittel angesammelt:",
+								"math": "L_{kum} = 16{.}000 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

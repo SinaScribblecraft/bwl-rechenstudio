@@ -1,0 +1,823 @@
+{
+	"cournot-monopol": {
+		"title": "Cournotscher Punkt (Monopol)",
+		"subtitle": "Ermittlung von gewinnmaximaler Menge, Preis und Maximalgewinn im Monopol.",
+		"formulas": [
+			{
+				"id": "erloesfunktion",
+				"name": "Erlösfunktion",
+				"math": "E(x) = p(x) \\cdot x",
+				"result": {
+					"symbol": "E(x)",
+					"description": "Erlös in Abhängigkeit der abgesetzten Menge"
+				},
+				"params": [
+					{ "symbol": "p(x)", "description": "Preis-Absatz-Funktion" },
+					{ "symbol": "x", "description": "Absatzmenge" }
+				]
+			},
+			{
+				"id": "grenzerloes",
+				"name": "Grenzerlös",
+				"math": "E'(x) = \\frac{\\partial E}{\\partial x}",
+				"result": {
+					"symbol": "E'(x)",
+					"description": "Zusätzlicher Erlös für eine weitere Mengeneinheit"
+				},
+				"params": [{ "symbol": "E(x)", "description": "Erlösfunktion" }]
+			},
+			{
+				"id": "grenzkosten",
+				"name": "Grenzkosten",
+				"math": "K'(x) = \\frac{\\partial K}{\\partial x}",
+				"result": {
+					"symbol": "K'(x)",
+					"description": "Zusätzliche Kosten für eine weitere Mengeneinheit"
+				},
+				"params": [{ "symbol": "K(x)", "description": "Kostenfunktion" }]
+			},
+			{
+				"id": "gewinnmaximum-bedingung",
+				"name": "Gewinnmaximum (Cournot-Bedingung)",
+				"math": "E'(x) = K'(x)",
+				"result": { "symbol": "x_C", "description": "Gewinnmaximale Menge" },
+				"params": [
+					{ "symbol": "E'(x)", "description": "Grenzerlös" },
+					{ "symbol": "K'(x)", "description": "Grenzkosten" }
+				]
+			},
+			{
+				"id": "cournot-preis",
+				"name": "Cournot-Preis",
+				"math": "p_C = p(x_C)",
+				"result": { "symbol": "p_C", "description": "Gewinnmaximaler Preis" },
+				"params": [
+					{ "symbol": "p(x)", "description": "Preis-Absatz-Funktion" },
+					{ "symbol": "x_C", "description": "Cournot-Menge" }
+				]
+			},
+			{
+				"id": "gewinnfunktion",
+				"name": "Gewinnfunktion",
+				"math": "G(x) = E(x) - K(x)",
+				"result": { "symbol": "G(x)", "description": "Gewinn" },
+				"params": [
+					{ "symbol": "E(x)", "description": "Erlös" },
+					{ "symbol": "K(x)", "description": "Kosten" }
+				]
+			},
+			{
+				"id": "erloesmaximum-bedingung",
+				"name": "Erlösmaximum",
+				"math": "E'(x) = 0",
+				"result": { "symbol": "x_E", "description": "Erlösmaximale Menge" },
+				"params": [{ "symbol": "E'(x)", "description": "Grenzerlös" }]
+			},
+			{
+				"id": "gewinn-nullstellen",
+				"name": "PQ-Formel",
+				"math": "x_{1,2} = -\\frac{p}{2} \\pm \\sqrt{\\left(\\frac{p}{2}\\right)^2 - q}",
+				"result": { "symbol": "x_{1,2}", "description": "Nullstellen" },
+				"params": [
+					{ "symbol": "p", "description": "Koeffizient des linearen Terms" },
+					{ "symbol": "q", "description": "Absolutes Glied" }
+				]
+			}
+		],
+		"exercises": [
+			{
+				"title": "Standard-Cournot-Punkt (lineare PAF)",
+				"descriptionTemplate": "Ein Monopolist sieht sich der linearen Preis-Absatz-Funktion {p} gegenüber. Seine Kostenstruktur wird durch die Kostenfunktion {K} beschrieben.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Typische Klausuraufgabe zum Monopol",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 100 - 2x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 20x + 100",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die gewinnmaximale Menge (Cournot-Menge) $x_C$.",
+						"formulaRefs": [
+							"erloesfunktion",
+							"grenzerloes",
+							"grenzkosten",
+							"gewinnmaximum-bedingung"
+						],
+						"interpretation": "Die Cournot-Menge liegt dort, wo der Grenzerlös den Grenzkosten entspricht. Jede weitere produzierte Einheit würde mehr kosten als sie an zusätzlichem Umsatz bringt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion aufstellen",
+								"description": "Zuerst multiplizieren wir die Preis-Absatz-Funktion mit der Menge $x$, um die Erlösfunktion zu erhalten.",
+								"math": "E(x) = (100 - 2x) \\cdot x"
+							},
+							{
+								"type": "calculation",
+								"title": "Erlösfunktion ausmultiplizieren",
+								"description": "Wir lösen die Klammer auf.",
+								"math": "E(x) = 100x - 2x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös bestimmen",
+								"description": "Wir leiten die Erlösfunktion nach $x$ ab.",
+								"math": "E'(x) = 100 - 4x"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzkosten bestimmen",
+								"description": "Wir leiten die Kostenfunktion nach $x$ ab. Da es sich um eine lineare Kostenfunktion handelt, sind die Grenzkosten konstant.",
+								"math": "K'(x) = 20"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnmaximum-Bedingung ansetzen",
+								"description": "Wir setzen Grenzerlös und Grenzkosten gleich.",
+								"math": "E'(x) = K'(x)"
+							},
+							{
+								"type": "substitution",
+								"title": "Funktionen einsetzen",
+								"description": "Wir setzen die berechneten Ableitungen in die Gleichung ein.",
+								"math": "100 - 4x = 20"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x umstellen (Teil 1)",
+								"description": "Wir subtrahieren $100$ auf beiden Seiten.",
+								"math": "-4x = -80"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x umstellen (Teil 2)",
+								"description": "Wir teilen durch $-4$.",
+								"math": "x = 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Cournot-Menge",
+								"description": "Die gewinnmaximale Menge ist ermittelt.",
+								"math": "x_C = 20 \\text{ ME}"
+							}
+						]
+					},
+					{
+						"label": "b",
+						"question": "Ermitteln Sie den zugehörigen Cournot-Preis $p_C$ sowie den Maximalgewinn $G_{max}$.",
+						"formulaRefs": ["cournot-preis", "gewinnfunktion"],
+						"interpretation": "Der Cournot-Preis ist der höchste Preis, der bei der abgesetzten Cournot-Menge am Markt durchsetzbar ist.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Cournot-Preis ansetzen",
+								"description": "Wir setzen die Cournot-Menge in die Preis-Absatz-Funktion ein.",
+								"math": "p_C = 100 - 2 \\cdot x_C"
+							},
+							{
+								"type": "substitution",
+								"title": "Menge einsetzen",
+								"description": "Wir ersetzen $x_C$ durch $20$.",
+								"math": "p_C = 100 - 2 \\cdot 20"
+							},
+							{
+								"type": "calculation",
+								"title": "Multiplikation ausführen",
+								"description": "Wir berechnen das Produkt.",
+								"math": "p_C = 100 - 40"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Cournot-Preis",
+								"description": "Das ergibt den optimalen Verkaufspreis.",
+								"math": "p_C = 60 \\text{ GE/ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion aufstellen",
+								"description": "Wir berechnen den Gewinn als Erlös minus Kosten an der Stelle $x_C$.",
+								"math": "G_{max} = p_C \\cdot x_C - K(x_C)"
+							},
+							{
+								"type": "substitution",
+								"title": "Werte in Gewinnfunktion einsetzen",
+								"description": "Wir setzen Preis, Menge und die Kostenfunktion ein.",
+								"math": "G_{max} = 60 \\cdot 20 - (20 \\cdot 20 + 100)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammer berechnen",
+								"description": "Wir werten die Kosten in der Klammer aus.",
+								"math": "G_{max} = 1200 - (400 + 100)"
+							},
+							{
+								"type": "calculation",
+								"title": "Kosten subtrahieren",
+								"description": "Wir ziehen die Gesamtkosten vom Erlös ab.",
+								"math": "G_{max} = 1200 - 500"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Maximalgewinn",
+								"description": "Der maximale Periodengewinn des Monopolisten.",
+								"math": "G_{max} = 700 \\text{ GE}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Monopol mit quadratischen Kosten",
+				"descriptionTemplate": "Ein angebotsmonopolistisches Unternehmen operiert mit der PAF {p}. Die Produktion verursacht Kosten gemäß der Funktion {K}.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Erweiterung mit progressiven Kosten",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 200 - x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = x^2 + 20x + 500",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Berechnen Sie die Cournot-Menge $x_C$ und den Cournot-Preis $p_C$.",
+						"formulaRefs": [
+							"erloesfunktion",
+							"grenzerloes",
+							"grenzkosten",
+							"gewinnmaximum-bedingung",
+							"cournot-preis"
+						],
+						"interpretation": "Bei quadratischen Kosten steigen die Grenzkosten mit zunehmender Menge an. Das bremst die optimale Ausbringungsmenge früher im Vergleich zu konstanten Grenzkosten.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion ermitteln",
+								"description": "Wir multiplizieren die PAF mit $x$.",
+								"math": "E(x) = 200x - x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös bilden",
+								"description": "Wir leiten $E(x)$ ab.",
+								"math": "E'(x) = 200 - 2x"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzkosten bilden",
+								"description": "Wir leiten die Kostenfunktion ab. Der Term $x^2$ wird zu $2x$.",
+								"math": "K'(x) = 2x + 20"
+							},
+							{
+								"type": "formula",
+								"title": "Optimum-Bedingung",
+								"description": "Wir setzen Grenzerlös gleich Grenzkosten.",
+								"math": "E'(x) = K'(x)"
+							},
+							{
+								"type": "substitution",
+								"title": "Gleichung aufstellen",
+								"description": "Wir setzen die Funktionen ein.",
+								"math": "200 - 2x = 2x + 20"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung ordnen",
+								"description": "Wir addieren $2x$ und subtrahieren $20$ auf beiden Seiten.",
+								"math": "180 = 4x"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x auflösen",
+								"description": "Wir teilen durch $4$.",
+								"math": "x = 45"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_C",
+								"description": "Die optimale Menge ist gefunden.",
+								"math": "x_C = 45 \\text{ ME}"
+							},
+							{
+								"type": "substitution",
+								"title": "Preis ermitteln",
+								"description": "Wir setzen $x_C$ in die PAF ein.",
+								"math": "p_C = 200 - 45"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis p_C",
+								"description": "Der gewinnmaximale Preis ist berechnet.",
+								"math": "p_C = 155 \\text{ GE/ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Indirekte Nachfragefunktion",
+				"descriptionTemplate": "Eine Marktforschung hat für das Monopolprodukt die Nachfragefunktion {x_func} ermittelt. Die Kosten betragen {K}.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Aufgabe erfordert Umstellung der Nachfragefunktion zur PAF",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "x_func",
+						"math": "x(p) = 500 - 5p",
+						"label": "Nachfragefunktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 10x + 200",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Cournot-Menge $x_C$.",
+						"formulaRefs": ["gewinnmaximum-bedingung"],
+						"interpretation": null,
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Nachfragefunktion umstellen",
+								"description": "Bevor wir rechnen können, müssen wir $x(p)$ nach $p$ auflösen, um die Preis-Absatz-Funktion $p(x)$ zu erhalten.",
+								"math": "x = 500 - 5p"
+							},
+							{
+								"type": "calculation",
+								"title": "Term mit p isolieren",
+								"description": "Wir addieren $5p$ und subtrahieren $x$.",
+								"math": "5p = 500 - x"
+							},
+							{
+								"type": "calculation",
+								"title": "Durch 5 teilen",
+								"description": "Wir teilen die gesamte Gleichung durch $5$, um $p(x)$ zu erhalten.",
+								"math": "p(x) = 100 - 0{,}2x"
+							},
+							{
+								"type": "formula",
+								"title": "Erlösfunktion bilden",
+								"description": "Nun bilden wir wie gewohnt die Erlösfunktion.",
+								"math": "E(x) = 100x - 0{,}2x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös bilden",
+								"description": "Ableiten von $E(x)$.",
+								"math": "E'(x) = 100 - 0{,}4x"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzkosten bilden",
+								"description": "Die Ableitung der linearen Kostenfunktion ergibt die variablen Stückkosten.",
+								"math": "K'(x) = 10"
+							},
+							{
+								"type": "substitution",
+								"title": "Bedingung aufstellen",
+								"description": "Gleichsetzen von Grenzerlös und Grenzkosten.",
+								"math": "100 - 0{,}4x = 10"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x umstellen",
+								"description": "Wir isolieren das $x$.",
+								"math": "-0{,}4x = -90"
+							},
+							{
+								"type": "calculation",
+								"title": "x berechnen",
+								"description": "Wir teilen durch $-0{,}4$.",
+								"math": "x = 225"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_C",
+								"description": "Das ist die optimale Absatzmenge.",
+								"math": "x_C = 225 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Erlösmaximum vs. Gewinnmaximum",
+				"descriptionTemplate": "Ein Geschäftsführer möchte wissen, wie sich das Ziel „Umsatzmaximierung“ vom Ziel „Gewinnmaximierung“ unterscheidet. Die PAF lautet {p}, die Kosten sind {K}.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Gegenüberstellung zweier Zielsysteme",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 120 - 3x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 30x + 400",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die erlösmaximale Menge $x_E$ und den Cournot-Punkt (gewinnmaximale Menge) $x_C$.",
+						"formulaRefs": ["erloesmaximum-bedingung", "gewinnmaximum-bedingung"],
+						"interpretation": "Das Erlösmaximum liegt typischerweise bei einer höheren Ausbringungsmenge als das Gewinnmaximum, da beim Erlös die anfallenden Grenzkosten komplett ignoriert werden.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Erlösfunktion",
+								"description": "Wir berechnen die Erlösfunktion.",
+								"math": "E(x) = 120x - 3x^2"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös",
+								"description": "Wir leiten ab.",
+								"math": "E'(x) = 120 - 6x"
+							},
+							{
+								"type": "formula",
+								"title": "Bedingung Erlösmaximum",
+								"description": "Für das Erlösmaximum (Umsatzmaximum) muss der Grenzerlös exakt Null sein.",
+								"math": "E'(x) = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "Gleichung aufstellen",
+								"description": "Wir setzen den Grenzerlös gleich Null.",
+								"math": "120 - 6x = 0"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x_E umstellen",
+								"description": "Wir bringen $6x$ auf die rechte Seite und teilen durch $6$.",
+								"math": "x_E = 20"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Erlösmaximum",
+								"description": "Die erlösmaximale Menge.",
+								"math": "x_E = 20 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Bedingung Gewinnmaximum",
+								"description": "Nun suchen wir das Gewinnmaximum. Dazu brauchen wir die Grenzkosten, die sich aus der Ableitung von $K(x)$ ergeben ($K'(x) = 30$). Wir setzen $E'(x) = K'(x)$.",
+								"math": "120 - 6x = 30"
+							},
+							{
+								"type": "calculation",
+								"title": "Nach x_C umstellen",
+								"description": "Wir subtrahieren $120$ und teilen durch $-6$.",
+								"math": "-6x = -90 \\implies x_C = 15"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinnmaximum",
+								"description": "Die gewinnmaximale Menge ist wie erwartet kleiner als die erlösmaximale Menge.",
+								"math": "x_C = 15 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Einführung einer Mengensteuer",
+				"descriptionTemplate": "Ein Monopolist produziert mit der PAF {p} und der Kostenfunktion {K}. Der Staat führt nun eine Mengensteuer in Höhe von {t} GE pro abgesetzter Mengeneinheit ein. Diese ist vom Monopolisten zu tragen.",
+				"verified": false,
+				"sourceType": "Klausur",
+				"sourceDetails": "Auswirkung von Steuern auf das Monopolgleichgewicht",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 300 - 4x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 20x + 1000",
+						"label": "Kostenfunktion"
+					},
+					{ "type": "value", "symbol": "t", "value": 40, "unit": "GE/ME", "label": "Mengensteuer" }
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die neue Cournot-Menge $x_{C, neu}$ nach Einführung der Steuer.",
+						"formulaRefs": ["gewinnmaximum-bedingung"],
+						"interpretation": "Eine Mengensteuer wirkt wie eine Erhöhung der variablen Kosten. Der Monopolist reagiert darauf, indem er die Produktionsmenge reduziert und den Preis anhebt.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Neue Kostenfunktion definieren",
+								"description": "Die Mengensteuer erhöht die Kosten für jede produzierte Einheit um $t$. Wir addieren also $t \\cdot x$ zur bisherigen Kostenfunktion.",
+								"math": "K_{neu}(x) = K(x) + t \\cdot x"
+							},
+							{
+								"type": "substitution",
+								"title": "Steuer einsetzen",
+								"description": "Wir setzen $t=40$ ein und fassen die $x$-Terme zusammen.",
+								"math": "K_{neu}(x) = 20x + 1000 + 40x = 60x + 1000"
+							},
+							{
+								"type": "formula",
+								"title": "Neue Grenzkosten",
+								"description": "Wir leiten die neue Kostenfunktion ab.",
+								"math": "K_{neu}'(x) = 60"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös ermitteln",
+								"description": "Wir leiten $E(x) = 300x - 4x^2$ ab.",
+								"math": "E'(x) = 300 - 8x"
+							},
+							{
+								"type": "substitution",
+								"title": "Bedingung aufstellen",
+								"description": "Grenzerlös gleich neue Grenzkosten.",
+								"math": "300 - 8x = 60"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung umstellen",
+								"description": "Wir subtrahieren $300$ und erhalten $-8x = -240$.",
+								"math": "x = \\frac{-240}{-8}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis neue Menge",
+								"description": "Die neue, geringere Cournot-Menge.",
+								"math": "x_{C, neu} = 30 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Gewinnschwelle und Gewinngrenze",
+				"descriptionTemplate": "Es gelte die PAF {p} und die Kostenfunktion {K}.",
+				"verified": false,
+				"sourceType": "Manuell",
+				"sourceDetails": "Ermittlung der Profitabilitätsgrenzen",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 50 - x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 10x + 300",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Bestimmen Sie die Nullstellen der Gewinnfunktion (Gewinnschwelle und Gewinngrenze).",
+						"formulaRefs": ["gewinnfunktion", "gewinn-nullstellen"],
+						"interpretation": "Zwischen der Gewinnschwelle (Break-Even-Point) und der Gewinngrenze erwirtschaftet das Monopolunternehmen einen positiven Deckungsbeitrag, der die Fixkosten übersteigt – also einen echten Gewinn.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion ansetzen",
+								"description": "Wir ziehen die Kosten vom Erlös ($50x - x^2$) ab.",
+								"math": "G(x) = (50x - x^2) - (10x + 300)"
+							},
+							{
+								"type": "calculation",
+								"title": "Gewinnfunktion zusammenfassen",
+								"description": "Wir ordnen die Terme und fassen zusammen.",
+								"math": "G(x) = -x^2 + 40x - 300"
+							},
+							{
+								"type": "formula",
+								"title": "Nullstellen-Bedingung",
+								"description": "Um die Grenzen zu finden, setzen wir den Gewinn auf Null. Um die PQ-Formel anwenden zu können, multiplizieren wir mit $-1$.",
+								"math": "x^2 - 40x + 300 = 0"
+							},
+							{
+								"type": "substitution",
+								"title": "PQ-Formel anwenden",
+								"description": "Wir setzen $p = -40$ und $q = 300$ in die Lösungsformel ein.",
+								"math": "x_{1,2} = -\\frac{-40}{2} \\pm \\sqrt{\\left(\\frac{-40}{2}\\right)^2 - 300}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel vereinfachen",
+								"description": "Wir berechnen den Term unter der Wurzel.",
+								"math": "x_{1,2} = 20 \\pm \\sqrt{400 - 300}"
+							},
+							{
+								"type": "calculation",
+								"title": "Wurzel ziehen",
+								"description": "Die Wurzel aus $100$ ist $10$.",
+								"math": "x_{1,2} = 20 \\pm 10"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinnschwelle",
+								"description": "Die untere Nullstelle ist die Gewinnschwelle.",
+								"math": "x_1 = 10 \\text{ ME}"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinngrenze",
+								"description": "Die obere Nullstelle ist die Gewinngrenze.",
+								"math": "x_2 = 30 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Auswirkung einer Subvention",
+				"descriptionTemplate": "Ein Monopolist produziert das Gut unter den Bedingungen {p} und {K}. Zur Förderung des Absatzes zahlt der Staat dem Unternehmen eine Subvention in Höhe von {s} GE für jede abgesetzte Einheit.",
+				"verified": false,
+				"sourceType": "AI-generated",
+				"sourceDetails": "Die Umkehrung der Mengensteuer",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 80 - 2x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 40x + 100",
+						"label": "Kostenfunktion"
+					},
+					{
+						"type": "value",
+						"symbol": "s",
+						"value": 12,
+						"unit": "GE/ME",
+						"label": "Stücksubvention"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Cournot-Menge $x_C$ nach Erhalt der Subvention.",
+						"formulaRefs": ["gewinnmaximum-bedingung"],
+						"interpretation": "Eine Subvention pro Stück senkt faktisch die variablen Grenzkosten für das Unternehmen. Dadurch verschiebt sich das Gewinnmaximum zu einer höheren Produktionsmenge.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Subventionierte Kostenfunktion",
+								"description": "Wir ziehen die Subvention $s \\cdot x$ von den Gesamtkosten ab.",
+								"math": "K_{sub}(x) = 40x + 100 - 12x"
+							},
+							{
+								"type": "calculation",
+								"title": "Kostenfunktion vereinfachen",
+								"description": "Wir fassen die linearen Terme zusammen.",
+								"math": "K_{sub}(x) = 28x + 100"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzerlös und neue Grenzkosten",
+								"description": "Wir bilden die Ableitung des Erlöses ($80x - 2x^2$) und der neuen Kostenfunktion.",
+								"math": "E'(x) = 80 - 4x \\quad \\text{und} \\quad K_{sub}'(x) = 28"
+							},
+							{
+								"type": "substitution",
+								"title": "Bedingung aufstellen",
+								"description": "Wir setzen beides gleich.",
+								"math": "80 - 4x = 28"
+							},
+							{
+								"type": "calculation",
+								"title": "Gleichung umstellen",
+								"description": "Wir subtrahieren $80$.",
+								"math": "-4x = -52"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_C",
+								"description": "Nach Division durch $-4$ erhalten wir die neue Menge.",
+								"math": "x_C = 13 \\text{ ME}"
+							}
+						]
+					}
+				]
+			},
+			{
+				"title": "Verlustminimierung im Cournot-Punkt",
+				"descriptionTemplate": "Ein Unternehmen mit Marktmacht steht vor einer schwachen Nachfrage und hohen Fixkosten. Es gilt {p} und {K}.",
+				"verified": false,
+				"sourceType": "Skript",
+				"sourceDetails": "Aufgabe zeigt, dass der Cournot-Punkt auch ein Verlustminimum sein kann.",
+				"given": [
+					{
+						"type": "formula",
+						"symbol": "p",
+						"math": "p(x) = 60 - 0{,}5x",
+						"label": "Preis-Absatz-Funktion"
+					},
+					{
+						"type": "formula",
+						"symbol": "K",
+						"math": "K(x) = 10x + 2000",
+						"label": "Kostenfunktion"
+					}
+				],
+				"inputTable": null,
+				"subTasks": [
+					{
+						"label": "a",
+						"question": "Ermitteln Sie die Cournot-Menge $x_C$ sowie den sich ergebenden Gewinn $G(x_C)$.",
+						"formulaRefs": ["gewinnmaximum-bedingung", "gewinnfunktion"],
+						"interpretation": "Selbst wenn das Unternehmen in der optimalen Situation Verluste macht (negativer Gewinn), ist die Produktion kurzfristig sinnvoll, solange der Deckungsbeitrag positiv ist und somit ein Teil der ohnehin anfallenden Fixkosten gedeckt wird.",
+						"steps": [
+							{
+								"type": "formula",
+								"title": "Grenzerlös",
+								"description": "Wir leiten $E(x) = 60x - 0{,}5x^2$ ab.",
+								"math": "E'(x) = 60 - x"
+							},
+							{
+								"type": "formula",
+								"title": "Grenzkosten",
+								"description": "Wir leiten $K(x)$ ab.",
+								"math": "K'(x) = 10"
+							},
+							{
+								"type": "substitution",
+								"title": "Gleichsetzen",
+								"description": "Wir wenden die Bedingung für das Maximum (bzw. hier relative Maximum/Verlustminimum) an.",
+								"math": "60 - x = 10"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis x_C",
+								"description": "Das liefert uns die optimale Menge.",
+								"math": "x_C = 50 \\text{ ME}"
+							},
+							{
+								"type": "formula",
+								"title": "Gewinnfunktion",
+								"description": "Wir stellen den Term für den Gewinn bei $x=50$ auf.",
+								"math": "G(50) = (60 \\cdot 50 - 0{,}5 \\cdot 50^2) - (10 \\cdot 50 + 2000)"
+							},
+							{
+								"type": "calculation",
+								"title": "Klammern auflösen",
+								"description": "Wir berechnen Erlös und Kosten separat. Erlös = $3000 - 1250 = 1750$. Kosten = $500 + 2000 = 2500$.",
+								"math": "G(50) = 1750 - 2500"
+							},
+							{
+								"type": "result",
+								"title": "Ergebnis Gewinn",
+								"description": "Das Unternehmen macht einen Verlust, welcher in diesem Punkt jedoch minimiert ist (bei Nicht-Produktion läge der Verlust bei $-2000$).",
+								"math": "G_{max} = -750 \\text{ GE}"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
